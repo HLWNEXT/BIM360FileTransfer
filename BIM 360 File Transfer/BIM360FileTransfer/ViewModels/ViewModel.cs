@@ -86,10 +86,10 @@ namespace BIM360FileTransfer.ViewModels
             authBrowser.MinWidth = 300;
             authBrowser.LoadUrl(authorizeURL);
             
-            authBrowser.FrameLoadEnd += Browser_FrameLoadEnd;
+            authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
         }
 
-        private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             var codePattern = "&code=";
 
@@ -101,7 +101,7 @@ namespace BIM360FileTransfer.ViewModels
             else
             {
                 // remove this event...
-                authBrowser.FrameLoadEnd -= Browser_FrameLoadEnd;
+                authBrowser.FrameLoadEnd -= BrowserFrameLoadEnd;
 
                 code = e.Url.Substring(e.Url.IndexOf(codePattern) + codePattern.Length);
 
