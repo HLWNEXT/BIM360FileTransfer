@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace BIM_360_File_Transfer.VIews
+{
+    /// <summary>
+    /// Interaction logic for OAuth.xaml
+    /// </summary>
+    public partial class OAuthWindow : Window
+    {
+        public OAuthWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}
