@@ -12,6 +12,8 @@ using BIM360FileTransfer.VIews;
 using CefSharp.Wpf;
 using CefSharp;
 using System.Text.RegularExpressions;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -60,6 +62,8 @@ namespace BIM360FileTransfer.ViewModels
 
 
         public ChromiumWebBrowser authBrowser;
+        public OAuthWindow oAuthWindow;
+        public string code;
 
         public void OpenAuthPage()
         {
@@ -68,17 +72,11 @@ namespace BIM360FileTransfer.ViewModels
             settings.CachePath = AppDomain.CurrentDomain.BaseDirectory + "cache";
             if (!Cef.IsInitialized) Cef.Initialize(settings);
 
-            OAuthWindow oAuthWindow = new OAuthWindow();
+            oAuthWindow = new OAuthWindow();
             oAuthWindow.Show();
 
             authBrowser = oAuthWindow.webBrowser;
 
-
-            ////webBrowser.Dock = DockStyle.Fill;
-            ////webBrowser.NavigateError += new WebBrowserNavigateErrorEventHandler(wb_NavigateError);
-            ////Controls.Add(webBrowser);
-
-            //// this is a basic code sample, quick & dirty way to get the Authentication string
             string authorizeURL = FORGE_BASE_URL +
                 string.Format("/authentication/v1/authorize?response_type=code&client_id={0}&redirect_uri={1}&scope={2}",
                 FORGE_CLIENT_ID, FORGE_CALLBACK_URL, System.Net.WebUtility.UrlEncode(FORGE_SCOPE));
@@ -88,9 +86,7 @@ namespace BIM360FileTransfer.ViewModels
             authBrowser.MinWidth = 300;
             authBrowser.LoadUrl(authorizeURL);
             
-            //PrepareUserData();
             authBrowser.FrameLoadEnd += Browser_FrameLoadEnd;
-            //oAuthWindow.Close();
         }
 
         private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
@@ -107,11 +103,13 @@ namespace BIM360FileTransfer.ViewModels
                 // remove this event...
                 authBrowser.FrameLoadEnd -= Browser_FrameLoadEnd;
 
-                var code = e.Url.Substring(e.Url.IndexOf(codePattern) + codePattern.Length);
+                code = e.Url.Substring(e.Url.IndexOf(codePattern) + codePattern.Length);
+
+                if (oAuthWindow.Dispatcher.CheckAccess())
+                    oAuthWindow.Close();
+                else
+                    oAuthWindow.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(oAuthWindow.Close));
             }
         }
-
     }
-
-
 }
