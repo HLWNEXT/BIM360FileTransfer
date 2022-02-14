@@ -1,4 +1,4 @@
-﻿using BIM_360_File_Transfer.ViewModels;
+﻿using BIM360FileTransfer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,36 +6,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace BIM_360_File_Transfer.Commands
+namespace BIM360FileTransfer.Commands
 {
-    internal class CustomerUpdateCommand : ICommand
+    internal class AuthCommand : ICommand
     {
         /// <summary>
         /// Initializes a new instance of the CustomerUpdateCommand class.
         /// </summary>
         /// <param name="viewModel"></param>
-        public CustomerUpdateCommand(CustomerViewModel viewModel)
+        public AuthCommand(ViewModel viewModel)
         {
             _ViewModel = viewModel;
         }
 
-        private CustomerViewModel _ViewModel;
+        private ViewModel _ViewModel;
 
         #region ICommand Members
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value;}
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
         public bool CanExecute(object parameter)
         {
-            return _ViewModel.CanUpdate;        
+            return _ViewModel.CanOpenAuthPage;
         }
 
         public void Execute(object parameter)
         {
-            _ViewModel.SaveChanges();
+            _ViewModel.OpenAuthPage();
         }
         #endregion
     }

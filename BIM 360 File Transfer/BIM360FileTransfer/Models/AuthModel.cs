@@ -5,33 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM_360_File_Transfer.Models
+namespace BIM360FileTransfer.Models
 {
-    public class Customer : INotifyPropertyChanged
+    public class AuthModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// Initializes a new instance of the Customer class.
+        /// Initializes a new instance of the AuthModel class.
         /// </summary>
-        /// <param name="customerName"></param>
-        public Customer(string customerName)
+        /// <param name="authCode"></param>
+        public AuthModel(string authCode)
         {
-            Name = customerName;
+            Code = authCode;
         }
 
-        public String _Name;
+        public String _Code;
+
         /// <summary>
-        /// Gets or sets the Customer's name.
+        /// Gets or sets the Authentication code.
         /// </summary>
-        public String Name
+        public String Code
         {
             get
             {
-                return _Name;
+                return _Code;
             }
             set
             {
-                _Name = value;
-                OnPropertyChanged("Name");
+                _Code = value;
+                OnPropertyChanged("AuthCode");
             }
         }
 

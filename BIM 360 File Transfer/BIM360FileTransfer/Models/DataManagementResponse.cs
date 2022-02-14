@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM_360_File_Transfer.ResponseModel
+namespace BIM360FileTransfer.ResponseModel
 {
     public class DataManagementResponse
     {

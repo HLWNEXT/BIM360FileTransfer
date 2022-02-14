@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace BIM_360_File_Transfer
+namespace BIM360FileTransfer
 {
     /// <summary>
     /// Interaction logic for App.xaml

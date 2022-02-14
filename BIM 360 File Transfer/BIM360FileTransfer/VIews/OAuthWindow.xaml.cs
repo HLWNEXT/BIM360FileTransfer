@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BIM_360_File_Transfer.VIews
+namespace BIM360FileTransfer.VIews
 {
     /// <summary>
     /// Interaction logic for OAuth.xaml

@@ -1,4 +1,4 @@
-﻿using BIM_360_File_Transfer.ViewModels;
+﻿using BIM360FileTransfer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BIM_360_File_Transfer.Views
+namespace BIM360FileTransfer.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

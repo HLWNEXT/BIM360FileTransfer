@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIM_360_File_Transfer.Utilities
+namespace BIM360FileTransfer.Utilities
 {
     internal class HttpUtils
     {

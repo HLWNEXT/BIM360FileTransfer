@@ -1,5 +1,5 @@
-﻿using BIM_360_File_Transfer.Models;
-using BIM_360_File_Transfer.Commands;
+﻿using BIM360FileTransfer.Models;
+using BIM360FileTransfer.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace BIM_360_File_Transfer.ViewModels
+namespace BIM360FileTransfer.ViewModels
 {
     internal class CustomerViewModel
     {

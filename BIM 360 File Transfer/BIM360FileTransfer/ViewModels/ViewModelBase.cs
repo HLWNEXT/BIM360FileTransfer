@@ -8,7 +8,7 @@
 //using Autodesk.Forge.Client;
 //using Autodesk.Forge.Model;
 
-//namespace BIM_360_File_Transfer.FileTransferViewModel
+//namespace BIM360FileTransfer.FileTransferViewModel
 //{
 //    public class ViewModelBase
 //    {
