@@ -26,6 +26,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             _AuthModel = new AuthModel("");
             OpenAuthCommand = new AuthCommand(this);
+            FileBrowseCommand = new FileBrowseCommand(this);
         }
 
 
@@ -49,6 +50,12 @@ namespace BIM360FileTransfer.ViewModels
         }
 
         public ICommand OpenAuthCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileBrowseCommand
         {
             get;
             private set;

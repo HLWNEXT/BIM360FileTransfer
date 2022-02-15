@@ -23,16 +23,8 @@ namespace BIM360FileTransfer.ViewModels
 
             if (id == "#") // root
             {
-                // Get all buckets
-                BucketsApi appBckets = new BucketsApi();
-                appBckets.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-
-                // to simplify, let's return only the first 100 buckets
-                dynamic buckets = await appBckets.GetBucketsAsync("US", 100);
-                foreach (KeyValuePair<string, dynamic> bucket in new DynamicDictionaryItems(buckets.items))
-                {
-                    nodes.Add(new TreeNode(bucket.Value.bucketKey, bucket.Value.bucketKey.Replace(User.FORGE_CLIENT_ID + "-", string.Empty), "bucket", true));
-                }
+                var hubId = GetHub();
+                var projects = GetProjects(hubId);
             }
             else
             {
@@ -47,6 +39,39 @@ namespace BIM360FileTransfer.ViewModels
                 }
             }
             return nodes;
+        }
+
+        /// <summary>
+        /// Get all projects.
+        /// </summary>
+        public string GetProjects(string hubId)
+        {
+            ProjectsApi projectsAPIInstance = new ProjectsApi();
+            //hubs.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6Im1yVDJGYm5jWnhjRjg0aHpKakZtSmQ2YTlZcEFmeEM1d0tkaGRxQUdLMmNJZ2ROTm9MYXQzZENEcXJtWUMyVUoiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NTMwNDR9.T9OoIaEDPTDl5xPl4RI3BwBVeOcQzeP3mPdILn1DdJyLDiDssUQHbiE4eiMD2zEKwEVwMoHCjj1dsjiB-o1Tu5FbHzD6HjaFlTAYRq9UlX6IByJiJJZsuUebXc7W9W4vL3933yKjG3S62T0_m5aFO2819WZqYBbfs9U-wJO8fwF60EjVxeCig9fos07sP_hR8fLT-fKhwHUKXMvgRFhXAwYdafO3kdCv2mhzmI0srakFhckhXeG2MTh7mEG8hJlOBSPVH8zR0Gua5wQgkF9LqXam15ox7PqyUoUxx5VfF5HtfpjdBhR7fHiAUfxH0CrCLMHAwissHJOn1a4C04Jqfw";
+
+            var response = projectsAPIInstance.GetHubProjects(hubId);
+
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                //nodes.Add(new TreeNode(Base64Encode((string)objInfo.Value.objectId),
+                //  objInfo.Value.objectKey, "object", false));
+            }
+            return response.data[0].id;
+        }
+
+        /// <summary>
+        /// Get the working hub.
+        /// </summary>
+        public string GetHub()
+        {
+            HubsApi hubsAPIInstance = new HubsApi();
+            //hubs.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            hubsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6Im1yVDJGYm5jWnhjRjg0aHpKakZtSmQ2YTlZcEFmeEM1d0tkaGRxQUdLMmNJZ2ROTm9MYXQzZENEcXJtWUMyVUoiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NTMwNDR9.T9OoIaEDPTDl5xPl4RI3BwBVeOcQzeP3mPdILn1DdJyLDiDssUQHbiE4eiMD2zEKwEVwMoHCjj1dsjiB-o1Tu5FbHzD6HjaFlTAYRq9UlX6IByJiJJZsuUebXc7W9W4vL3933yKjG3S62T0_m5aFO2819WZqYBbfs9U-wJO8fwF60EjVxeCig9fos07sP_hR8fLT-fKhwHUKXMvgRFhXAwYdafO3kdCv2mhzmI0srakFhckhXeG2MTh7mEG8hJlOBSPVH8zR0Gua5wQgkF9LqXam15ox7PqyUoUxx5VfF5HtfpjdBhR7fHiAUfxH0CrCLMHAwissHJOn1a4C04Jqfw";
+
+
+            var response = hubsAPIInstance.GetHubs();
+            return response.data[0].id;
         }
 
         /// <summary>

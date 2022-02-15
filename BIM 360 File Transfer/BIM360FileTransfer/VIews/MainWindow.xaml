@@ -31,7 +31,7 @@
                     <TextBlock Grid.Column="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">BIM 360 File Transfer</TextBlock>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" >
-                        <Button Command="{Binding OpenAuthCommand}" Margin="5">Load</Button>
+                        <Button Command="{Binding FileBrowseCommand}" Margin="5">Load</Button>
                         <Button Command="{Binding OpenAuthCommand}" Margin="5">Authenticate</Button>
                     </StackPanel>
                 </Grid>
