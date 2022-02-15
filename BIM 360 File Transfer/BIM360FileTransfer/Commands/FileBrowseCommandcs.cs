@@ -36,7 +36,7 @@ namespace BIM360FileTransfer.Commands
         public void Execute(object parameter)
         {
             FileBrowseViewModel fileBrowseViewModel = new FileBrowseViewModel();
-            fileBrowseViewModel.GetFiles();
+            var result = fileBrowseViewModel.GetFileAsync("#");
         }
         #endregion
     }
