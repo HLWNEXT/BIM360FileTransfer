@@ -8,13 +8,13 @@ using System.Windows.Input;
 
 namespace BIM360FileTransfer.Commands
 {
-    internal class AuthCommand : ICommand
+    internal class FileBrowseCommand : ICommand
     {
         /// <summary>
-        /// Initializes a new instance of the AuthCommand class.
+        /// Initializes a new instance of the FileBrowseCommand class.
         /// </summary>
         /// <param name="viewModel">Main view model.</param>
-        public AuthCommand(ViewModel viewModel)
+        public FileBrowseCommand(ViewModel viewModel)
         {
             _ViewModel = viewModel;
         }
@@ -35,8 +35,8 @@ namespace BIM360FileTransfer.Commands
 
         public void Execute(object parameter)
         {
-            AuthViewModel authViewModel = new AuthViewModel();
-            authViewModel.OpenAuthPage();
+            FileBrowseViewModel fileBrowseViewModel = new FileBrowseViewModel();
+            fileBrowseViewModel.GetFiles();
         }
         #endregion
     }

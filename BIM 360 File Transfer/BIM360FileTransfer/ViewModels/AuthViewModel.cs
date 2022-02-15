@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Controls;
-using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
 using BIM360FileTransfer.VIews;
-using BIM360FileTransfer.Models;
-using BIM360FileTransfer.Commands;
-using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -36,7 +26,9 @@ namespace BIM360FileTransfer.ViewModels
         public OAuthWindow oAuthWindow;
 
 
-
+        /// <summary>
+        /// Open an authentication window using Chromium browser.
+        /// </summary>
         public void OpenAuthPage()
         {
             // Set up the Chromium cache. 
@@ -61,6 +53,12 @@ namespace BIM360FileTransfer.ViewModels
             authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
         }
 
+        /// <summary>
+        /// Get authentication code from the call back url. Close browser window once done.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         private async void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             // Find the final call back url with code.
@@ -90,6 +88,10 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        /// <summary>
+        /// Get 3 legged token from Forge API.
+        /// </summary>
+        /// <returns>Bearer token</returns>
         private async Task<dynamic> Get3LeggedTokenAsync()
         {
             ThreeLeggedApi oauth = new ThreeLeggedApi();
