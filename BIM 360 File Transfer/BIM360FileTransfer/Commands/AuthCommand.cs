@@ -35,7 +35,9 @@ namespace BIM360FileTransfer.Commands
 
         public void Execute(object parameter)
         {
-            _ViewModel.OpenAuthPage();
+            //_ViewModel.OpenAuthPage();
+            AuthViewModel authViewModel = new AuthViewModel();
+            authViewModel.OpenAuthPage();
         }
         #endregion
     }
