@@ -101,7 +101,7 @@ namespace BIM360FileTransfer.ViewModels
             //projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
 
             var response = projectsAPIInstance.GetHubProjects(hubId);
-            rootCategory.Children.Add(new PublicCategoryCore(new CategoryModel()));
+            rootCategory.Children = new List<CategoryViewModel>();
 
             foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
             {
@@ -124,11 +124,12 @@ namespace BIM360FileTransfer.ViewModels
 
         private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
         {
-            rootCategory.Children.Add(new PublicCategoryCore(new CategoryModel()));
+            
             if (rootCategory.CategoryType == "projects")
             {
                 var apiInstance = new FoldersApi();
                 var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+                rootCategory.Children = new List<CategoryViewModel>();
                 foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
                 {
                     var type = objInfo.Value.type;
@@ -153,6 +154,7 @@ namespace BIM360FileTransfer.ViewModels
                 }
                 var apiInstance = new FoldersApi();
                 var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+                rootCategory.Children = new List<CategoryViewModel>();
                 foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
                 {
                     var type = objInfo.Value.type;
