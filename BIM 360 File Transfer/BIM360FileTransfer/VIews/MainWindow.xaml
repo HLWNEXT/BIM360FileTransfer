@@ -31,8 +31,8 @@
                     <TextBlock Grid.Column="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">BIM 360 File Transfer</TextBlock>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" >
-                        <Button Command="{Binding FileBrowseCommand}" Margin="5">Load</Button>
                         <Button Command="{Binding AuthViewModel.OpenAuthCommand}" Margin="5">Authenticate</Button>
+                        <Button Command="{Binding FileBrowseViewModel.FileBrowseCommand}" Margin="5">Load</Button>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>
@@ -63,7 +63,7 @@
                         Grid.Row="1"
                             x:Name="SourceCategoryTree"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            ItemsSource="{Binding Path=CategoryTree,Mode=OneWay,IsAsync=True}"
+                            ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
                             CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
                         <local:EnhancedTreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
@@ -71,28 +71,7 @@
                             </HierarchicalDataTemplate>
                         </local:EnhancedTreeView.ItemTemplate>
 
-                        <TreeViewItem Header="Folder1" IsSelected="False">
-                            <TreeViewItem Header="Subfolder1"/>
-                            <TreeViewItem Header="Subfolder2">
-                                <TreeViewItem Header="Item1"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Subfolder3">
-                                <TreeViewItem Header="Item1"/>
-                                <TreeViewItem Header="Item2"/>
-                                <TreeViewItem Header="Item3"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Folder2">
-                            <TreeViewItem Header="Subfolder1"/>
-                            <TreeViewItem Header="Subfolder2">
-                                <TreeViewItem Header="Item1"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Subfolder3">
-                                <TreeViewItem Header="Item1"/>
-                                <TreeViewItem Header="Item2"/>
-                                <TreeViewItem Header="Item3"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
+                        
                     </local:EnhancedTreeView>
                 </Grid>
                 
@@ -112,7 +91,7 @@
                            Grid.Row="1"
                             x:Name="CategoryTree"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            ItemsSource="{Binding Path=CategoryTree,Mode=OneWay,IsAsync=True}"
+                            ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
                             CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
                         <local:EnhancedTreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
@@ -120,28 +99,7 @@
                             </HierarchicalDataTemplate>
                         </local:EnhancedTreeView.ItemTemplate>
 
-                        <TreeViewItem Header="Project1" IsSelected="False">
-                            <TreeViewItem Header="Folder1"/>
-                            <TreeViewItem Header="Folder2">
-                                <TreeViewItem Header="Subfolder1"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Folder3">
-                                <TreeViewItem Header="Subfolder1"/>
-                                <TreeViewItem Header="Subfolder2"/>
-                                <TreeViewItem Header="Subfolder3"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Project2">
-                            <TreeViewItem Header="Folder1"/>
-                            <TreeViewItem Header="Folder2">
-                                <TreeViewItem Header="Subfolder1"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Folder3">
-                                <TreeViewItem Header="Subfolder1"/>
-                                <TreeViewItem Header="Subfolder2"/>
-                                <TreeViewItem Header="Subfolder3"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
+                       
                     </local:EnhancedTreeView>
                 </Grid>
 

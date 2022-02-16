@@ -20,7 +20,7 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    internal class AuthViewModel
+    internal class AuthViewModel : BaseViewModel, IViewModel
     {
         public ChromiumWebBrowser authBrowser;
         public OAuthWindow oAuthWindow;

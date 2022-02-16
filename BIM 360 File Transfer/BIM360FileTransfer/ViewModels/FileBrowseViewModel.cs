@@ -1,30 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
+using System.Collections.ObjectModel;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
 using BIM360FileTransfer.VIews;
-using System.Collections.Generic;
-using Autodesk.Forge.Model;
 using BIM360FileTransfer.Models;
+using BIM360FileTransfer.Commands;
+using BIM360FileTransfer.Interfaces;
+using Autodesk.Forge.Model;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    internal class FileBrowseViewModel
+    internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
+
+        private IList<CategoryViewModel> categoryTree;
+
+        public IList<CategoryViewModel> CategoryTree
+        {
+            get { return categoryTree; }
+            set
+            {
+                categoryTree = value;
+                OnPropertyChanged("CategoryTree");
+            }
+        }
+
+        public FileBrowseViewModel()
+        {
+            FileBrowseCommand = new FileBrowseCommand(this);
+        }
+
         /// <summary>
         /// Get a list of buckets (id=#) or list of objects (id=bucketKey)
         /// </summary>
-        public IList<CategoryViewModel> GetCategoryAsync()
+        public void GetCategoryAsync()
         {
-            
             var hubId = GetHub();
-            //var projects = GetProjects(hubId);
-            var files = GetCategoryTree(hubId);
+            CategoryTree = GetCategoryTree(hubId);
 
-            return files;
         }
 
         /// <summary>
@@ -33,8 +57,8 @@ namespace BIM360FileTransfer.ViewModels
         public string GetHub()
         {
             HubsApi hubsAPIInstance = new HubsApi();
-            //hubs.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-            hubsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
+            hubsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            //hubsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
 
             var response = hubsAPIInstance.GetHubs();
             return response.data[0].id;
@@ -68,13 +92,13 @@ namespace BIM360FileTransfer.ViewModels
 
         private CategoryViewModel GetProjects(string hubId)
         {
-            var root = new CategoryModel("", "All Componentes", "root");
+            var root = new CategoryModel("", "Projects", "root");
             var rootCategroy = new PublicCategoryCore(root);
 
             var projects = new List<CategoryViewModel>();
             ProjectsApi projectsAPIInstance = new ProjectsApi();
-            //hubs.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-            projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
+            projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            //projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
 
             var response = projectsAPIInstance.GetHubProjects(hubId);
 
@@ -181,6 +205,26 @@ namespace BIM360FileTransfer.ViewModels
         public static string Base64Decode(string encodedText)
         {
             return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(encodedText));
+        }
+
+        public bool CanFileBrowse
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public ICommand OpenFileBrowseCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileBrowseCommand
+        {
+            get;
+            private set;
         }
 
     }

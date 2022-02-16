@@ -10,17 +10,16 @@ namespace BIM360FileTransfer.Commands
 {
     internal class FileBrowseCommand : ICommand
     {
-        private ViewModel _ViewModel;
-        public FileBrowseViewModel fileBrowseViewModel;
+        public FileBrowseViewModel _fileBrowseViewModel;
         public IList<CategoryViewModel> result;
 
         /// <summary>
         /// Initializes a new instance of the FileBrowseCommand class.
         /// </summary>
         /// <param name="viewModel">Main view model.</param>
-        public FileBrowseCommand(ViewModel viewModel)
+        public FileBrowseCommand(FileBrowseViewModel fileBrowseViewModel)
         {
-            _ViewModel = viewModel;
+            _fileBrowseViewModel = fileBrowseViewModel;
         }
 
         
@@ -39,8 +38,7 @@ namespace BIM360FileTransfer.Commands
 
         public void Execute(object parameter)
         {
-            fileBrowseViewModel = new FileBrowseViewModel();
-            result = fileBrowseViewModel.GetCategoryAsync();
+            _fileBrowseViewModel.GetCategoryAsync();
         }
         #endregion
     }
