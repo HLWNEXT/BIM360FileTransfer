@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
+using System.Collections.ObjectModel;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
@@ -21,10 +22,27 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class ViewModel : BaseViewModel, IViewModel
     {
+        //ObservableCollection<object> _children;
+        //public ObservableCollection<object> Children { get { return _children; } }
+
+        //private List<CategoryViewModel> categoryTree;
+        //public List<CategoryViewModel> CategoryTree
+        //{
+        //    get { return categoryTree; }
+        //    set
+        //    {
+        //        categoryTree = value;
+        //        OnPropertyChanged("CategoryTree");
+        //    }
+        //}
 
         public ViewModel()
         {
-            _AuthModel = new AuthModel("");
+            //_children = new ObservableCollection<object>();
+            //_children.Add(new AuthCommand(this));
+            //_children.Add(new FileBrowseCommand(this));
+
+
             OpenAuthCommand = new AuthCommand(this);
             FileBrowseCommand = new FileBrowseCommand(this);
         }
@@ -34,19 +52,8 @@ namespace BIM360FileTransfer.ViewModels
         {
             get
             {
-                if (AuthModel is null)
-                {
-                    return false;
-                }
-                return AuthModel.Code == "";
+                return true;
             }
-        }
-
-        private AuthModel _AuthModel;
-
-        public AuthModel AuthModel
-        {
-            get { return _AuthModel; }
         }
 
         public ICommand OpenAuthCommand
