@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
+using System.Collections.ObjectModel;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
@@ -19,25 +20,27 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    internal class AuthViewModel
+    internal class AuthViewModel : BaseViewModel, IViewModel
     {
-        private const string FORGE_CLIENT_ID = "Oc1Dgsd4bxY5hbfvYOsuHCkZTyI1ef7q";
-        private const string FORGE_CLIENT_SECRET = "PwA4iw3Ant6MlkQZ";
-        private const string FORGE_CALLBACK_URL = "http://sampleapp.com/oauth/callback?foo=bar";
-        private const string FORGE_BASE_URL = "https://developer.api.autodesk.com";
-        private const string FORGE_SCOPE = "data:read data:write data:create data:search bucket:create bucket:read bucket:update bucket:delete"; // Full scope access.
-        private const string FORGE_GRANT_TYPE = "authorization_code";
-        private const string Forge_Code_Pattern = "&code=";
-        private static string FORGE_CODE { get; set; }
-        private static dynamic FORGE_INTERNAL_TOKEN { get; set; }
-
-
         public ChromiumWebBrowser authBrowser;
         public OAuthWindow oAuthWindow;
 
 
+        public AuthViewModel()
+        {
+            OpenAuthCommand = new AuthCommand(this);
+        }
 
-        public void OpenAuthPage()
+    public void myFirstCommand(string par)
+    {
+        Console.Beep();
+    }
+
+
+    /// <summary>
+    /// Open an authentication window using Chromium browser.
+    /// </summary>
+    public void OpenAuthPage()
         {
             // Set up the Chromium cache. 
             var settings = new CefSettings();
@@ -52,19 +55,25 @@ namespace BIM360FileTransfer.ViewModels
             authBrowser.MinWidth = 300;
 
             // Build authentication url.
-            string authorizeURL = FORGE_BASE_URL +
+            string authorizeURL = User.FORGE_BASE_URL +
                 string.Format("/authentication/v1/authorize?response_type=code&client_id={0}&redirect_uri={1}&scope={2}",
-                FORGE_CLIENT_ID, FORGE_CALLBACK_URL, System.Net.WebUtility.UrlEncode(FORGE_SCOPE));
+                User.FORGE_CLIENT_ID, User.FORGE_CALLBACK_URL, System.Net.WebUtility.UrlEncode(User.FORGE_SCOPE));
 
             // Open url and get end event.
             authBrowser.LoadUrl(authorizeURL);
             authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
         }
 
+        /// <summary>
+        /// Get authentication code from the call back url. Close browser window once done.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         private async void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             // Find the final call back url with code.
-            if (!e.Url.Contains(Forge_Code_Pattern))
+            if (!e.Url.Contains(User.Forge_Code_Pattern))
             {
                 return;
             }
@@ -74,12 +83,12 @@ namespace BIM360FileTransfer.ViewModels
                 authBrowser.FrameLoadEnd -= BrowserFrameLoadEnd;
 
                 // Get the token.
-                FORGE_CODE = e.Url.Substring(e.Url.IndexOf(Forge_Code_Pattern) + Forge_Code_Pattern.Length);
-                if (FORGE_CODE is null)
+                User.FORGE_CODE = e.Url.Substring(e.Url.IndexOf(User.Forge_Code_Pattern) + User.Forge_Code_Pattern.Length);
+                if (User.FORGE_CODE is null)
                 {
-                    throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(FORGE_CODE));
+                    throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(User.FORGE_CODE));
                 }
-                FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
+                User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
 
 
                 // Close the authentication window once done.
@@ -90,16 +99,41 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        /// <summary>
+        /// Get 3 legged token from Forge API.
+        /// </summary>
+        /// <returns>Bearer token</returns>
         private async Task<dynamic> Get3LeggedTokenAsync()
         {
             ThreeLeggedApi oauth = new ThreeLeggedApi();
             dynamic bearer = await oauth.GettokenAsync(
-              FORGE_CLIENT_ID,
-              FORGE_CLIENT_SECRET,
-              FORGE_GRANT_TYPE,
-              FORGE_CODE,
-              FORGE_CALLBACK_URL);
+              User.FORGE_CLIENT_ID,
+              User.FORGE_CLIENT_SECRET,
+              User.FORGE_GRANT_TYPE,
+              User.FORGE_CODE,
+              User.FORGE_CALLBACK_URL);
             return bearer;
+        }
+
+
+        public bool CanOpenAuthPage
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public ICommand OpenAuthCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileBrowseCommand
+        {
+            get;
+            private set;
         }
     }
 }

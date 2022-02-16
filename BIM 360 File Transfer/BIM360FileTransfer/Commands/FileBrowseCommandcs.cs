@@ -8,18 +8,21 @@ using System.Windows.Input;
 
 namespace BIM360FileTransfer.Commands
 {
-    internal class AuthCommand : ICommand
+    internal class FileBrowseCommand : ICommand
     {
+        public FileBrowseViewModel _fileBrowseViewModel;
+        public IList<CategoryViewModel> result;
+
         /// <summary>
-        /// Initializes a new instance of the AuthCommand class.
+        /// Initializes a new instance of the FileBrowseCommand class.
         /// </summary>
         /// <param name="viewModel">Main view model.</param>
-        public AuthCommand(AuthViewModel authViewModel)
+        public FileBrowseCommand(FileBrowseViewModel fileBrowseViewModel)
         {
-            _AuthViewModel = authViewModel;
+            _fileBrowseViewModel = fileBrowseViewModel;
         }
 
-        private AuthViewModel _AuthViewModel;
+        
 
         #region ICommand Members
         public event EventHandler CanExecuteChanged
@@ -30,12 +33,12 @@ namespace BIM360FileTransfer.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _AuthViewModel.CanOpenAuthPage;
+            return true;
         }
 
         public void Execute(object parameter)
         {
-            _AuthViewModel.OpenAuthPage();
+            _fileBrowseViewModel.GetCategoryAsync();
         }
         #endregion
     }
