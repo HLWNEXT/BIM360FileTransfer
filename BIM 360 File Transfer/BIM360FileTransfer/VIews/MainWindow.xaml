@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIM360FileTransfer.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="BIM 360 File Transfer" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -67,7 +67,7 @@
                             CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
                         <local:EnhancedTreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
-                                <TextBlock Text="{Binding Path=Name}"/>
+                                <TextBlock Text="{Binding Path=CategoryName}"/>
                             </HierarchicalDataTemplate>
                         </local:EnhancedTreeView.ItemTemplate>
 
@@ -95,7 +95,7 @@
                             CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
                         <local:EnhancedTreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
-                                <TextBlock Text="{Binding Path=Name}"/>
+                                <TextBlock Text="{Binding Path=CategoryName}"/>
                             </HierarchicalDataTemplate>
                         </local:EnhancedTreeView.ItemTemplate>
 

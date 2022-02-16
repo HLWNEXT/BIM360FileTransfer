@@ -27,12 +27,30 @@ namespace BIM360FileTransfer.Models
         public int Level { get; set; }
 
         public string Id { get; }
-
+        public string ProjectId { get; set; }
         public string Name { get; set; }
 
-        public CategoryModel(string id, string name, string type)
+        //public CategoryModel(string id, string name, string type)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Type = type;
+        //    Subjects = new List<string>();
+        //}
+        public CategoryModel() { }
+
+        public CategoryModel(string name, string type)
+        {
+            Id = "";
+            Name = name;
+            Type = type;
+            Subjects = new List<string>();
+        }
+
+        public CategoryModel(string id, string projectId, string name, string type)
         {
             Id = id;
+            ProjectId = projectId;
             Name = name;
             Type = type;
             Subjects = new List<string>();

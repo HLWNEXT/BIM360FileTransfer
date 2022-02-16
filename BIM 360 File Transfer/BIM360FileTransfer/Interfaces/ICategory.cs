@@ -12,6 +12,7 @@ namespace BIM360FileTransfer.Interfaces
 
         string ParentId { get; set; }
         string Type { get; set; }
+        string ProjectId { get; set; }
         int Level { get; set; }
 
         List<string> Subjects { get; set; }

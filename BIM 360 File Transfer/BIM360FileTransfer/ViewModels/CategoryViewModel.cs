@@ -13,8 +13,10 @@ namespace BIM360FileTransfer.ViewModels
     {
         public ICategory Model { get; set; }
 
-        public string CategoryId => Model.Id;
+        public string CategoryProjectId => Model.ProjectId;
+        public string CategoryName => Model.Name;
         public string CategoryType => Model.Type;
+        public string CategoryId => Model.Id;
 
         private List<CategoryViewModel> children;
         public List<CategoryViewModel> Children
@@ -51,7 +53,7 @@ namespace BIM360FileTransfer.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string Name => Model.Name;
+        
 
 
         public CategoryViewModel Parent { get; set; }

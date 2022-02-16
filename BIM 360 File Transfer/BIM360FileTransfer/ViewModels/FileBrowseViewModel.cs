@@ -24,9 +24,9 @@ namespace BIM360FileTransfer.ViewModels
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
 
-        private IList<CategoryViewModel> categoryTree;
+        private List<CategoryViewModel> categoryTree;
 
-        public IList<CategoryViewModel> CategoryTree
+        public List<CategoryViewModel> CategoryTree
         {
             get { return categoryTree; }
             set
@@ -84,7 +84,7 @@ namespace BIM360FileTransfer.ViewModels
         //    return response.data[0].id;
         //}
 
-        private IList<CategoryViewModel> GetCategoryTree(string hubId)
+        private List<CategoryViewModel> GetCategoryTree(string hubId)
         {
             var categoryTree = new List<CategoryViewModel> { GetProjects(hubId) };
             return categoryTree;
@@ -92,8 +92,8 @@ namespace BIM360FileTransfer.ViewModels
 
         private CategoryViewModel GetProjects(string hubId)
         {
-            var root = new CategoryModel("", "Projects", "root");
-            var rootCategroy = new PublicCategoryCore(root);
+            var root = new CategoryModel("Projects", "root");
+            var rootCategory = new PublicCategoryCore(root);
 
             var projects = new List<CategoryViewModel>();
             ProjectsApi projectsAPIInstance = new ProjectsApi();
@@ -101,27 +101,80 @@ namespace BIM360FileTransfer.ViewModels
             //projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
 
             var response = projectsAPIInstance.GetHubProjects(hubId);
+            rootCategory.Children.Add(new PublicCategoryCore(new CategoryModel()));
 
             foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
             {
                 var type = objInfo.Value.type;
-                var id = objInfo.Value.id;
+                var projectId = objInfo.Value.id;
+                var rootFolderId = objInfo.Value.relationships.rootFolder.data.id;
                 var name = objInfo.Value.attributes.name;
-                //projects.Add(new CategoryViewModel(Base64Encode((string)objInfo.Value.objectId),objInfo.Value.objectKey, "project", false));
-                var entity = new CategoryModel(id, name, type);
+
+                var entity = new CategoryModel(rootFolderId, projectId, name, type);
                 var thisCategory = new PublicCategoryCore(entity);
-                thisCategory.Parent = rootCategroy;
-                GetChildrenCategory(hubId, id, thisCategory);
+                thisCategory.Parent = rootCategory;
+                GetChildrenCategory(hubId, thisCategory);
                 projects.Add(thisCategory);
-                rootCategroy.Children.Add(thisCategory);
+                rootCategory.Children.Add(thisCategory);
             }
 
             
-            return rootCategroy;
+            return rootCategory;
         }
 
-        private void GetChildrenCategory(string hubId, string projectId, CategoryViewModel rootCategroy)
+        private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
         {
+            rootCategory.Children.Add(new PublicCategoryCore(new CategoryModel()));
+            if (rootCategory.CategoryType == "projects")
+            {
+                var apiInstance = new FoldersApi();
+                var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+                {
+                    var type = objInfo.Value.type;
+                    var folderId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.name;
+
+                    if (name == "Plans" || name == "Project Files")
+                    {
+                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        thisCategory.Parent = rootCategory;
+                        GetChildrenCategory(hubId, thisCategory);
+                        rootCategory.Children.Add(thisCategory);
+                    }
+                }
+            }
+            else if (rootCategory.CategoryType == "folders")
+            {
+                if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+                {
+                    return;
+                }
+                var apiInstance = new FoldersApi();
+                var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+                {
+                    var type = objInfo.Value.type;
+
+                    if (type == "items")
+                    {
+
+                    }
+                    else 
+                    {
+                        var folderId = objInfo.Value.id;
+                        var name = objInfo.Value.attributes.name;
+
+                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        thisCategory.Parent = rootCategory;
+                        GetChildrenCategory(hubId, thisCategory);
+                        rootCategory.Children.Add(thisCategory);
+                    }
+                    
+                }
+            }
             //var directory = new DirectoryInfo(path);
             //var subDirectories = directory.GetDirectories();
             //if (subDirectories.Length == 0)
@@ -146,7 +199,7 @@ namespace BIM360FileTransfer.ViewModels
             //    {
             //        familyItems.ForEach(x => items.Add(x));
 
-            //        rootCategroy.Model.Subjects = familyItems.Select(x => x.DisplayName).ToList();
+            //        rootCategory.Model.Subjects = familyItems.Select(x => x.DisplayName).ToList();
             //    }
 
             //}
@@ -157,19 +210,19 @@ namespace BIM360FileTransfer.ViewModels
             //        var name = item.Name.Split('-').Last();
             //        var entity = new CategoryModel(name);
             //        var thisCategory = new PublicCategoryCore(entity);
-            //        thisCategory.Parent = rootCategroy;
+            //        thisCategory.Parent = rootCategory;
             //        GetChildrenCategory(item.FullName, thisCategory);
-            //        rootCategroy.Children.Add(thisCategory);
+            //        rootCategory.Children.Add(thisCategory);
             //    }
-            //    rootCategroy.Children.ForEach(x => rootCategroy.Model.Subjects.AddRange(x.Model.Subjects));
+            //    rootCategory.Children.ForEach(x => rootCategory.Model.Subjects.AddRange(x.Model.Subjects));
             //}
 
-            var entity = new CategoryModel("", "Project1", "project");
-            var thisCategory = new PublicCategoryCore(entity);
-            thisCategory.Parent = rootCategroy;
-            var a = rootCategroy.Children;
-            rootCategroy.Children.Add(thisCategory);
-            //rootCategroy.Children.ForEach(x => rootCategroy.Model.Subjects.AddRange(x.Model.Subjects));
+            //var entity = new CategoryModel("", "Project1", "project");
+            //var thisCategory = new PublicCategoryCore(entity);
+            //thisCategory.Parent = rootCategory;
+            //var a = rootCategory.Children;
+            //rootCategory.Children.Add(thisCategory);
+            //rootCategory.Children.ForEach(x => rootCategory.Model.Subjects.AddRange(x.Model.Subjects));
         }
 
 
