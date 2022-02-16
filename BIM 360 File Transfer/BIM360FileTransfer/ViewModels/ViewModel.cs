@@ -24,6 +24,8 @@ namespace BIM360FileTransfer.ViewModels
     {
         //ObservableCollection<object> _children;
         //public ObservableCollection<object> Children { get { return _children; } }
+        public AuthViewModel AuthViewModel { get; private set; }
+        public FileBrowseViewModel FileBrowseViewModel { get; private set; }
 
         //private List<CategoryViewModel> categoryTree;
         //public List<CategoryViewModel> CategoryTree
@@ -38,34 +40,19 @@ namespace BIM360FileTransfer.ViewModels
 
         public ViewModel()
         {
+            this.AuthViewModel = new AuthViewModel();
+            this.FileBrowseViewModel = new FileBrowseViewModel();
+
             //_children = new ObservableCollection<object>();
             //_children.Add(new AuthCommand(this));
             //_children.Add(new FileBrowseCommand(this));
 
 
-            OpenAuthCommand = new AuthCommand(this);
-            FileBrowseCommand = new FileBrowseCommand(this);
+            //OpenAuthCommand = new AuthCommand(this);
+            //FileBrowseCommand = new FileBrowseCommand(this);
         }
 
 
-        public bool CanOpenAuthPage
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public ICommand OpenAuthCommand
-        {
-            get;
-            private set;
-        }
-
-        public ICommand FileBrowseCommand
-        {
-            get;
-            private set;
-        }
+        
     }
 }

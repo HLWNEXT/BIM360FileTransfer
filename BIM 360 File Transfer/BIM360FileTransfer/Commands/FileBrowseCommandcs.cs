@@ -34,7 +34,7 @@ namespace BIM360FileTransfer.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _ViewModel.CanOpenAuthPage;
+            return true;
         }
 
         public void Execute(object parameter)

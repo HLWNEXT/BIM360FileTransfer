@@ -32,7 +32,7 @@
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" >
                         <Button Command="{Binding FileBrowseCommand}" Margin="5">Load</Button>
-                        <Button Command="{Binding OpenAuthCommand}" Margin="5">Authenticate</Button>
+                        <Button Command="{Binding AuthViewModel.OpenAuthCommand}" Margin="5">Authenticate</Button>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>

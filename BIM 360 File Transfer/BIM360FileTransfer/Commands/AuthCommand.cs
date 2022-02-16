@@ -14,12 +14,12 @@ namespace BIM360FileTransfer.Commands
         /// Initializes a new instance of the AuthCommand class.
         /// </summary>
         /// <param name="viewModel">Main view model.</param>
-        public AuthCommand(ViewModel viewModel)
+        public AuthCommand(AuthViewModel authViewModel)
         {
-            _ViewModel = viewModel;
+            _AuthViewModel = authViewModel;
         }
 
-        private ViewModel _ViewModel;
+        private AuthViewModel _AuthViewModel;
 
         #region ICommand Members
         public event EventHandler CanExecuteChanged
@@ -30,13 +30,12 @@ namespace BIM360FileTransfer.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _ViewModel.CanOpenAuthPage;
+            return _AuthViewModel.CanOpenAuthPage;
         }
 
         public void Execute(object parameter)
         {
-            AuthViewModel authViewModel = new AuthViewModel();
-            authViewModel.OpenAuthPage();
+            _AuthViewModel.OpenAuthPage();
         }
         #endregion
     }

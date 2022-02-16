@@ -1,12 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
+using System.Collections.ObjectModel;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
 using BIM360FileTransfer.VIews;
 using BIM360FileTransfer.Models;
+using BIM360FileTransfer.Commands;
+using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -16,10 +26,21 @@ namespace BIM360FileTransfer.ViewModels
         public OAuthWindow oAuthWindow;
 
 
-        /// <summary>
-        /// Open an authentication window using Chromium browser.
-        /// </summary>
-        public void OpenAuthPage()
+        public AuthViewModel()
+        {
+            OpenAuthCommand = new AuthCommand(this);
+        }
+
+    public void myFirstCommand(string par)
+    {
+        Console.Beep();
+    }
+
+
+    /// <summary>
+    /// Open an authentication window using Chromium browser.
+    /// </summary>
+    public void OpenAuthPage()
         {
             // Set up the Chromium cache. 
             var settings = new CefSettings();
@@ -92,6 +113,27 @@ namespace BIM360FileTransfer.ViewModels
               User.FORGE_CODE,
               User.FORGE_CALLBACK_URL);
             return bearer;
+        }
+
+
+        public bool CanOpenAuthPage
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public ICommand OpenAuthCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileBrowseCommand
+        {
+            get;
+            private set;
         }
     }
 }
