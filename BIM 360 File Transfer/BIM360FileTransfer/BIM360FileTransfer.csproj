@@ -18,6 +18,7 @@
     <PackageReference Include="CefSharp.Wpf" Version="97.1.61" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="MultiSelectTreeView" Version="1.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

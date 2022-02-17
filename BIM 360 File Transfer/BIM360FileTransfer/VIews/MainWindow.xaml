@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIM360FileTransfer.Views"
+        xmlns:vm="clr-namespace:BIM360FileTransfer.ViewModels"
+        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView" 
         mc:Ignorable="d"
         Title="BIM 360 File Transfer" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
@@ -51,29 +53,44 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" x:Name="Source" Margin="16">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
+            <DockPanel Margin="16">
 
-                    <local:EnhancedTreeView
-                        Grid.Row="1"
+                <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
+
+                <!--<local:EnhancedTreeView
                             x:Name="SourceCategoryTree"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
                             CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
-                        <local:EnhancedTreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
-                                <TextBlock Text="{Binding Path=CategoryName}"/>
-                            </HierarchicalDataTemplate>
-                        </local:EnhancedTreeView.ItemTemplate>
-                    </local:EnhancedTreeView>
-                </Grid>
-                
-            </Border>
+                    <local:EnhancedTreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
+                            <TextBlock Text="{Binding Path=CategoryName}"/>
+                        </HierarchicalDataTemplate>
+                    </local:EnhancedTreeView.ItemTemplate>
+                </local:EnhancedTreeView>-->
+                <Controls:MultiSelectTreeView
+                    x:Name="SourceCategoryTree"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
+                    PreviewSelectionChanged="TheTreeView_PreviewSelectionChanged">
+                    <Controls:MultiSelectTreeView.Resources>
+                        <!--<HierarchicalDataTemplate DataType="{x:Type vm:CategoryViewModel}" ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>
+                                <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>-->
+                    </Controls:MultiSelectTreeView.Resources>
+                    <Controls:MultiSelectTreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>
+                                <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </Controls:MultiSelectTreeView.ItemTemplate>
+                </Controls:MultiSelectTreeView>
+            </DockPanel>
 
             <Button Command="{Binding UpdateCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">></Button>
 
