@@ -18,15 +18,17 @@ using BIM360FileTransfer.Models;
 using BIM360FileTransfer.Commands;
 using BIM360FileTransfer.Interfaces;
 using Autodesk.Forge.Model;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace BIM360FileTransfer.ViewModels
 {
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
 
-        private List<CategoryViewModel> categoryTree;
+        private IList<CategoryViewModel> categoryTree;
 
-        public List<CategoryViewModel> CategoryTree
+        public IList<CategoryViewModel> CategoryTree
         {
             get { return categoryTree; }
             set
@@ -48,7 +50,16 @@ namespace BIM360FileTransfer.ViewModels
         {
             var hubId = GetHub();
             CategoryTree = GetCategoryTree(hubId);
+            SaveCategory(CategoryTree);
+        }
 
+        private void SaveCategory(IList<CategoryViewModel> categoryTree)
+        {
+            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, categoryTree);
+            }
         }
 
         /// <summary>
@@ -84,7 +95,7 @@ namespace BIM360FileTransfer.ViewModels
         //    return response.data[0].id;
         //}
 
-        private List<CategoryViewModel> GetCategoryTree(string hubId)
+        private IList<CategoryViewModel> GetCategoryTree(string hubId)
         {
             var categoryTree = new List<CategoryViewModel> { GetProjects(hubId) };
             return categoryTree;
@@ -95,7 +106,6 @@ namespace BIM360FileTransfer.ViewModels
             var root = new CategoryModel("Projects", "root");
             var rootCategory = new PublicCategoryCore(root);
 
-            var projects = new List<CategoryViewModel>();
             ProjectsApi projectsAPIInstance = new ProjectsApi();
             projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
             //projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
@@ -114,7 +124,6 @@ namespace BIM360FileTransfer.ViewModels
                 var thisCategory = new PublicCategoryCore(entity);
                 thisCategory.Parent = rootCategory;
                 GetChildrenCategory(hubId, thisCategory);
-                projects.Add(thisCategory);
                 rootCategory.Children.Add(thisCategory);
             }
 
@@ -197,54 +206,6 @@ namespace BIM360FileTransfer.ViewModels
                     
                 }
             }
-            //var directory = new DirectoryInfo(path);
-            //var subDirectories = directory.GetDirectories();
-            //if (subDirectories.Length == 0)
-            //{
-            //    var familyItems = new List<FamilyContentViewModel>();
-            //    var files = directory.GetFiles();
-            //    foreach (var item in files)
-            //    {
-            //        if (item.Extension == ".rfa")
-            //        {
-            //            var family = new FamilyContent();
-            //            family.Name = item.Name.Substring(0, item.Name.Length - 4);
-            //            family.ContentLocalPath = item.FullName;
-            //            var entity = new FamilyContentViewModel(family);
-            //            entity.PlaceFamily += PlaceFamilyReal;
-            //            entity.LoadFamily += LoadFamilyReal;
-            //            familyItems.Add(entity);
-            //            var name = entity.Name;
-            //        }
-            //    }
-            //    if (familyItems.Count != 0)
-            //    {
-            //        familyItems.ForEach(x => items.Add(x));
-
-            //        rootCategory.Model.Subjects = familyItems.Select(x => x.DisplayName).ToList();
-            //    }
-
-            //}
-            //else
-            //{
-            //    foreach (var item in subDirectories)
-            //    {
-            //        var name = item.Name.Split('-').Last();
-            //        var entity = new CategoryModel(name);
-            //        var thisCategory = new PublicCategoryCore(entity);
-            //        thisCategory.Parent = rootCategory;
-            //        GetChildrenCategory(item.FullName, thisCategory);
-            //        rootCategory.Children.Add(thisCategory);
-            //    }
-            //    rootCategory.Children.ForEach(x => rootCategory.Model.Subjects.AddRange(x.Model.Subjects));
-            //}
-
-            //var entity = new CategoryModel("", "Project1", "project");
-            //var thisCategory = new PublicCategoryCore(entity);
-            //thisCategory.Parent = rootCategory;
-            //var a = rootCategory.Children;
-            //rootCategory.Children.Add(thisCategory);
-            //rootCategory.Children.ForEach(x => rootCategory.Model.Subjects.AddRange(x.Model.Subjects));
         }
 
 
