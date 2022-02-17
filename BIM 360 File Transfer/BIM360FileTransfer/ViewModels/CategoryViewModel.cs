@@ -29,7 +29,7 @@ namespace BIM360FileTransfer.ViewModels
                     if (children != null)
                         return children.Select(delegate (CategoryViewModel c)
                         {
-                            c.Parent = this;
+                            //c.Parent = this;
                             c.Level = Level + 1;
                             return c;
                         }).ToList();
@@ -98,14 +98,14 @@ namespace BIM360FileTransfer.ViewModels
         {
             if (IsSelected)
             {
-                if (Parent != null)
-                {
-                    var children = Parent.Children;
-                    if (children != null)
-                        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
-                    Parent.OnSelectionChanged();
-                    OnPropertyChanged("Subjects");
-                }
+                //if (Parent != null)
+                //{
+                //    var children = Parent.Children;
+                //    if (children != null)
+                //        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
+                //    Parent.OnSelectionChanged();
+                //    OnPropertyChanged("Subjects");
+                //}
             }
         }
 

@@ -122,7 +122,7 @@ namespace BIM360FileTransfer.ViewModels
 
                 var entity = new CategoryModel(rootFolderId, projectId, name, type);
                 var thisCategory = new PublicCategoryCore(entity);
-                thisCategory.Parent = rootCategory;
+                //thisCategory.Parent = rootCategory;
                 GetChildrenCategory(hubId, thisCategory);
                 rootCategory.Children.Add(thisCategory);
             }
@@ -149,7 +149,7 @@ namespace BIM360FileTransfer.ViewModels
                     {
                         var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
                         var thisCategory = new PublicCategoryCore(entity);
-                        thisCategory.Parent = rootCategory;
+                        //thisCategory.Parent = rootCategory;
                         GetChildrenCategory(hubId, thisCategory);
                         rootCategory.Children.Add(thisCategory);
                     }
@@ -187,7 +187,7 @@ namespace BIM360FileTransfer.ViewModels
 
                                 var entity = new CategoryModel(storage_object_id, rootCategory.CategoryProjectId, name, new_type);
                                 var thisCategory = new PublicCategoryCore(entity);
-                                thisCategory.Parent = rootCategory;
+                                //thisCategory.Parent = rootCategory;
                                 rootCategory.Children.Add(thisCategory);
                             }
                         }
@@ -199,7 +199,7 @@ namespace BIM360FileTransfer.ViewModels
 
                         var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
                         var thisCategory = new PublicCategoryCore(entity);
-                        thisCategory.Parent = rootCategory;
+                        //thisCategory.Parent = rootCategory;
                         GetChildrenCategory(hubId, thisCategory);
                         rootCategory.Children.Add(thisCategory);
                     }
