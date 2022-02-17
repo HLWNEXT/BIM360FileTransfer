@@ -70,8 +70,6 @@
                                 <TextBlock Text="{Binding Path=CategoryName}"/>
                             </HierarchicalDataTemplate>
                         </local:EnhancedTreeView.ItemTemplate>
-
-                        
                     </local:EnhancedTreeView>
                 </Grid>
                 
