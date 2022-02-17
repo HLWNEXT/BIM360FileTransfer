@@ -34,7 +34,8 @@
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" >
                         <Button Command="{Binding AuthViewModel.OpenAuthCommand}" Margin="5">Authenticate</Button>
-                        <Button Command="{Binding FileBrowseViewModel.FileBrowseCommand}" Margin="5">Load</Button>
+                        <Button Command="{Binding FileBrowseViewModel.FileBrowseCommand}" Margin="5">Load CLOUD</Button>
+                        <Button Command="{Binding FileBrowseViewModel.FileLoadCommand}" Margin="5">Load JSON</Button>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>

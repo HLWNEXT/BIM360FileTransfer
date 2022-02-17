@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace BIM360FileTransfer.Commands
 {
-    internal class FileBrowseCommand : ICommand
+    internal class FileLoadCommand : ICommand
     {
         public FileBrowseViewModel _fileBrowseViewModel;
 
@@ -16,12 +16,12 @@ namespace BIM360FileTransfer.Commands
         /// Initializes a new instance of the FileBrowseCommand class.
         /// </summary>
         /// <param name="viewModel">Main view model.</param>
-        public FileBrowseCommand(FileBrowseViewModel fileBrowseViewModel)
+        public FileLoadCommand(FileBrowseViewModel fileBrowseViewModel)
         {
             _fileBrowseViewModel = fileBrowseViewModel;
         }
 
-        
+
 
         #region ICommand Members
         public event EventHandler CanExecuteChanged
@@ -37,7 +37,7 @@ namespace BIM360FileTransfer.Commands
 
         public void Execute(object parameter)
         {
-            _fileBrowseViewModel.GetCategoryAsync();
+            _fileBrowseViewModel.GetCategoryLocal();
         }
         #endregion
     }

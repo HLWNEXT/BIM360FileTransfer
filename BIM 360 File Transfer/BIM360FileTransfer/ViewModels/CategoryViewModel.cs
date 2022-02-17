@@ -56,7 +56,7 @@ namespace BIM360FileTransfer.ViewModels
         
 
 
-        public CategoryViewModel Parent { get; set; }
+        //public CategoryViewModel Parent { get; set; }
 
 
         protected CategoryViewModel(ICategory category, ICommand command = null)

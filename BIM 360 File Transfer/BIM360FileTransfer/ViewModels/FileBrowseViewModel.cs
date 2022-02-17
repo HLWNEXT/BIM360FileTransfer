@@ -41,11 +41,22 @@ namespace BIM360FileTransfer.ViewModels
         public FileBrowseViewModel()
         {
             FileBrowseCommand = new FileBrowseCommand(this);
+            FileLoadCommand = new FileLoadCommand(this);
         }
 
-        /// <summary>
-        /// Get a list of buckets (id=#) or list of objects (id=bucketKey)
-        /// </summary>
+        internal void GetCategoryLocal()
+        {
+            using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+                serializer.TypeNameHandling = TypeNameHandling.All;
+                serializer.Formatting = Formatting.Indented;
+                CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+            }
+        }
+
         public void GetCategoryAsync()
         {
             var hubId = GetHub();
@@ -58,6 +69,8 @@ namespace BIM360FileTransfer.ViewModels
             using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
+                serializer.TypeNameHandling = TypeNameHandling.All;
+                serializer.NullValueHandling = NullValueHandling.Ignore;
                 serializer.Serialize(file, categoryTree);
             }
         }
@@ -263,5 +276,16 @@ namespace BIM360FileTransfer.ViewModels
             private set;
         }
 
+        public ICommand OpenFileLoadCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileLoadCommand
+        {
+            get;
+            private set;
+        }
     }
 }
