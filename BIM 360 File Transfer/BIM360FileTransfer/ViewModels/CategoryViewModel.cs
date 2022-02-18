@@ -11,6 +11,7 @@ namespace BIM360FileTransfer.ViewModels
 {
     public abstract class CategoryViewModel : SelectableObject, IModelCore<ICategory>
     {
+        #region Data
         public ICategory Model { get; set; }
 
         public string CategoryProjectId => Model.ProjectId;
@@ -53,22 +54,29 @@ namespace BIM360FileTransfer.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
+        private bool isExpanded;
+        private bool isSelected;
+        private bool isVisible = true;
+        private string remarks;
+        #endregion
+
 
 
         //public CategoryViewModel Parent { get; set; }
 
-
+        #region Constructor
         protected CategoryViewModel(ICategory category, ICommand command = null)
         {
             Model = category;
             if (Model is INotifyPropertyChanged model)
                 model.PropertyChanged += Model_PropertyChanged;
-            Children = null;
+            Children = new List<CategoryViewModel>();
             Command = command;
         }
+        #endregion
 
-   
+
 
         public override bool Equals(object obj)
         {
