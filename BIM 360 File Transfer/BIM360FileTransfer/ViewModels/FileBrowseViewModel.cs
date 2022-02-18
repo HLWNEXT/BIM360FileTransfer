@@ -38,8 +38,31 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
-        private IList<CategoryViewModel> targetCategoryTree;
+        private IList<CategoryViewModel> selectedSourceCategoryTree;
 
+        public IList<CategoryViewModel> SelectedSourceCategoryTree
+        {
+            get { return selectedSourceCategoryTree; }
+            set
+            {
+                selectedSourceCategoryTree = value;
+                OnPropertyChanged("SelectedSourceCategoryTree");
+            }
+        }
+
+        private IList<CategoryViewModel> selectedTargetCategoryTree;
+
+        public IList<CategoryViewModel> SelectedTargetCategoryTree
+        {
+            get { return selectedTargetCategoryTree; }
+            set
+            {
+                selectedTargetCategoryTree = value;
+                OnPropertyChanged("SelectedTargetCategoryTree");
+            }
+        }
+
+        private IList<CategoryViewModel> targetCategoryTree;
         public IList<CategoryViewModel> TargetCategoryTree
         {
             get { return targetCategoryTree; }
@@ -52,22 +75,20 @@ namespace BIM360FileTransfer.ViewModels
 
         private ObservableCollection<SourceViewModel> items;
 
-        public ObservableCollection<SourceViewModel> Items
-        {
-            get { return items; }
-            set
-            {
-                items = value;
-                OnPropertyChanged("Items");
-            }
-        }
+        
 
+        #region Constructor
         public FileBrowseViewModel()
         {
+            selectedSourceCategoryTree = new ObservableCollection<CategoryViewModel>();
+            selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
+            FileTransferCommand = new FileTransferCommand(this);
         }
+        #endregion
 
+        #region Public Properties
         //private CategoryViewModel selectedCategory;
 
         //public CategoryViewModel SelectedCategory
@@ -91,6 +112,17 @@ namespace BIM360FileTransfer.ViewModels
 
         //    }
         //}
+
+        public ObservableCollection<SourceViewModel> Items
+        {
+            get { return items; }
+            set
+            {
+                items = value;
+                OnPropertyChanged("Items");
+            }
+        }
+        #endregion
 
         #region Get Category
         internal void GetCategoryLocal()
@@ -249,6 +281,13 @@ namespace BIM360FileTransfer.ViewModels
         }
         #endregion
 
+        #region Transfer File
+        internal void TransferFile()
+        {
+            var a = "";
+        }
+        #endregion
+
         #region ICommand
         public bool CanFileBrowse
         {
@@ -281,6 +320,12 @@ namespace BIM360FileTransfer.ViewModels
         }
 
         public ICommand FileLoadCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileTransferCommand
         {
             get;
             private set;

@@ -60,6 +60,7 @@
                     x:Name="SourceCategoryTree"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
+                    SelectedItems="{Binding Path=FileBrowseViewModel.SelectedSourceCategoryTree,Mode=TwoWay,IsAsync=True}"
                     PreviewSelectionChanged="TheTreeView_PreviewSelectionChanged">
                     <Controls:MultiSelectTreeView.ContextMenu>
                         <ContextMenu>
@@ -94,7 +95,7 @@
                 </Controls:MultiSelectTreeView>
             </DockPanel>
 
-            <Button Command="{Binding UpdateCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">></Button>
+            <Button Command="{Binding FileBrowseViewModel.FileTransferCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">></Button>
 
             <DockPanel Grid.Column="2" Margin="16">
                 <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
@@ -102,7 +103,8 @@
                     x:Name="TargetCategoryTree"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
-                    PreviewSelectionChanged="TheTreeView_PreviewSelectionChanged">
+                    SelectedItems="{Binding Path=FileBrowseViewModel.SelectedTargetCategoryTree,Mode=TwoWay,IsAsync=True}"
+                    PreviewSelectionChanged="TargetTreeView_PreviewSelectionChanged">
                     <Controls:MultiSelectTreeView.ContextMenu>
                         <ContextMenu>
                             <!--<MenuItem Header="Expand" Click="ExpandMenuItem_Click"/>
