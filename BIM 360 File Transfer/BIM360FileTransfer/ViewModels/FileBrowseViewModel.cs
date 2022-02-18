@@ -25,7 +25,7 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
-
+        private readonly List<SourceViewModel> entities;
         private IList<CategoryViewModel> categoryTree;
 
         public IList<CategoryViewModel> CategoryTree
@@ -38,11 +38,47 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        private ObservableCollection<SourceViewModel> items;
+
+        public ObservableCollection<SourceViewModel> Items
+        {
+            get { return items; }
+            set
+            {
+                items = value;
+                OnPropertyChanged("Items");
+            }
+        }
+
         public FileBrowseViewModel()
         {
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
         }
+
+        //private CategoryViewModel selectedCategory;
+
+        //public CategoryViewModel SelectedCategory
+        //{
+        //    get { return selectedCategory; }
+        //    set
+        //    {
+        //        if (!object.Equals(selectedCategory, value))
+        //        {
+        //            selectedCategory = value;
+        //            if (selectedCategory != null && !selectedCategory.IsSelected)
+        //                selectedCategory.IsSelected = true;
+        //            OnPropertyChanged("SelectedCategory");
+        //        }
+        //        Items = new ObservableCollection<SourceViewModel>();
+        //        foreach (var item in entities)
+        //        {
+        //            if (selectedCategory.Model.Subjects.Contains(item.Model.Name))
+        //                Items.Add(item);
+        //        }
+
+        //    }
+        //}
 
         internal void GetCategoryLocal()
         {
@@ -86,9 +122,9 @@ namespace BIM360FileTransfer.ViewModels
             return response.data[0].id;
         }
 
-        private IList<CategoryViewModel> GetCategoryTree(string hubId)
+        private ObservableCollection<CategoryViewModel> GetCategoryTree(string hubId)
         {
-            var categoryTree = new List<CategoryViewModel> { GetProjects(hubId) };
+            var categoryTree = new ObservableCollection<CategoryViewModel> { GetProjects(hubId) };
             return categoryTree;
         }
 
@@ -191,41 +227,6 @@ namespace BIM360FileTransfer.ViewModels
                     
                 }
             }
-        }
-
-
-
-        /// <summary>
-        /// Model data for jsTree used on GetOSSAsync
-        /// </summary>
-        public class TreeNode
-        {
-            public TreeNode(string id, string text, string type, bool children)
-            {
-                this.id = id;
-                this.text = text;
-                this.type = type;
-                this.children = children;
-            }
-
-            public string id { get; set; }
-            public string text { get; set; }
-            public string type { get; set; }
-            public bool children { get; set; }
-        }
-
-        /// <summary>
-        /// Base64 enconde a string
-        /// </summary>
-        public static string Base64Encode(string plainText)
-        {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
-        }
-
-        public static string Base64Decode(string encodedText)
-        {
-            return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(encodedText));
         }
 
         public bool CanFileBrowse

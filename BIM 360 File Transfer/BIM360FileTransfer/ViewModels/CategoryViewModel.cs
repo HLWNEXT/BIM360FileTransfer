@@ -10,7 +10,7 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    public abstract class CategoryViewModel : INotifyPropertyChanged
+    public abstract class CategoryViewModel : BaseViewModel, IViewModel
     {
         #region Data
         public ICategory Model { get; set; }
@@ -76,6 +76,7 @@ namespace BIM360FileTransfer.ViewModels
                 if (value != isSelected)
                 {
                     isSelected = value;
+                    NotifyPropertyChanged("IsSelected");
                     OnPropertyChanged("IsSelected");
                 }
             }
@@ -138,24 +139,7 @@ namespace BIM360FileTransfer.ViewModels
 
         #region INotifyPropertyChanged members
 
-        /// <summary>
-        /// Raised when a property on this object has a new value.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises this object's PropertyChanged event.
-        /// </summary>
-        /// <param name="propertyName">The property that has a new value.</param>
-        protected void OnPropertyChanged(string propertyName)
-        {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        
         #endregion INotifyPropertyChanged members
 
 
