@@ -14,11 +14,11 @@ namespace BIM360FileTransfer.ViewModels
             Model = category;
         }
 
-        protected override List<CategoryViewModel> CreateChildren()
-        {
-            var children = Model.Children;
-            if (children == null) return null;
-            return children.Select(x => new PublicCategoryCore(x)).ToList<CategoryViewModel>();
-        }
+        //protected override List<CategoryViewModel> CreateChildren()
+        //{
+        //    var children = Model.Children;
+        //    if (children == null) return null;
+        //    return children.Select(x => new PublicCategoryCore(x)).ToList<CategoryViewModel>();
+        //}
     }
 }

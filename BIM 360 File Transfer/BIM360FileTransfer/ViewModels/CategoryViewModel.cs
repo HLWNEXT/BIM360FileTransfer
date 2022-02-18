@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -19,31 +20,8 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryType => Model.Type;
         public string CategoryId => Model.Id;
 
-        private List<CategoryViewModel> children;
-        public List<CategoryViewModel> Children
-        {
-            get
-            {
-                if (children == null)
-                {
-                    children = CreateChildren();
-                    if (children != null)
-                        return children.Select(delegate (CategoryViewModel c)
-                        {
-                            //c.Parent = this;
-                            c.Level = Level + 1;
-                            return c;
-                        }).ToList();
-                    return null;
-                }
-                return children;
-            }
-            set
-            {
-                children = value;
-                OnPropertyChanged();
-            }
-        }
+        private readonly ObservableCollection<CategoryViewModel> children;
+        
         private int level;
         public int Level
         {
@@ -71,8 +49,18 @@ namespace BIM360FileTransfer.ViewModels
             Model = category;
             if (Model is INotifyPropertyChanged model)
                 model.PropertyChanged += Model_PropertyChanged;
-            Children = new List<CategoryViewModel>();
+            children = new ObservableCollection<CategoryViewModel>();
             Command = command;
+        }
+        #endregion
+
+        #region Public Properties
+        /// <summary>
+		/// Returns the logical child items of this object.
+		/// </summary>
+		public ObservableCollection<CategoryViewModel> Children
+        {
+            get { return children; }
         }
         #endregion
 
@@ -92,7 +80,7 @@ namespace BIM360FileTransfer.ViewModels
         
 
 
-        protected abstract List<CategoryViewModel> CreateChildren();
+        //protected abstract ObservableCollection<CategoryViewModel> CreateChildren();
 
 
         public ICommand Command { get; }
