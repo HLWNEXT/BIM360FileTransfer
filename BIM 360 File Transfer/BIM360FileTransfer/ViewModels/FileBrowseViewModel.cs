@@ -208,6 +208,7 @@ namespace BIM360FileTransfer.ViewModels
 
                                 var entity = new CategoryModel(storage_object_id, rootCategory.CategoryProjectId, name, new_type);
                                 var thisCategory = new PublicCategoryCore(entity);
+                                thisCategory.IsVisible = false;
                                 //thisCategory.Parent = rootCategory;
                                 rootCategory.Children.Add(thisCategory);
                             }

@@ -90,6 +90,7 @@ namespace BIM360FileTransfer.ViewModels
                 if (value != isVisible)
                 {
                     isVisible = value;
+                    NotifyPropertyChanged("IsSelected");
                     OnPropertyChanged("IsVisible");
                 }
             }

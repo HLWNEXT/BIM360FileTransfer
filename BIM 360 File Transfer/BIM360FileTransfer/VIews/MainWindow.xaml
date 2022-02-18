@@ -76,7 +76,7 @@
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                             <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=TwoWay}"/>
-                            <Setter Property="IsVisible" Value="{Binding IsVisible, Mode=TwoWay}"/>
+                            <!--<Setter Property="IsVisible" Value="{Binding IsVisible, Mode=TwoWay}"/>-->
                             <Setter Property="IsEditable" Value="{Binding IsEditable, Mode=TwoWay}"/>
                             <Setter Property="IsEditing" Value="{Binding IsEditing, Mode=TwoWay}"/>
                             <Setter Property="Remarks" Value="{Binding Remarks, Mode=TwoWay}"/>
