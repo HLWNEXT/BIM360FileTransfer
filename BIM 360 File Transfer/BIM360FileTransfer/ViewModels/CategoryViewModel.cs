@@ -10,7 +10,7 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    public abstract class CategoryViewModel : SelectableObject, IModelCore<ICategory>
+    public abstract class CategoryViewModel : INotifyPropertyChanged
     {
         #region Data
         public ICategory Model { get; set; }
@@ -21,19 +21,11 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryId => Model.Id;
 
         private readonly ObservableCollection<CategoryViewModel> children;
-        
-        private int level;
-        public int Level
-        {
-            get { return level; }
-            set
-            {
-                level = value;
-                OnPropertyChanged();
-            }
-        }
+        //public readonly CategoryViewModel parent;
 
-        private bool isExpanded;
+        private int level;
+        
+
         private bool isSelected;
         private bool isVisible = true;
         private string remarks;
@@ -41,16 +33,15 @@ namespace BIM360FileTransfer.ViewModels
 
 
 
-        //public CategoryViewModel Parent { get; set; }
-
         #region Constructor
         protected CategoryViewModel(ICategory category, ICommand command = null)
         {
             Model = category;
             if (Model is INotifyPropertyChanged model)
                 model.PropertyChanged += Model_PropertyChanged;
+            //this.parent = parent;
             children = new ObservableCollection<CategoryViewModel>();
-            Command = command;
+            //Command = command;
         }
         #endregion
 
@@ -61,6 +52,46 @@ namespace BIM360FileTransfer.ViewModels
 		public ObservableCollection<CategoryViewModel> Children
         {
             get { return children; }
+        }
+
+        public int Level
+        {
+            get { return level; }
+            set
+            {
+                level = value;
+                OnPropertyChanged("Level");
+            }
+        }
+
+        /// <summary>
+		/// Gets/sets whether the TreeViewItem 
+		/// associated with this object is selected.
+		/// </summary>
+		public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    isSelected = value;
+                    OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                if (value != isVisible)
+                {
+                    isVisible = value;
+                    OnPropertyChanged("IsVisible");
+                }
+            }
         }
         #endregion
 
@@ -90,20 +121,42 @@ namespace BIM360FileTransfer.ViewModels
             OnPropertyChanged(e.PropertyName);
         }
 
-        protected override void OnSelectionChanged()
+        //protected override void OnSelectionChanged()
+        //{
+        //    if (IsSelected)
+        //    {
+        //        //if (Parent != null)
+        //        //{
+        //        //    var children = Parent.Children;
+        //        //    if (children != null)
+        //        //        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
+        //        //    Parent.OnSelectionChanged();
+        //        //    OnPropertyChanged("Subjects");
+        //        //}
+        //    }
+        //}
+
+        #region INotifyPropertyChanged members
+
+        /// <summary>
+        /// Raised when a property on this object has a new value.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raises this object's PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The property that has a new value.</param>
+        protected void OnPropertyChanged(string propertyName)
         {
-            if (IsSelected)
+            var handler = PropertyChanged;
+            if (handler != null)
             {
-                //if (Parent != null)
-                //{
-                //    var children = Parent.Children;
-                //    if (children != null)
-                //        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
-                //    Parent.OnSelectionChanged();
-                //    OnPropertyChanged("Subjects");
-                //}
+                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion INotifyPropertyChanged members
 
 
     }
