@@ -7,8 +7,10 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
+    [Serializable]
     public class PublicCategoryCore : CategoryViewModel
     {
+        
         public PublicCategoryCore(ICategory category) : base(category)
         {
             Model = category;

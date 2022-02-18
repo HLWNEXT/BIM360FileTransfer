@@ -20,6 +20,8 @@ using BIM360FileTransfer.Interfaces;
 using Autodesk.Forge.Model;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using BIM360FileTransfer.Utilities;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -135,10 +137,12 @@ namespace BIM360FileTransfer.ViewModels
                 serializer.TypeNameHandling = TypeNameHandling.All;
                 serializer.Formatting = Formatting.Indented;
                 CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+                
+                // Create a deep copy of the source tree to build the target tree.
                 TargetCategoryTree = new List<CategoryViewModel>();
-                foreach(var item in categoryTree)
+                foreach(var tree in CategoryTree)
                 {
-                    TargetCategoryTree.Add((CategoryViewModel)item.Clone());
+                    TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
                 }
             }
         }

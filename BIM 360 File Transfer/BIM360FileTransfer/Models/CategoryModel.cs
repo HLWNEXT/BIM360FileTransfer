@@ -7,6 +7,7 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.Models
 {
+    [Serializable]
     public class CategoryModel : ICategory
     {
         private List<ICategory> children;

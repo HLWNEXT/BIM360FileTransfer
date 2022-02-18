@@ -10,6 +10,7 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
+    [Serializable]
     public abstract class CategoryViewModel : BaseViewModel, IViewModel, ICloneable
     {
         #region Data

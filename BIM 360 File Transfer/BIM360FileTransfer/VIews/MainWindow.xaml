@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIM360FileTransfer.Views"
         xmlns:vm="clr-namespace:BIM360FileTransfer.ViewModels"
-        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView" 
+        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
         mc:Ignorable="d"
         Title="BIM 360 File Transfer" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
@@ -57,7 +57,7 @@
             <DockPanel Margin="16">
                 <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
                 <Controls:MultiSelectTreeView
-                    x:Name="SourceCategoryTree"
+                    Name="SourceCategoryTree"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
                     SelectedItems="{Binding Path=FileBrowseViewModel.SelectedSourceCategoryTree,Mode=TwoWay,IsAsync=True}"
@@ -98,11 +98,11 @@
             <Button Command="{Binding FileBrowseViewModel.FileTransferCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">></Button>
 
             <DockPanel Grid.Column="2" Margin="16">
-                <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
+                <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Target Folder</TextBlock>
                 <Controls:MultiSelectTreeView
-                    x:Name="TargetCategoryTree"
+                    Name="TargetCategoryTree"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
+                    ItemsSource="{Binding Path=FileBrowseViewModel.TargetCategoryTree,Mode=OneWay,IsAsync=True}"
                     SelectedItems="{Binding Path=FileBrowseViewModel.SelectedTargetCategoryTree,Mode=TwoWay,IsAsync=True}"
                     PreviewSelectionChanged="TargetTreeView_PreviewSelectionChanged">
                     <Controls:MultiSelectTreeView.ContextMenu>

@@ -3,6 +3,7 @@ using System.ComponentModel;
 
 namespace BIM360FileTransfer.ViewModels
 {
+    [Serializable]
     public abstract class ObserverableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
