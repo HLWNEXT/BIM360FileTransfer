@@ -38,6 +38,18 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        private IList<CategoryViewModel> targetCategoryTree;
+
+        public IList<CategoryViewModel> TargetCategoryTree
+        {
+            get { return targetCategoryTree; }
+            set
+            {
+                targetCategoryTree = value;
+                OnPropertyChanged("TargetCategoryTree");
+            }
+        }
+
         private ObservableCollection<SourceViewModel> items;
 
         public ObservableCollection<SourceViewModel> Items
@@ -80,6 +92,7 @@ namespace BIM360FileTransfer.ViewModels
         //    }
         //}
 
+        #region Get Category
         internal void GetCategoryLocal()
         {
             using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
@@ -90,6 +103,11 @@ namespace BIM360FileTransfer.ViewModels
                 serializer.TypeNameHandling = TypeNameHandling.All;
                 serializer.Formatting = Formatting.Indented;
                 CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+                TargetCategoryTree = new List<CategoryViewModel>();
+                foreach(var item in categoryTree)
+                {
+                    TargetCategoryTree.Add((CategoryViewModel)item.Clone());
+                }
             }
         }
 
@@ -229,11 +247,17 @@ namespace BIM360FileTransfer.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region ICommand
         public bool CanFileBrowse
         {
             get
             {
+                if (User.FORGE_CODE is null)
+                {
+                    return false;
+                }
                 return true;
             }
         }
@@ -261,5 +285,6 @@ namespace BIM360FileTransfer.ViewModels
             get;
             private set;
         }
+        #endregion
     }
 }

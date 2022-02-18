@@ -10,7 +10,7 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    public abstract class CategoryViewModel : BaseViewModel, IViewModel
+    public abstract class CategoryViewModel : BaseViewModel, IViewModel, ICloneable
     {
         #region Data
         public ICategory Model { get; set; }
@@ -123,6 +123,12 @@ namespace BIM360FileTransfer.ViewModels
             OnPropertyChanged(e.PropertyName);
         }
 
+        public object Clone()
+        {
+            return (CategoryViewModel)base.MemberwiseClone();
+        }
+
+
         //protected override void OnSelectionChanged()
         //{
         //    if (IsSelected)
@@ -140,7 +146,7 @@ namespace BIM360FileTransfer.ViewModels
 
         #region INotifyPropertyChanged members
 
-        
+
         #endregion INotifyPropertyChanged members
 
 
