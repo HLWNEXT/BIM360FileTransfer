@@ -305,6 +305,18 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        public bool CanFileTransfer
+        {
+            get
+            {
+                if (selectedTargetCategoryTree.Count == 0 || selectedSourceCategoryTree.Count == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         public ICommand OpenFileBrowseCommand
         {
             get;
