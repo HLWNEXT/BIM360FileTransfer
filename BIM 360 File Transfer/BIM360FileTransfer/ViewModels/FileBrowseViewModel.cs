@@ -144,14 +144,10 @@ namespace BIM360FileTransfer.ViewModels
 
         private ObservableCollection<CategoryViewModel> GetCategoryTree(string hubId)
         {
-            var categoryTree = new ObservableCollection<CategoryViewModel> { GetProjects(hubId) };
-            return categoryTree;
-        }
+            //var categoryTree = new ObservableCollection<CategoryViewModel> { GetProjects(hubId) };
+            //return categoryTree;
 
-        private CategoryViewModel GetProjects(string hubId)
-        {
-            var root = new CategoryModel("Projects", "root");
-            var rootCategory = new PublicCategoryCore(root);
+            var categoryTree = new ObservableCollection<CategoryViewModel>();
 
             ProjectsApi projectsAPIInstance = new ProjectsApi();
             projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
@@ -168,91 +164,117 @@ namespace BIM360FileTransfer.ViewModels
                 var entity = new CategoryModel(rootFolderId, projectId, name, type);
                 var thisCategory = new PublicCategoryCore(entity);
                 //thisCategory.Parent = rootCategory;
-                GetChildrenCategory(hubId, thisCategory);
-                rootCategory.Children.Add(thisCategory);
+                //GetChildrenCategory(hubId, thisCategory);
+                categoryTree.Add(thisCategory);
             }
-
-            
-            return rootCategory;
+            return categoryTree;
         }
 
-        private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
-        {
+        //private CategoryViewModel GetProjects(string hubId)
+        //{
+        //    var root = new CategoryModel("Projects", "root");
+        //    var rootCategory = new PublicCategoryCore(root);
+
+        //    ProjectsApi projectsAPIInstance = new ProjectsApi();
+        //    projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+
+        //    var response = projectsAPIInstance.GetHubProjects(hubId);
+
+        //    foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+        //    {
+        //        var type = objInfo.Value.type;
+        //        var projectId = objInfo.Value.id;
+        //        var rootFolderId = objInfo.Value.relationships.rootFolder.data.id;
+        //        var name = objInfo.Value.attributes.name;
+
+        //        var entity = new CategoryModel(rootFolderId, projectId, name, type);
+        //        var thisCategory = new PublicCategoryCore(entity);
+        //        //thisCategory.Parent = rootCategory;
+        //        GetChildrenCategory(hubId, thisCategory);
+        //        rootCategory.Children.Add(thisCategory);
+        //    }
+
             
-            if (rootCategory.CategoryType == "projects")
-            {
-                var folderAPIInstance = new FoldersApi();
-                folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-                var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
-                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-                {
-                    var type = objInfo.Value.type;
-                    var folderId = objInfo.Value.id;
-                    var name = objInfo.Value.attributes.name;
+        //    return rootCategory;
+        //}
 
-                    if (name == "Plans" || name == "Project Files")
-                    {
-                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-                        var thisCategory = new PublicCategoryCore(entity);
-                        //thisCategory.Parent = rootCategory;
-                        GetChildrenCategory(hubId, thisCategory);
-                        rootCategory.Children.Add(thisCategory);
-                    }
-                }
-            }
-            else if (rootCategory.CategoryType == "folders")
-            {
-                if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
-                {
-                    return;
-                }
-                var apiInstance = new FoldersApi();
-                var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+        //private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
+        //{
+            
+        //    if (rootCategory.CategoryType == "projects")
+        //    {
+        //        var folderAPIInstance = new FoldersApi();
+        //        folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+        //        var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+        //        foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+        //        {
+        //            var type = objInfo.Value.type;
+        //            var folderId = objInfo.Value.id;
+        //            var name = objInfo.Value.attributes.name;
 
-                bool isItemExist = false;
+        //            if (name == "Plans" || name == "Project Files")
+        //            {
+        //                var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+        //                var thisCategory = new PublicCategoryCore(entity);
+        //                //thisCategory.Parent = rootCategory;
+        //                GetChildrenCategory(hubId, thisCategory);
+        //                rootCategory.Children.Add(thisCategory);
+        //            }
+        //        }
+        //    }
+        //    else if (rootCategory.CategoryType == "folders")
+        //    {
+        //        if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+        //        {
+        //            return;
+        //        }
+        //        var apiInstance = new FoldersApi();
+        //        var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
 
-                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-                {
-                    var type = objInfo.Value.type;
-                    if (type == "items")
-                    {
-                        isItemExist = true;
-                        continue;
-                    }
-                    else 
-                    {
-                        var folderId = objInfo.Value.id;
-                        var name = objInfo.Value.attributes.name;
+        //        bool isItemExist = false;
 
-                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-                        var thisCategory = new PublicCategoryCore(entity);
-                        //thisCategory.Parent = rootCategory;
-                        GetChildrenCategory(hubId, thisCategory);
-                        rootCategory.Children.Add(thisCategory);
-                    }
-                }
-                if (isItemExist)
-                {
-                    foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
-                    {
-                        var new_type = storageObjInfo.Value.type;
-                        if (new_type == "versions")
-                        {
-                            var id = storageObjInfo.Value.relationships.storage.data.id;
-                            var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
-                            var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-                            var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+        //        foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+        //        {
+        //            var type = objInfo.Value.type;
+        //            if (type == "items")
+        //            {
+        //                isItemExist = true;
+        //                continue;
+        //            }
+        //            else 
+        //            {
+        //                var folderId = objInfo.Value.id;
+        //                var name = objInfo.Value.attributes.name;
 
-                            var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-                            var thisCategory = new PublicCategoryCore(entity);
-                            thisCategory.IsVisible = false;
-                            //thisCategory.Parent = rootCategory;
-                            rootCategory.Children.Add(thisCategory);
-                        }
-                    }
-                }
-            }
-        }
+        //                var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+        //                var thisCategory = new PublicCategoryCore(entity);
+        //                //thisCategory.Parent = rootCategory;
+        //                GetChildrenCategory(hubId, thisCategory);
+        //                rootCategory.Children.Add(thisCategory);
+        //            }
+        //        }
+        //        if (isItemExist)
+        //        {
+        //            foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+        //            {
+        //                var new_type = storageObjInfo.Value.type;
+        //                if (new_type == "versions")
+        //                {
+        //                    var id = storageObjInfo.Value.relationships.storage.data.id;
+        //                    var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
+        //                    var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+        //                    var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+        //                    var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+        //                    var thisCategory = new PublicCategoryCore(entity);
+        //                    thisCategory.IsVisible = false;
+        //                    //thisCategory.Parent = rootCategory;
+        //                    rootCategory.Children.Add(thisCategory);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Transfer File
