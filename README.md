@@ -1,7 +1,6 @@
 # BIM 360 File Transfer Tool
 A desktop program helps you copy files to different projects on BIM 360.
 All functions are done. You can find the code in the master branch. 
-------------------------------------------------------------------------------------------
 
 # Test Instruction
 
