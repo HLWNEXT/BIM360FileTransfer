@@ -31,6 +31,7 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> selectedSourceCategoryTree;
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
+        private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
 
 
         #region Constructor
@@ -265,6 +266,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             foreach(var item in selectedSourceCategoryTree)
             {
+                if (item.CategoryType != "versions") continue;
                 var objectAPIInstance = new ObjectsApi();
                 objectAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                 var bucketKey = item.CategoryBucketId;  // string | URL-encoded bucket key
@@ -273,17 +275,19 @@ namespace BIM360FileTransfer.ViewModels
                 try
                 {
                     Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
-                    var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
-                    DirectoryInfo info = new DirectoryInfo(filePath);
-                    if (!info.Exists)
-                    {
-                        info.Create();
-                    }
-                    string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
-                    using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
-                    {
-                        result.CopyTo(outputFileStream);
-                    }
+                    FileInfoStreamMap[item] = result;
+
+                    //var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
+                    //DirectoryInfo info = new DirectoryInfo(filePath);
+                    //if (!info.Exists)
+                    //{
+                    //    info.Create();
+                    //}
+                    //string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
+                    //using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
+                    //{
+                    //    result.CopyTo(outputFileStream);
+                    //}
                 }
                 catch (Exception e)
                 {
@@ -297,38 +301,59 @@ namespace BIM360FileTransfer.ViewModels
             foreach (var item in selectedTargetCategoryTree)
             {
                 var projectsAPIInstance = new ProjectsApi();
+                var folderId = item.CategoryId;
                 var projectId = item.CategoryProjectId;  // string | the `project id`
-                var createStorageBody = new CreateStorage(); // CreateStorage | describe the file the storage is created for
-
+                
                 try
                 {
-                    StorageCreated storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
-                    var target_storage_object_id = storageCreateResult.Data.Id;
-                    var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
-                    var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-                        
-
-                    var objectsAPIInstance = new ObjectsApi();
-                    var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
-                    var objectName = target_object_id;  // string | URL-encoded object name
-                    var contentLength = 56;  // int? | Indicates the size of the request body.
-                    var body = "/ path / to / file.txt";  // System.IO.Stream | 
-                    // TODO: Make body as stream and enable upload.
-                  
-                    try
+                    foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
-                       // ObjectDetails result = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, body);
+                        var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                        var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("","",new JsonApiLink("")));
+                        var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+                        var relationships = new CreateStorageDataRelationships(target);
+                        var data = new CreateStorageData(new CreateStorageData.TypeEnum(),attributes, relationships);
+                        var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
+                        //createStorageBody.Data.Attributes.Name = fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' '));
+                        //createStorageBody.Data.Relationships.Target.Data.Id = folderId;
 
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Exception when calling ObjectApi.GetObject: " + e.Message);
-                    }
+                        var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
+                        var target_storage_object_id = storageCreateResult.data.id;
+                        var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
+                        var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
 
+                        var objectsAPIInstance = new ObjectsApi();
+                        var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
+                        var objectName = target_object_id;  // string | URL-encoded object name
+                        var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
+                        var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
+
+                        try
+                        {
+                            var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
+                            
+                            var itemsAPIInstance = new ItemsApi();
+                            var postItemBody = new CreateItem(); // CreateItem | describe the item to be created
+
+                            try
+                            {
+                                var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Exception when calling ProjectsApi.GetObject: " + e.Message);
+                    throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
             }
         }

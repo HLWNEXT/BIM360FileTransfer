@@ -115,9 +115,6 @@ namespace BIM360FileTransfer.ViewModels
         
 
 
-        //protected abstract ObservableCollection<CategoryViewModel> CreateChildren();
-
-
         public ICommand Command { get; }
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -131,20 +128,6 @@ namespace BIM360FileTransfer.ViewModels
         }
 
 
-        //protected override void OnSelectionChanged()
-        //{
-        //    if (IsSelected)
-        //    {
-        //        //if (Parent != null)
-        //        //{
-        //        //    var children = Parent.Children;
-        //        //    if (children != null)
-        //        //        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
-        //        //    Parent.OnSelectionChanged();
-        //        //    OnPropertyChanged("Subjects");
-        //        //}
-        //    }
-        //}
 
         #region INotifyPropertyChanged members
 
