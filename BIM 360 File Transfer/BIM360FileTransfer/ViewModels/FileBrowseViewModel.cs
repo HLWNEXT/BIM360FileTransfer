@@ -151,6 +151,11 @@ namespace BIM360FileTransfer.ViewModels
         {
             var hubId = GetHub();
             CategoryTree = GetCategoryTree(hubId);
+            TargetCategoryTree = new List<CategoryViewModel>();
+            foreach (var tree in CategoryTree)
+            {
+                TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+            }
             SaveCategory(CategoryTree);
         }
 
@@ -242,6 +247,8 @@ namespace BIM360FileTransfer.ViewModels
                 var apiInstance = new FoldersApi();
                 var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
 
+                bool isItemExist = false;
+
 
                 foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
                 {
@@ -249,24 +256,26 @@ namespace BIM360FileTransfer.ViewModels
 
                     if (type == "items")
                     {
-                        foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
-                        {
-                            var new_type = storageObjInfo.Value.type;
+                        //foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+                        //{
+                        //    var new_type = storageObjInfo.Value.type;
 
-                            if (new_type == "versions")
-                            {
-                                var id = storageObjInfo.Value.relationships.storage.data.id;
-                                var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);// id.Split("/")[-1];
-                                var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-                                var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+                        //    if (new_type == "versions")
+                        //    {
+                        //        var id = storageObjInfo.Value.relationships.storage.data.id;
+                        //        var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);// id.Split("/")[-1];
+                        //        var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                        //        var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
 
-                                var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-                                var thisCategory = new PublicCategoryCore(entity);
-                                thisCategory.IsVisible = false;
-                                //thisCategory.Parent = rootCategory;
-                                rootCategory.Children.Add(thisCategory);
-                            }
-                        }
+                        //        var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+                        //        var thisCategory = new PublicCategoryCore(entity);
+                        //        thisCategory.IsVisible = false;
+                        //        //thisCategory.Parent = rootCategory;
+                        //        rootCategory.Children.Add(thisCategory);
+                        //    }
+                        //}
+                        isItemExist = true;
+                        continue;
                     }
                     else 
                     {
@@ -279,7 +288,27 @@ namespace BIM360FileTransfer.ViewModels
                         GetChildrenCategory(hubId, thisCategory);
                         rootCategory.Children.Add(thisCategory);
                     }
-                    
+                }
+                if (isItemExist)
+                {
+                    foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+                    {
+                        var new_type = storageObjInfo.Value.type;
+
+                        if (new_type == "versions")
+                        {
+                            var id = storageObjInfo.Value.relationships.storage.data.id;
+                            var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);// id.Split("/")[-1];
+                            var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                            var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+                            var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+                            var thisCategory = new PublicCategoryCore(entity);
+                            thisCategory.IsVisible = false;
+                            //thisCategory.Parent = rootCategory;
+                            rootCategory.Children.Add(thisCategory);
+                        }
+                    }
                 }
             }
         }
