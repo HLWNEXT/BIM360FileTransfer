@@ -1,6 +1,7 @@
 # BIM 360 File Transfer Tool
 A desktop program helps you copy files to different projects on BIM 360.
 All functions are done. You can find the code in the master branch. 
+------------------------------------------------------------------------------------------
 
 # Test Instruction
 
@@ -19,30 +20,30 @@ All functions are done. You can find the code in the master branch.
 
 # Working Functions
 
--Click Authentication button to open the new browser page.
+- Click Authentication button to open the new browser page.
 
--Use your hlw email to login.
+- Use your hlw email to login.
 
--Allow all access request. Once it's done, the browser will automatically close and the Load CLOUD button will turn purple.
+- Allow all access request. Once it's done, the browser will automatically close and the Load CLOUD button will turn purple.
 
--Click Load CLOUD button to pull the BIM 360 library online. It will save a json copy in :/BIM 360 File Transfer/BIM360FileTransfer/Resources
+- Click Load CLOUD button to pull the BIM 360 library online. It will save a json copy in :/BIM 360 File Transfer/BIM360FileTransfer/Resources
 
--You can restart the app and try Load JSON button.
+- You can restart the app and try Load JSON button.
 
--Select files in the left source panel.
+- Select files in the left source panel.
 
--Select target folder in the right target panel. You should be able to select multiple target folders using check box or hold Ctrl key.
+- Select target folder in the right target panel. You should be able to select multiple target folders using check box or hold Ctrl key.
 
--Click the > Button to fire the transfer process.
+- Click the > Button to fire the transfer process.
 
--Check your BIM 360 page to see the result.
+- Check your BIM 360 page to see the result.
 
 # Known Issues
 
--Load CLOUD might encounter request limit.
+- Load CLOUD might encounter request limit.
 
--You can only click empty space or check box to deselect the files and folders.
+- You can only click empty space or check box to deselect the files and folders.
 
--Transfer result doesn't show properly inside the program.
+- Transfer result doesn't show properly inside the program.
 
--Missing icons to distinguish the folder with files. Now all green.
+- Missing icons to distinguish the folder with files. Now all green.
