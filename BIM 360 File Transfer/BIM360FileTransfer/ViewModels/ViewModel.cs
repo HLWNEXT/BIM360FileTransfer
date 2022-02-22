@@ -18,7 +18,6 @@ namespace BIM360FileTransfer.ViewModels
     {
         public AuthViewModel AuthViewModel { get; private set; }
         public FileBrowseViewModel FileBrowseViewModel { get; private set; }
-        public FileTransferViewModel FileTransferViewModel { get; private set; }
 
 
         public ViewModel()

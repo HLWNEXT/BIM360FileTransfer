@@ -41,7 +41,6 @@ namespace BIM360FileTransfer.ViewModels
             selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
-            FileTransferCommand = new FileTransferCommand(this);
         }
         #endregion
 
@@ -329,10 +328,29 @@ namespace BIM360FileTransfer.ViewModels
             return createStorageBody;
         }
 
+        private CreateItem CreateItemBody(string folderId, string target_storage_object_id, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
+        {
+            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+            var createItemDataAttributes = new CreateItemDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("items:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+            var tip = new CreateItemDataRelationshipsTip(new CreateItemDataRelationshipsTipData(new CreateItemDataRelationshipsTipData.TypeEnum(), new CreateItemDataRelationshipsTipData.IdEnum()));
+            var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+            var createItemDataRelationships = new CreateItemDataRelationships(tip, target);
+            var data = new CreateItemData(new CreateItemData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+
+            var createStorageDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+            var createStorageDataRelationships = new CreateItemRelationships(new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id)));
+            var included = new List<CreateItemIncluded>() { new CreateItemIncluded(new CreateItemIncluded.TypeEnum(), new CreateItemIncluded.IdEnum(), createStorageDataAttributes, createStorageDataRelationships) };
+
+            var postItemBody = new CreateItem(jsonapi, data, included); // CreateItem | describe the item to be created
+            return postItemBody;
+        }
+
         internal void UploadFile()
         {
             foreach (var item in selectedTargetCategoryTree)
             {
+                if (item.CategoryType == "projects") continue;
+
                 var projectsAPIInstance = new ProjectsApi();
                 var folderId = item.CategoryId;
                 var projectId = item.CategoryProjectId;  // string | the `project id`
@@ -341,21 +359,25 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
-                        //var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
-                        //var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("","",new JsonApiLink("")));
-                        //var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
-                        //var relationships = new CreateStorageDataRelationships(target);
-                        //var data = new CreateStorageData(new CreateStorageData.TypeEnum(),attributes, relationships);
-                        //var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
+                        bool isExisted = false;
+                        string itemId = "";
+                        foreach (var child in item.Children)
+                        {
+                            if (child.CategoryType == "items" && fileInfoStreamMap.Key.CategoryName.Contains(child.CategoryName))
+                            {
+                                isExisted = true;
+                                itemId = child.CategoryId;
+                                break;
+                            }
+                        }
                         var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
-
-
                         var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
                         var target_storage_object_id = storageCreateResult.data.id;
                         var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
                         var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
 
                         var objectsAPIInstance = new ObjectsApi();
+                        objectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                         var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
                         var objectName = target_object_id;  // string | URL-encoded object name
                         var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
@@ -364,24 +386,18 @@ namespace BIM360FileTransfer.ViewModels
                         try
                         {
                             var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                        }
+
+                        if (!isExisted)
+                        {
                             
                             var itemsAPIInstance = new ItemsApi();
-
-                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
-
-                            var createItemDataAttributes = new CreateItemDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("items:autodesk.bim360:File", "1.0", new JsonApiLink("")));
-                            var tip = new CreateItemDataRelationshipsTip(new CreateItemDataRelationshipsTipData(new CreateItemDataRelationshipsTipData.TypeEnum(), new CreateItemDataRelationshipsTipData.IdEnum()));
-                            var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
-                            var createItemDataRelationships = new CreateItemDataRelationships(tip, target);
-                            var data = new CreateItemData(new CreateItemData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
-
-                            var createStorageDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
-
-
-                            var createStorageDataRelationships = new CreateItemRelationships(new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id)));
-                            var included = new List<CreateItemIncluded>() { new CreateItemIncluded(new CreateItemIncluded.TypeEnum(), new CreateItemIncluded.IdEnum(), createStorageDataAttributes, createStorageDataRelationships) };
-
-                            var postItemBody = new CreateItem(jsonapi, data, included); // CreateItem | describe the item to be created
+                            itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                            var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
 
                             using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
                             {
@@ -398,12 +414,32 @@ namespace BIM360FileTransfer.ViewModels
                             {
                                 throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
                             }
-
                         }
-                        catch (Exception e)
+                        else
                         {
-                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                            var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+
+                            var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
+                            var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
+                            var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
+
+
+                            var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+
+                            var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
+
+                            try
+                            {
+                                var result = projectsAPIInstance.PostVersion(projectId, createVersionBody);
+
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
+                            }
                         }
+                        
                     }
                 }
                 catch (Exception e)
@@ -417,6 +453,18 @@ namespace BIM360FileTransfer.ViewModels
 
         #region ICommand
         public bool CanFileBrowse
+        {
+            get
+            {
+                if (User.FORGE_CODE is null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool CanFileLoad
         {
             get
             {

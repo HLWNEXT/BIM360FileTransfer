@@ -32,6 +32,7 @@ namespace BIM360FileTransfer.ViewModels
 
         private bool isSelected;
         private bool isVisible = true;
+        private bool isVisibleInSource = true;
         private string remarks;
         #endregion
 
@@ -104,6 +105,20 @@ namespace BIM360FileTransfer.ViewModels
                 }
             }
         }
+
+        public bool IsVisibleInSource
+        {
+            get { return isVisibleInSource; }
+            set
+            {
+                if (value != isVisibleInSource)
+                {
+                    isVisibleInSource = value;
+                    NotifyPropertyChanged("IsVisibleInSource");
+                    OnPropertyChanged("IsVisibleInSource");
+                }
+            }
+        }
         #endregion
 
         #region Get Children
@@ -147,6 +162,13 @@ namespace BIM360FileTransfer.ViewModels
                 if (type == "items")
                 {
                     isItemExist = true;
+                    var itemId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.displayName;
+
+                    var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.isVisibleInSource = false;
+                    rootCategory.Children.Add(thisCategory);
                     continue;
                 }
                 else
