@@ -350,6 +350,8 @@ namespace BIM360FileTransfer.ViewModels
         {
             foreach (var item in selectedTargetCategoryTree)
             {
+                if (item.CategoryType == "projects") continue;
+
                 var projectsAPIInstance = new ProjectsApi();
                 var folderId = item.CategoryId;
                 var projectId = item.CategoryProjectId;  // string | the `project id`
@@ -359,73 +361,84 @@ namespace BIM360FileTransfer.ViewModels
                     foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
                         bool isExisted = false;
+                        string itemId = "";
                         foreach (var child in item.Children)
                         {
-                            if (child.CategoryName == fileInfoStreamMap.Key.CategoryName)
+                            if (child.CategoryType == "items" && fileInfoStreamMap.Key.CategoryName.Contains(child.CategoryName))
                             {
                                 isExisted = true;
+                                itemId = child.CategoryId;
                                 break;
                             }
+                        }
+                        var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
+                        var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
+                        var target_storage_object_id = storageCreateResult.data.id;
+                        var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
+                        var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+
+                        var objectsAPIInstance = new ObjectsApi();
+                        objectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                        var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
+                        var objectName = target_object_id;  // string | URL-encoded object name
+                        var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
+                        var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
+
+                        try
+                        {
+                            var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
                         }
 
                         if (!isExisted)
                         {
-                            var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
-                            var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
-                            var target_storage_object_id = storageCreateResult.data.id;
-                            var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
-                            var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                            
+                            var itemsAPIInstance = new ItemsApi();
+                            itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                            var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
 
-                            var objectsAPIInstance = new ObjectsApi();
-                            objectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-                            var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
-                            var objectName = target_object_id;  // string | URL-encoded object name
-                            var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
-                            var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
+                            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
+                            {
+                                JsonSerializer serializer = new JsonSerializer();
+                                serializer.TypeNameHandling = TypeNameHandling.None;
+                                serializer.Serialize(file, postItemBody);
+                            }
 
                             try
                             {
-                                var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
-
-                                var itemsAPIInstance = new ItemsApi();
-                                itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-                                var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
-
-                                using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
-                                {
-                                    JsonSerializer serializer = new JsonSerializer();
-                                    serializer.TypeNameHandling = TypeNameHandling.None;
-                                    serializer.Serialize(file, postItemBody);
-                                }
-
-                                try
-                                {
-                                    var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
-                                }
-                                catch (Exception e)
-                                {
-                                    throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
-                                }
+                                var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
                             }
                             catch (Exception e)
                             {
-                                throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                                throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
                             }
                         }
                         else
                         {
-                            //var apiInstance = new ProjectsApi();
-                            //var body = new CreateVersion(); // CreateVersion | describe the version to be created
+                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                            var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
 
-                            //try
-                            //{
-                            //    var result = apiInstance.PostVersion(projectId, body);
-                            //    Debug.WriteLine(result);
-                            //}
-                            //catch (Exception e)
-                            //{
-                            //    Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
-                            //}
+                            var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
+                            var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
+                            var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
+
+
+                            var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+
+                            var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
+
+                            try
+                            {
+                                var result = projectsAPIInstance.PostVersion(projectId, createVersionBody);
+
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
+                            }
                         }
                         
                     }
