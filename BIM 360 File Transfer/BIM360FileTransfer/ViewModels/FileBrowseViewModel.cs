@@ -41,7 +41,6 @@ namespace BIM360FileTransfer.ViewModels
             selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
-            FileTransferCommand = new FileTransferCommand(this);
         }
         #endregion
 
