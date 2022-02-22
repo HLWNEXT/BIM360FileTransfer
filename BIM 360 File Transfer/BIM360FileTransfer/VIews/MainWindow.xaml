@@ -86,7 +86,7 @@
                     <Controls:MultiSelectTreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type vm:CategoryViewModel}" ItemsSource="{Binding Children}">
                             <StackPanel Orientation="Horizontal">
-                                <Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>
+                                <!--<Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>-->
                                 <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}"/>
                                 <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
                             </StackPanel>
@@ -129,7 +129,7 @@
                     <Controls:MultiSelectTreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type vm:CategoryViewModel}" ItemsSource="{Binding Children}">
                             <StackPanel Orientation="Horizontal">
-                                <Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>
+                                <!--<Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>-->
                                 <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}"/>
                                 <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
                             </StackPanel>
