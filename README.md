@@ -1,46 +1,48 @@
-# BIM360FileTransfer
+# BIM 360 File Transfer Tool
 A desktop program helps you copy files to different projects on BIM 360.
+All functions are done. You can find the code in the master branch. 
 
-All functions are done. You can find the code in the GitHub master branch. To run the code, please do:
+# Test Instruction
 
-Download the code to your local computer. (Recommend GitHub Desktop App to save your time setting environment).
+- Download the code to your local computer. (Recommend GitHub Desktop App to save your time setting environment).
 
-Check if you have already install .net 4.8 framework. If not, you can download the runtime from https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48
+- Check if you have already install .net 4.8 framework. If not, you can download the runtime from https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48
 
-Open the :/BIM 360 File Transfer/BIM360FileTransfer.sln with Visual Studio 2022.
+- Open the :/BIM 360 File Transfer/BIM360FileTransfer.sln with Visual Studio 2022.
 
-In the Solution Explorer, right click the Solution 'BIM360FileTransfer' and then left click Restore NuGet Packages.
+- In the Solution Explorer, right click the Solution 'BIM360FileTransfer' and then left click Restore NuGet Packages.
 
-Once it's done, right click the Solution 'BIM360FileTransfer' and then left click Rebuild Solution.
+- Once it's done, right click the Solution 'BIM360FileTransfer' and then left click Rebuild Solution.
 
-Finally, click the green Triangle on the top debug panel.
+- Finally, click the green Triangle on the top debug panel.
 
-Once you succeed to open the program, you can do:
 
-Click Authentication button to open the new browser page.
+# Working Functions
 
-Use your hlw email to login.
+-Click Authentication button to open the new browser page.
 
-Allow all access request. Once it's done, the browser will automatically close and the Load CLOUD button will turn purple.
+-Use your hlw email to login.
 
-Click Load CLOUD button to pull the BIM 360 library online. It will save a json copy in :/BIM 360 File Transfer/BIM360FileTransfer/Resources
+-Allow all access request. Once it's done, the browser will automatically close and the Load CLOUD button will turn purple.
 
-You can restart the app and try Load JSON button.
+-Click Load CLOUD button to pull the BIM 360 library online. It will save a json copy in :/BIM 360 File Transfer/BIM360FileTransfer/Resources
 
-Select files in the left source panel.
+-You can restart the app and try Load JSON button.
 
-Select target folder in the right target panel. You should be able to select multiple target folders using check box or hold Ctrl key.
+-Select files in the left source panel.
 
-Click the > Button to fire the transfer process.
+-Select target folder in the right target panel. You should be able to select multiple target folders using check box or hold Ctrl key.
 
-Check your BIM 360 page to see the result.
+-Click the > Button to fire the transfer process.
 
-Currently, there are some know unfixed issue:
+-Check your BIM 360 page to see the result.
 
-Load CLOUD might encounter request limit.
+# Known Issues
 
-You can only click empty space or check box to deselect the files and folders.
+-Load CLOUD might encounter request limit.
 
-Transfer result doesn't show properly inside the program.
+-You can only click empty space or check box to deselect the files and folders.
 
-Missing icons to distinguish the folder with files. Now all green.
+-Transfer result doesn't show properly inside the program.
+
+-Missing icons to distinguish the folder with files. Now all green.
