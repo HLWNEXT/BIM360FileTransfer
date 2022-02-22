@@ -28,6 +28,7 @@ namespace BIM360FileTransfer.Models
         public int Level { get; set; }
 
         public string Id { get; set; }
+        public string BucketId { get; set; }
         public string ProjectId { get; set; }
         public string Name { get; set; }
 
@@ -52,6 +53,16 @@ namespace BIM360FileTransfer.Models
         public CategoryModel(string id, string projectId, string name, string type)
         {
             Id = id;
+            ProjectId = projectId;
+            Name = name;
+            Type = type;
+            Subjects = new List<string>();
+        }
+
+        public CategoryModel(string id, string bucketId, string projectId, string name, string type)
+        {
+            Id = id;
+            BucketId = bucketId;
             ProjectId = projectId;
             Name = name;
             Type = type;

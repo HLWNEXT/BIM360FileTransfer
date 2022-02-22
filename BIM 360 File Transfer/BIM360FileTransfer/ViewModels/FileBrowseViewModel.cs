@@ -257,10 +257,10 @@ namespace BIM360FileTransfer.ViewModels
                             {
                                 var id = storageObjInfo.Value.relationships.storage.data.id;
                                 var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);// id.Split("/")[-1];
-                                //var bucket_id = id.split("/")[0].Split(":").slice(-1)[0];
+                                var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
                                 var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
 
-                                var entity = new CategoryModel(storage_object_id, rootCategory.CategoryProjectId, name, new_type);
+                                var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
                                 var thisCategory = new PublicCategoryCore(entity);
                                 thisCategory.IsVisible = false;
                                 //thisCategory.Parent = rootCategory;

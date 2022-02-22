@@ -14,6 +14,7 @@ namespace BIM360FileTransfer.Interfaces
         string Name { get; set; }
         string Type { get; set; }
         string Id { get; set; }
+        string BucketId { get; set; }
         string ProjectId { get; set; }
         int Level { get; set; }
 

@@ -20,6 +20,7 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryName => Model.Name;
         public string CategoryType => Model.Type;
         public string CategoryId => Model.Id;
+        public string CategoryBucketId => Model.BucketId;
 
         private readonly ObservableCollection<CategoryViewModel> children;
         //public readonly CategoryViewModel parent;
