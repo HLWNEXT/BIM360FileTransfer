@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIM360FileTransfer.Views"
+        xmlns:vm="clr-namespace:BIM360FileTransfer.ViewModels"
+        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="BIM 360 File Transfer" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -32,7 +34,8 @@
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" >
                         <Button Command="{Binding AuthViewModel.OpenAuthCommand}" Margin="5">Authenticate</Button>
-                        <Button Command="{Binding FileBrowseViewModel.FileBrowseCommand}" Margin="5">Load</Button>
+                        <Button Command="{Binding FileBrowseViewModel.FileBrowseCommand}" Margin="5">Load CLOUD</Button>
+                        <Button Command="{Binding FileBrowseViewModel.FileLoadCommand}" Margin="5">Load JSON</Button>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>
@@ -51,43 +54,133 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" x:Name="Source" Margin="16">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
+            <DockPanel Margin="16">
+                <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Source File</TextBlock>
+                <Controls:MultiSelectTreeView
+                    Name="SourceCategoryTree"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
+                    SelectedItems="{Binding Path=FileBrowseViewModel.SelectedSourceCategoryTree,Mode=TwoWay,IsAsync=True}"
+                    PreviewSelectionChanged="TheTreeView_PreviewSelectionChanged">
+                    <Controls:MultiSelectTreeView.ContextMenu>
+                        <ContextMenu>
+                            <!--<MenuItem Header="Expand" Click="ExpandMenuItem_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Rename" Click="RenameMenuItem_Click"/>
+                            <MenuItem Header="Delete" Click="DeleteMenuItem_Click"/>-->
+                        </ContextMenu>
+                    </Controls:MultiSelectTreeView.ContextMenu>
+                    <Controls:MultiSelectTreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type Controls:MultiSelectTreeViewItem}">
 
-                    <local:EnhancedTreeView
-                        Grid.Row="1"
-                            x:Name="SourceCategoryTree"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            ItemsSource="{Binding Path=FileBrowseViewModel.CategoryTree,Mode=OneWay,IsAsync=True}"
-                            CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
-                        <local:EnhancedTreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
-                                <TextBlock Text="{Binding Path=Name}"/>
-                            </HierarchicalDataTemplate>
-                        </local:EnhancedTreeView.ItemTemplate>
+                            <Setter Property="DisplayName" Value="{Binding DisplayName, Mode=TwoWay}"/>
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                            <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=TwoWay}"/>
+                            <!--<Setter Property="IsVisible" Value="{Binding IsVisible, Mode=TwoWay}"/>-->
+                            <Setter Property="IsEditable" Value="{Binding IsEditable, Mode=TwoWay}"/>
+                            <Setter Property="IsEditing" Value="{Binding IsEditing, Mode=TwoWay}"/>
+                            <Setter Property="Remarks" Value="{Binding Remarks, Mode=TwoWay}"/>
+                        </Style>
+                    </Controls:MultiSelectTreeView.ItemContainerStyle>
+                    <Controls:MultiSelectTreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:CategoryViewModel}" ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <!--<Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>-->
+                                <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}"/>
+                                <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </Controls:MultiSelectTreeView.Resources>
+                </Controls:MultiSelectTreeView>
+            </DockPanel>
 
-                        
-                    </local:EnhancedTreeView>
-                </Grid>
-                
-            </Border>
+            <Button Command="{Binding FileBrowseViewModel.FileTransferCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">></Button>
 
-            <Button Command="{Binding UpdateCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">></Button>
+            <DockPanel Grid.Column="2" Margin="16">
+                <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Target Folder</TextBlock>
+                <Controls:MultiSelectTreeView
+                    Name="TargetCategoryTree"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ItemsSource="{Binding Path=FileBrowseViewModel.TargetCategoryTree,Mode=OneWay,IsAsync=True}"
+                    SelectedItems="{Binding Path=FileBrowseViewModel.SelectedTargetCategoryTree,Mode=TwoWay,IsAsync=True}"
+                    PreviewSelectionChanged="TargetTreeView_PreviewSelectionChanged">
+                    <Controls:MultiSelectTreeView.ContextMenu>
+                        <ContextMenu>
+                            <!--<MenuItem Header="Expand" Click="ExpandMenuItem_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Rename" Click="RenameMenuItem_Click"/>
+                            <MenuItem Header="Delete" Click="DeleteMenuItem_Click"/>-->
+                        </ContextMenu>
+                    </Controls:MultiSelectTreeView.ContextMenu>
+                    <Controls:MultiSelectTreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type Controls:MultiSelectTreeViewItem}">
 
-            <Border Grid.Column="2" x:Name="Target" Margin="16">
+                            <Setter Property="DisplayName" Value="{Binding DisplayName, Mode=TwoWay}"/>
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                            <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=TwoWay}"/>
+                            <Setter Property="IsVisible" Value="{Binding IsVisible, Mode=TwoWay}"/>
+                            <Setter Property="IsEditable" Value="{Binding IsEditable, Mode=TwoWay}"/>
+                            <Setter Property="IsEditing" Value="{Binding IsEditing, Mode=TwoWay}"/>
+                            <Setter Property="Remarks" Value="{Binding Remarks, Mode=TwoWay}"/>
+                        </Style>
+                    </Controls:MultiSelectTreeView.ItemContainerStyle>
+                    <Controls:MultiSelectTreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:CategoryViewModel}" ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <!--<Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>-->
+                                <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}"/>
+                                <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </Controls:MultiSelectTreeView.Resources>
+                </Controls:MultiSelectTreeView>
+            </DockPanel>
+            <!--<Border Grid.Column="2" x:Name="Target" Margin="16">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Target Folder</TextBlock>
+                    <Controls:MultiSelectTreeView
+                    x:Name="TargetCategoryTree"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ItemsSource="{Binding Path=FileBrowseViewModel.TargetCategoryTree,Mode=OneWay,IsAsync=True}"
+                    PreviewSelectionChanged="TheTreeView_PreviewSelectionChanged">
+                        <Controls:MultiSelectTreeView.ContextMenu>
+                            <ContextMenu>
+                                --><!--<MenuItem Header="Expand" Click="ExpandMenuItem_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Rename" Click="RenameMenuItem_Click"/>
+                            <MenuItem Header="Delete" Click="DeleteMenuItem_Click"/>--><!--
+                            </ContextMenu>
+                        </Controls:MultiSelectTreeView.ContextMenu>
+                        <Controls:MultiSelectTreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type Controls:MultiSelectTreeViewItem}">
 
-                    <local:EnhancedTreeView
+                                <Setter Property="DisplayName" Value="{Binding DisplayName, Mode=TwoWay}"/>
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                                <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=TwoWay}"/>
+                                <Setter Property="IsVisible" Value="{Binding IsVisible, Mode=TwoWay}"/>
+                                <Setter Property="IsEditable" Value="{Binding IsEditable, Mode=TwoWay}"/>
+                                <Setter Property="IsEditing" Value="{Binding IsEditing, Mode=TwoWay}"/>
+                                <Setter Property="Remarks" Value="{Binding Remarks, Mode=TwoWay}"/>
+                            </Style>
+                        </Controls:MultiSelectTreeView.ItemContainerStyle>
+                        <Controls:MultiSelectTreeView.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type vm:CategoryViewModel}" ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="YellowGreen" CornerRadius="3" Width="16" Height="16" SnapsToDevicePixels="True"/>
+                                    <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}"/>
+                                    <TextBlock Text="{Binding Path=CategoryName}" VerticalAlignment="Center" Padding="4,0,2,0"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </Controls:MultiSelectTreeView.Resources>
+                    </Controls:MultiSelectTreeView>
+                    --><!--<local:EnhancedTreeView
                            Grid.Row="1"
                             x:Name="CategoryTree"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -95,16 +188,16 @@
                             CurrentItem="{Binding SelectedCategory,Mode=TwoWay}">
                         <local:EnhancedTreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
-                                <TextBlock Text="{Binding Path=Name}"/>
+                                <TextBlock Text="{Binding Path=CategoryName}"/>
                             </HierarchicalDataTemplate>
                         </local:EnhancedTreeView.ItemTemplate>
 
                        
-                    </local:EnhancedTreeView>
+                    </local:EnhancedTreeView>--><!--
                 </Grid>
 
                 
-            </Border>
+            </Border>-->
 
         </Grid>
 

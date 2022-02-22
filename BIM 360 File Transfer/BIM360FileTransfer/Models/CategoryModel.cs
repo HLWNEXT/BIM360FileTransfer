@@ -7,7 +7,8 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.Models
 {
-    public class CategoryModel : ICategory, IModel
+    [Serializable]
+    public class CategoryModel : ICategory
     {
         private List<ICategory> children;
         public List<ICategory> Children
@@ -21,18 +22,48 @@ namespace BIM360FileTransfer.Models
             }
             set { children = value; }
         }
-        public string ParentId { get; set; }
+        //public string ParentId { get; set; }
         public List<string> Subjects { get; set; }
         public string Type { get; set; }
         public int Level { get; set; }
 
-        public string Id { get; }
-
+        public string Id { get; set; }
+        public string BucketId { get; set; }
+        public string ProjectId { get; set; }
         public string Name { get; set; }
 
-        public CategoryModel(string id, string name, string type)
+        //public CategoryModel(string id, string name, string type)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //    Type = type;
+        //    Subjects = new List<string>();
+        //}
+        public CategoryModel() { }
+
+        public CategoryModel(string name, string type)
+        {
+            Id = "";
+            ProjectId = "";
+            Name = name;
+            Type = type;
+            Subjects = new List<string>();
+        }
+
+        public CategoryModel(string id, string projectId, string name, string type)
         {
             Id = id;
+            ProjectId = projectId;
+            Name = name;
+            Type = type;
+            Subjects = new List<string>();
+        }
+
+        public CategoryModel(string id, string bucketId, string projectId, string name, string type)
+        {
+            Id = id;
+            BucketId = bucketId;
+            ProjectId = projectId;
             Name = name;
             Type = type;
             Subjects = new List<string>();

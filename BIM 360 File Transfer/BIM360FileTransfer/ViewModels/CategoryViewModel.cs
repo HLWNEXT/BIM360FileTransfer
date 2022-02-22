@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -9,64 +10,96 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
-    public abstract class CategoryViewModel : SelectableObject, IModelCore<ICategory>
+    [Serializable]
+    public abstract class CategoryViewModel : BaseViewModel, IViewModel, ICloneable
     {
+        #region Data
         public ICategory Model { get; set; }
 
-        public string CategoryId => Model.Id;
+        public string CategoryProjectId => Model.ProjectId;
+        public string CategoryName => Model.Name;
         public string CategoryType => Model.Type;
+        public string CategoryId => Model.Id;
+        public string CategoryBucketId => Model.BucketId;
 
-        private List<CategoryViewModel> children;
-        public List<CategoryViewModel> Children
-        {
-            get
-            {
-                if (children == null)
-                {
-                    children = CreateChildren();
-                    if (children != null)
-                        return children.Select(delegate (CategoryViewModel c)
-                        {
-                            c.Parent = this;
-                            c.Level = Level + 1;
-                            return c;
-                        }).ToList();
-                    return null;
-                }
-                return children;
-            }
-            set
-            {
-                children = value;
-                OnPropertyChanged();
-            }
-        }
+        private readonly ObservableCollection<CategoryViewModel> children;
+        //public readonly CategoryViewModel parent;
+
         private int level;
+        
+
+        private bool isSelected;
+        private bool isVisible = true;
+        private string remarks;
+        #endregion
+
+
+
+        #region Constructor
+        protected CategoryViewModel(ICategory category, ICommand command = null)
+        {
+            Model = category;
+            if (Model is INotifyPropertyChanged model)
+                model.PropertyChanged += Model_PropertyChanged;
+            //this.parent = parent;
+            children = new ObservableCollection<CategoryViewModel>();
+            //Command = command;
+        }
+        #endregion
+
+        #region Public Properties
+        /// <summary>
+		/// Returns the logical child items of this object.
+		/// </summary>
+		public ObservableCollection<CategoryViewModel> Children
+        {
+            get { return children; }
+        }
+
         public int Level
         {
             get { return level; }
             set
             {
                 level = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Level");
             }
         }
-        public string Name => Model.Name;
 
-
-        public CategoryViewModel Parent { get; set; }
-
-
-        protected CategoryViewModel(ICategory category, ICommand command = null)
+        /// <summary>
+		/// Gets/sets whether the TreeViewItem 
+		/// associated with this object is selected.
+		/// </summary>
+		public bool IsSelected
         {
-            Model = category;
-            if (Model is INotifyPropertyChanged model)
-                model.PropertyChanged += Model_PropertyChanged;
-            Children = null;
-            Command = command;
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    isSelected = value;
+                    NotifyPropertyChanged("IsSelected");
+                    OnPropertyChanged("IsSelected");
+                }
+            }
         }
 
-   
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                if (value != isVisible)
+                {
+                    isVisible = value;
+                    NotifyPropertyChanged("IsSelected");
+                    OnPropertyChanged("IsVisible");
+                }
+            }
+        }
+        #endregion
+
+
 
         public override bool Equals(object obj)
         {
@@ -82,7 +115,7 @@ namespace BIM360FileTransfer.ViewModels
         
 
 
-        protected abstract List<CategoryViewModel> CreateChildren();
+        //protected abstract ObservableCollection<CategoryViewModel> CreateChildren();
 
 
         public ICommand Command { get; }
@@ -92,20 +125,31 @@ namespace BIM360FileTransfer.ViewModels
             OnPropertyChanged(e.PropertyName);
         }
 
-        protected override void OnSelectionChanged()
+        public object Clone()
         {
-            if (IsSelected)
-            {
-                if (Parent != null)
-                {
-                    var children = Parent.Children;
-                    if (children != null)
-                        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
-                    Parent.OnSelectionChanged();
-                    OnPropertyChanged("Subjects");
-                }
-            }
+            return (CategoryViewModel)base.MemberwiseClone();
         }
+
+
+        //protected override void OnSelectionChanged()
+        //{
+        //    if (IsSelected)
+        //    {
+        //        //if (Parent != null)
+        //        //{
+        //        //    var children = Parent.Children;
+        //        //    if (children != null)
+        //        //        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
+        //        //    Parent.OnSelectionChanged();
+        //        //    OnPropertyChanged("Subjects");
+        //        //}
+        //    }
+        //}
+
+        #region INotifyPropertyChanged members
+
+
+        #endregion INotifyPropertyChanged members
 
 
     }

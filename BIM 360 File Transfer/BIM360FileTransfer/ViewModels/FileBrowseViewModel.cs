@@ -18,14 +18,33 @@ using BIM360FileTransfer.Models;
 using BIM360FileTransfer.Commands;
 using BIM360FileTransfer.Interfaces;
 using Autodesk.Forge.Model;
+using Newtonsoft.Json;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using BIM360FileTransfer.Utilities;
 
 namespace BIM360FileTransfer.ViewModels
 {
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
-
         private IList<CategoryViewModel> categoryTree;
+        private IList<CategoryViewModel> selectedSourceCategoryTree;
+        private IList<CategoryViewModel> selectedTargetCategoryTree;
+        private IList<CategoryViewModel> targetCategoryTree;
 
+
+        #region Constructor
+        public FileBrowseViewModel()
+        {
+            selectedSourceCategoryTree = new ObservableCollection<CategoryViewModel>();
+            selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
+            FileBrowseCommand = new FileBrowseCommand(this);
+            FileLoadCommand = new FileLoadCommand(this);
+            FileTransferCommand = new FileTransferCommand(this);
+        }
+        #endregion
+
+        #region Public Properties
         public IList<CategoryViewModel> CategoryTree
         {
             get { return categoryTree; }
@@ -36,19 +55,79 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
-        public FileBrowseViewModel()
+        public IList<CategoryViewModel> TargetCategoryTree
         {
-            FileBrowseCommand = new FileBrowseCommand(this);
+            get { return targetCategoryTree; }
+            set
+            {
+                targetCategoryTree = value;
+                OnPropertyChanged("TargetCategoryTree");
+            }
         }
 
-        /// <summary>
-        /// Get a list of buckets (id=#) or list of objects (id=bucketKey)
-        /// </summary>
+        public IList<CategoryViewModel> SelectedSourceCategoryTree
+        {
+            get { return selectedSourceCategoryTree; }
+            set
+            {
+                selectedSourceCategoryTree = value;
+                OnPropertyChanged("SelectedSourceCategoryTree");
+            }
+        }
+
+        public IList<CategoryViewModel> SelectedTargetCategoryTree
+        {
+            get { return selectedTargetCategoryTree; }
+            set
+            {
+                selectedTargetCategoryTree = value;
+                OnPropertyChanged("SelectedTargetCategoryTree");
+            }
+        }
+        #endregion
+
+        #region Get Category
+        internal void GetCategoryLocal()
+        {
+            using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+                serializer.TypeNameHandling = TypeNameHandling.All;
+                serializer.Formatting = Formatting.Indented;
+                CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+                
+                // Create a deep copy of the source tree to build the target tree.
+                TargetCategoryTree = new List<CategoryViewModel>();
+                foreach(var tree in CategoryTree)
+                {
+                    TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+                }
+            }
+        }
+
         public void GetCategoryAsync()
         {
             var hubId = GetHub();
             CategoryTree = GetCategoryTree(hubId);
+            TargetCategoryTree = new List<CategoryViewModel>();
+            foreach (var tree in CategoryTree)
+            {
+                TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+            }
+            SaveCategory(CategoryTree);
+        }
 
+        private void SaveCategory(IList<CategoryViewModel> categoryTree)
+        {
+            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.TypeNameHandling = TypeNameHandling.All;
+                serializer.NullValueHandling = NullValueHandling.Ignore;
+                serializer.Serialize(file, categoryTree);
+            }
         }
 
         /// <summary>
@@ -58,159 +137,225 @@ namespace BIM360FileTransfer.ViewModels
         {
             HubsApi hubsAPIInstance = new HubsApi();
             hubsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-            //hubsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
-
             var response = hubsAPIInstance.GetHubs();
             return response.data[0].id;
         }
 
-        /// <summary>
-        /// Get all projects.
-        /// </summary>
-        //public IList<CategoryViewModel> GetProjects(string hubId)
-        //{
-        //    var projects = new List<CategoryViewModel>();
-        //    ProjectsApi projectsAPIInstance = new ProjectsApi();
-        //    //hubs.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-        //    projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
-
-        //    var response = projectsAPIInstance.GetHubProjects(hubId);
-
-        //    foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-        //    {
-        //        //projects.Add(new CategoryViewModel(Base64Encode((string)objInfo.Value.objectId),objInfo.Value.objectKey, "project", false));
-        //    }
-            
-        //    return response.data[0].id;
-        //}
-
-        private IList<CategoryViewModel> GetCategoryTree(string hubId)
+        private ObservableCollection<CategoryViewModel> GetCategoryTree(string hubId)
         {
-            var categoryTree = new List<CategoryViewModel> { GetProjects(hubId) };
+            var categoryTree = new ObservableCollection<CategoryViewModel> { GetProjects(hubId) };
             return categoryTree;
         }
 
         private CategoryViewModel GetProjects(string hubId)
         {
-            var root = new CategoryModel("", "Projects", "root");
-            var rootCategroy = new PublicCategoryCore(root);
+            var root = new CategoryModel("Projects", "root");
+            var rootCategory = new PublicCategoryCore(root);
 
-            var projects = new List<CategoryViewModel>();
             ProjectsApi projectsAPIInstance = new ProjectsApi();
             projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-            //projectsAPIInstance.Configuration.AccessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IlU3c0dGRldUTzlBekNhSzBqZURRM2dQZXBURVdWN2VhIn0.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpjcmVhdGUiLCJkYXRhOnNlYXJjaCIsImRhdGE6cmVhZCIsImJ1Y2tldDpyZWFkIiwiYnVja2V0OnVwZGF0ZSIsImJ1Y2tldDpjcmVhdGUiLCJidWNrZXQ6ZGVsZXRlIl0sImNsaWVudF9pZCI6Ik9jMURnc2Q0YnhZNWhiZnZZT3N1SENrWlR5STFlZjdxIiwiYXVkIjoiaHR0cHM6Ly9hdXRvZGVzay5jb20vYXVkL2Fqd3RleHA2MCIsImp0aSI6IlBub2xwQUF4REpUNzc5RFpicjJCYWpOdlhvaUFGWHZvM3E1c2Rub2Y0SmxPSjd4bmd3dTdiSW5ONTA1ZWRwdlQiLCJ1c2VyaWQiOiJVNFVSS1AzUU5CTVEiLCJleHAiOjE2NDQ5NzY5ODR9.RqWihcexXxT38dXwJ8qtdxGmPG96B4rNkhpvjvByU-DPylS215XLwy4fcJAwLS8uKX5ZH3JKKtjcr3oyZBUid3Mt9RItMN80j31prJHKFwkvyCyDbHMS0czhmzUR2VA_8rR2UWJHem-AUV4qRZ_-_jYsQ-QrxDFcB89iy9o_8zhdX_cP7Ui7PpT3cBhYVzMDD3ySiMUZYePN71rA10FwpetvnmZkPWN62RWHUSoMbGCbTn8bogEJa0MwnbzxY1Yp4YPZhfZET71pGoiMikyFTJlIOky0WV_jQyj78LFC1vSu43zILawoKtH-PGduQ-sghz3ys4qY-bvs4pIjq1W7JQ";
 
             var response = projectsAPIInstance.GetHubProjects(hubId);
 
             foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
             {
                 var type = objInfo.Value.type;
-                var id = objInfo.Value.id;
+                var projectId = objInfo.Value.id;
+                var rootFolderId = objInfo.Value.relationships.rootFolder.data.id;
                 var name = objInfo.Value.attributes.name;
-                //projects.Add(new CategoryViewModel(Base64Encode((string)objInfo.Value.objectId),objInfo.Value.objectKey, "project", false));
-                var entity = new CategoryModel(id, name, type);
+
+                var entity = new CategoryModel(rootFolderId, projectId, name, type);
                 var thisCategory = new PublicCategoryCore(entity);
-                thisCategory.Parent = rootCategroy;
-                GetChildrenCategory(hubId, id, thisCategory);
-                projects.Add(thisCategory);
-                rootCategroy.Children.Add(thisCategory);
+                //thisCategory.Parent = rootCategory;
+                GetChildrenCategory(hubId, thisCategory);
+                rootCategory.Children.Add(thisCategory);
             }
 
             
-            return rootCategroy;
+            return rootCategory;
         }
 
-        private void GetChildrenCategory(string hubId, string projectId, CategoryViewModel rootCategroy)
+        private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
         {
-            //var directory = new DirectoryInfo(path);
-            //var subDirectories = directory.GetDirectories();
-            //if (subDirectories.Length == 0)
-            //{
-            //    var familyItems = new List<FamilyContentViewModel>();
-            //    var files = directory.GetFiles();
-            //    foreach (var item in files)
-            //    {
-            //        if (item.Extension == ".rfa")
-            //        {
-            //            var family = new FamilyContent();
-            //            family.Name = item.Name.Substring(0, item.Name.Length - 4);
-            //            family.ContentLocalPath = item.FullName;
-            //            var entity = new FamilyContentViewModel(family);
-            //            entity.PlaceFamily += PlaceFamilyReal;
-            //            entity.LoadFamily += LoadFamilyReal;
-            //            familyItems.Add(entity);
-            //            var name = entity.Name;
-            //        }
-            //    }
-            //    if (familyItems.Count != 0)
-            //    {
-            //        familyItems.ForEach(x => items.Add(x));
-
-            //        rootCategroy.Model.Subjects = familyItems.Select(x => x.DisplayName).ToList();
-            //    }
-
-            //}
-            //else
-            //{
-            //    foreach (var item in subDirectories)
-            //    {
-            //        var name = item.Name.Split('-').Last();
-            //        var entity = new CategoryModel(name);
-            //        var thisCategory = new PublicCategoryCore(entity);
-            //        thisCategory.Parent = rootCategroy;
-            //        GetChildrenCategory(item.FullName, thisCategory);
-            //        rootCategroy.Children.Add(thisCategory);
-            //    }
-            //    rootCategroy.Children.ForEach(x => rootCategroy.Model.Subjects.AddRange(x.Model.Subjects));
-            //}
-
-            var entity = new CategoryModel("", "Project1", "project");
-            var thisCategory = new PublicCategoryCore(entity);
-            thisCategory.Parent = rootCategroy;
-            var a = rootCategroy.Children;
-            rootCategroy.Children.Add(thisCategory);
-            //rootCategroy.Children.ForEach(x => rootCategroy.Model.Subjects.AddRange(x.Model.Subjects));
-        }
-
-
-
-        /// <summary>
-        /// Model data for jsTree used on GetOSSAsync
-        /// </summary>
-        public class TreeNode
-        {
-            public TreeNode(string id, string text, string type, bool children)
+            
+            if (rootCategory.CategoryType == "projects")
             {
-                this.id = id;
-                this.text = text;
-                this.type = type;
-                this.children = children;
+                var folderAPIInstance = new FoldersApi();
+                folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+                {
+                    var type = objInfo.Value.type;
+                    var folderId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.name;
+
+                    if (name == "Plans" || name == "Project Files")
+                    {
+                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        //thisCategory.Parent = rootCategory;
+                        GetChildrenCategory(hubId, thisCategory);
+                        rootCategory.Children.Add(thisCategory);
+                    }
+                }
             }
+            else if (rootCategory.CategoryType == "folders")
+            {
+                if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+                {
+                    return;
+                }
+                var apiInstance = new FoldersApi();
+                var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
 
-            public string id { get; set; }
-            public string text { get; set; }
-            public string type { get; set; }
-            public bool children { get; set; }
+                bool isItemExist = false;
+
+                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+                {
+                    var type = objInfo.Value.type;
+                    if (type == "items")
+                    {
+                        isItemExist = true;
+                        continue;
+                    }
+                    else 
+                    {
+                        var folderId = objInfo.Value.id;
+                        var name = objInfo.Value.attributes.name;
+
+                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        //thisCategory.Parent = rootCategory;
+                        GetChildrenCategory(hubId, thisCategory);
+                        rootCategory.Children.Add(thisCategory);
+                    }
+                }
+                if (isItemExist)
+                {
+                    foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+                    {
+                        var new_type = storageObjInfo.Value.type;
+                        if (new_type == "versions")
+                        {
+                            var id = storageObjInfo.Value.relationships.storage.data.id;
+                            var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
+                            var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                            var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+                            var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+                            var thisCategory = new PublicCategoryCore(entity);
+                            thisCategory.IsVisible = false;
+                            //thisCategory.Parent = rootCategory;
+                            rootCategory.Children.Add(thisCategory);
+                        }
+                    }
+                }
+            }
         }
+        #endregion
 
-        /// <summary>
-        /// Base64 enconde a string
-        /// </summary>
-        public static string Base64Encode(string plainText)
+        #region Transfer File
+        internal void TransferFile()
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
+            DownloadFile();
+            UploadFile();
         }
 
-        public static string Base64Decode(string encodedText)
+        internal void DownloadFile()
         {
-            return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(encodedText));
+            foreach(var item in selectedSourceCategoryTree)
+            {
+                var objectAPIInstance = new ObjectsApi();
+                objectAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                var bucketKey = item.CategoryBucketId;  // string | URL-encoded bucket key
+                var objectName = item.CategoryId;  // string | URL-encoded object name
+
+                try
+                {
+                    Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
+                    var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
+                    DirectoryInfo info = new DirectoryInfo(filePath);
+                    if (!info.Exists)
+                    {
+                        info.Create();
+                    }
+                    string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
+                    using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
+                    {
+                        result.CopyTo(outputFileStream);
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Exception when calling ObjectsApi.GetObject: " + e.Message);
+                }
+            }
         }
 
+        internal void UploadFile()
+        {
+            foreach (var item in selectedTargetCategoryTree)
+            {
+                var projectsAPIInstance = new ProjectsApi();
+                var projectId = item.CategoryProjectId;  // string | the `project id`
+                var createStorageBody = new CreateStorage(); // CreateStorage | describe the file the storage is created for
+
+                try
+                {
+                    StorageCreated storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
+                    var target_storage_object_id = storageCreateResult.Data.Id;
+                    var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
+                    var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                        
+
+                    var objectsAPIInstance = new ObjectsApi();
+                    var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
+                    var objectName = target_object_id;  // string | URL-encoded object name
+                    var contentLength = 56;  // int? | Indicates the size of the request body.
+                    var body = "/ path / to / file.txt";  // System.IO.Stream | 
+                    // TODO: Make body as stream and enable upload.
+                  
+                    try
+                    {
+                       // ObjectDetails result = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, body);
+
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Exception when calling ObjectApi.GetObject: " + e.Message);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Exception when calling ProjectsApi.GetObject: " + e.Message);
+                }
+            }
+        }
+
+        #endregion
+
+        #region ICommand
         public bool CanFileBrowse
         {
             get
             {
+                if (User.FORGE_CODE is null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool CanFileTransfer
+        {
+            get
+            {
+                if (selectedTargetCategoryTree.Count == 0 || selectedSourceCategoryTree.Count == 0)
+                {
+                    return false;
+                }
                 return true;
             }
         }
@@ -227,5 +372,23 @@ namespace BIM360FileTransfer.ViewModels
             private set;
         }
 
+        public ICommand OpenFileLoadCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileLoadCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileTransferCommand
+        {
+            get;
+            private set;
+        }
+        #endregion
     }
 }

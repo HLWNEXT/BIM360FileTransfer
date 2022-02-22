@@ -7,18 +7,20 @@ using BIM360FileTransfer.Interfaces;
 
 namespace BIM360FileTransfer.ViewModels
 {
+    [Serializable]
     public class PublicCategoryCore : CategoryViewModel
     {
+        
         public PublicCategoryCore(ICategory category) : base(category)
         {
             Model = category;
         }
 
-        protected override List<CategoryViewModel> CreateChildren()
-        {
-            var children = Model.Children;
-            if (children == null) return null;
-            return children.Select(x => new PublicCategoryCore(x)).ToList<CategoryViewModel>();
-        }
+        //protected override List<CategoryViewModel> CreateChildren()
+        //{
+        //    var children = Model.Children;
+        //    if (children == null) return null;
+        //    return children.Select(x => new PublicCategoryCore(x)).ToList<CategoryViewModel>();
+        //}
     }
 }

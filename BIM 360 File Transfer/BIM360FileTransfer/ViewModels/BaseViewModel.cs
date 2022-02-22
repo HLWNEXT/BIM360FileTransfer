@@ -3,6 +3,7 @@ using System;
 
 namespace BIM360FileTransfer.ViewModels
 {
+    [Serializable]
     public abstract class BaseViewModel : ObserverableObject, IViewModel
     {
         public string Id { get; }

@@ -6,13 +6,19 @@
     <RootNamespace>BIM360FileTransfer</RootNamespace>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon>Resources\HLW Logo Vivid Blue_rgb.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\HLW Logo Vivid Blue_rgb.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autodesk.Forge" Version="1.9.0" />
     <PackageReference Include="CefSharp.Wpf" Version="97.1.61" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="MultiSelectTreeView" Version="1.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
