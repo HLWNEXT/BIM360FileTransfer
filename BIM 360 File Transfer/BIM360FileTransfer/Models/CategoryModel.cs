@@ -44,6 +44,7 @@ namespace BIM360FileTransfer.Models
         public CategoryModel(string name, string type)
         {
             Id = "";
+            BucketId = "";
             ProjectId = "";
             Name = name;
             Type = type;
@@ -53,6 +54,7 @@ namespace BIM360FileTransfer.Models
         public CategoryModel(string id, string projectId, string name, string type)
         {
             Id = id;
+            BucketId = "";
             ProjectId = projectId;
             Name = name;
             Type = type;

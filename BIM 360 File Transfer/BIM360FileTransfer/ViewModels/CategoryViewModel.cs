@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Autodesk.Forge;
+using Autodesk.Forge.Model;
 using BIM360FileTransfer.Interfaces;
+using BIM360FileTransfer.Models;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -15,7 +18,6 @@ namespace BIM360FileTransfer.ViewModels
     {
         #region Data
         public ICategory Model { get; set; }
-
         public string CategoryProjectId => Model.ProjectId;
         public string CategoryName => Model.Name;
         public string CategoryType => Model.Type;
@@ -81,6 +83,11 @@ namespace BIM360FileTransfer.ViewModels
                     NotifyPropertyChanged("IsSelected");
                     OnPropertyChanged("IsSelected");
                 }
+
+                if (CategoryType == "projects" && value is true)
+                {
+                    GetChildren();
+                }
             }
         }
 
@@ -94,6 +101,84 @@ namespace BIM360FileTransfer.ViewModels
                     isVisible = value;
                     NotifyPropertyChanged("IsSelected");
                     OnPropertyChanged("IsVisible");
+                }
+            }
+        }
+        #endregion
+
+        #region Get Children
+
+        private void GetChildren()
+        {
+            var folderAPIInstance = new FoldersApi();
+            folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            var response = folderAPIInstance.GetFolderContents(CategoryProjectId, CategoryId);
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                var type = objInfo.Value.type;
+                var folderId = objInfo.Value.id;
+                var name = objInfo.Value.attributes.name;
+
+                if (name == "Plans" || name == "Project Files")
+                {
+                    var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    //thisCategory.Parent = rootCategory;
+                    GetChildrenCategory(thisCategory);
+                    Children.Add(thisCategory);
+                }
+            }
+        }
+
+        private void GetChildrenCategory(CategoryViewModel rootCategory)
+        {
+            if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+            {
+                return;
+            }
+            var apiInstance = new FoldersApi();
+            var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+
+            bool isItemExist = false;
+
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                var type = objInfo.Value.type;
+                if (type == "items")
+                {
+                    isItemExist = true;
+                    continue;
+                }
+                else
+                {
+                    var folderId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.name;
+
+                    var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    //thisCategory.Parent = rootCategory;
+                    GetChildrenCategory(thisCategory);
+                    rootCategory.Children.Add(thisCategory);
+                }
+            }
+            if (isItemExist)
+            {
+                foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+                {
+                    var new_type = storageObjInfo.Value.type;
+                    if (new_type == "versions")
+                    {
+                        var id = storageObjInfo.Value.relationships.storage.data.id;
+                        var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
+                        var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                        var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+                        var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        thisCategory.IsVisible = false;
+                        //thisCategory.Parent = rootCategory;
+                        rootCategory.Children.Add(thisCategory);
+                    }
                 }
             }
         }
@@ -115,9 +200,6 @@ namespace BIM360FileTransfer.ViewModels
         
 
 
-        //protected abstract ObservableCollection<CategoryViewModel> CreateChildren();
-
-
         public ICommand Command { get; }
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -131,20 +213,6 @@ namespace BIM360FileTransfer.ViewModels
         }
 
 
-        //protected override void OnSelectionChanged()
-        //{
-        //    if (IsSelected)
-        //    {
-        //        //if (Parent != null)
-        //        //{
-        //        //    var children = Parent.Children;
-        //        //    if (children != null)
-        //        //        children.ForEach(x => { if (!x.Equals(this)) x.IsSelected = false; });
-        //        //    Parent.OnSelectionChanged();
-        //        //    OnPropertyChanged("Subjects");
-        //        //}
-        //    }
-        //}
 
         #region INotifyPropertyChanged members
 

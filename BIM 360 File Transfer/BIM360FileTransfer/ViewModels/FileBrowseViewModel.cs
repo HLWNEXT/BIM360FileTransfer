@@ -31,6 +31,7 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> selectedSourceCategoryTree;
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
+        private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
 
 
         #region Constructor
@@ -143,14 +144,10 @@ namespace BIM360FileTransfer.ViewModels
 
         private ObservableCollection<CategoryViewModel> GetCategoryTree(string hubId)
         {
-            var categoryTree = new ObservableCollection<CategoryViewModel> { GetProjects(hubId) };
-            return categoryTree;
-        }
+            //var categoryTree = new ObservableCollection<CategoryViewModel> { GetProjects(hubId) };
+            //return categoryTree;
 
-        private CategoryViewModel GetProjects(string hubId)
-        {
-            var root = new CategoryModel("Projects", "root");
-            var rootCategory = new PublicCategoryCore(root);
+            var categoryTree = new ObservableCollection<CategoryViewModel>();
 
             ProjectsApi projectsAPIInstance = new ProjectsApi();
             projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
@@ -167,91 +164,117 @@ namespace BIM360FileTransfer.ViewModels
                 var entity = new CategoryModel(rootFolderId, projectId, name, type);
                 var thisCategory = new PublicCategoryCore(entity);
                 //thisCategory.Parent = rootCategory;
-                GetChildrenCategory(hubId, thisCategory);
-                rootCategory.Children.Add(thisCategory);
+                //GetChildrenCategory(hubId, thisCategory);
+                categoryTree.Add(thisCategory);
             }
-
-            
-            return rootCategory;
+            return categoryTree;
         }
 
-        private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
-        {
+        //private CategoryViewModel GetProjects(string hubId)
+        //{
+        //    var root = new CategoryModel("Projects", "root");
+        //    var rootCategory = new PublicCategoryCore(root);
+
+        //    ProjectsApi projectsAPIInstance = new ProjectsApi();
+        //    projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+
+        //    var response = projectsAPIInstance.GetHubProjects(hubId);
+
+        //    foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+        //    {
+        //        var type = objInfo.Value.type;
+        //        var projectId = objInfo.Value.id;
+        //        var rootFolderId = objInfo.Value.relationships.rootFolder.data.id;
+        //        var name = objInfo.Value.attributes.name;
+
+        //        var entity = new CategoryModel(rootFolderId, projectId, name, type);
+        //        var thisCategory = new PublicCategoryCore(entity);
+        //        //thisCategory.Parent = rootCategory;
+        //        GetChildrenCategory(hubId, thisCategory);
+        //        rootCategory.Children.Add(thisCategory);
+        //    }
+
             
-            if (rootCategory.CategoryType == "projects")
-            {
-                var folderAPIInstance = new FoldersApi();
-                folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-                var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
-                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-                {
-                    var type = objInfo.Value.type;
-                    var folderId = objInfo.Value.id;
-                    var name = objInfo.Value.attributes.name;
+        //    return rootCategory;
+        //}
 
-                    if (name == "Plans" || name == "Project Files")
-                    {
-                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-                        var thisCategory = new PublicCategoryCore(entity);
-                        //thisCategory.Parent = rootCategory;
-                        GetChildrenCategory(hubId, thisCategory);
-                        rootCategory.Children.Add(thisCategory);
-                    }
-                }
-            }
-            else if (rootCategory.CategoryType == "folders")
-            {
-                if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
-                {
-                    return;
-                }
-                var apiInstance = new FoldersApi();
-                var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+        //private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
+        //{
+            
+        //    if (rootCategory.CategoryType == "projects")
+        //    {
+        //        var folderAPIInstance = new FoldersApi();
+        //        folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+        //        var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+        //        foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+        //        {
+        //            var type = objInfo.Value.type;
+        //            var folderId = objInfo.Value.id;
+        //            var name = objInfo.Value.attributes.name;
 
-                bool isItemExist = false;
+        //            if (name == "Plans" || name == "Project Files")
+        //            {
+        //                var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+        //                var thisCategory = new PublicCategoryCore(entity);
+        //                //thisCategory.Parent = rootCategory;
+        //                GetChildrenCategory(hubId, thisCategory);
+        //                rootCategory.Children.Add(thisCategory);
+        //            }
+        //        }
+        //    }
+        //    else if (rootCategory.CategoryType == "folders")
+        //    {
+        //        if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+        //        {
+        //            return;
+        //        }
+        //        var apiInstance = new FoldersApi();
+        //        var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
 
-                foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-                {
-                    var type = objInfo.Value.type;
-                    if (type == "items")
-                    {
-                        isItemExist = true;
-                        continue;
-                    }
-                    else 
-                    {
-                        var folderId = objInfo.Value.id;
-                        var name = objInfo.Value.attributes.name;
+        //        bool isItemExist = false;
 
-                        var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-                        var thisCategory = new PublicCategoryCore(entity);
-                        //thisCategory.Parent = rootCategory;
-                        GetChildrenCategory(hubId, thisCategory);
-                        rootCategory.Children.Add(thisCategory);
-                    }
-                }
-                if (isItemExist)
-                {
-                    foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
-                    {
-                        var new_type = storageObjInfo.Value.type;
-                        if (new_type == "versions")
-                        {
-                            var id = storageObjInfo.Value.relationships.storage.data.id;
-                            var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
-                            var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-                            var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+        //        foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+        //        {
+        //            var type = objInfo.Value.type;
+        //            if (type == "items")
+        //            {
+        //                isItemExist = true;
+        //                continue;
+        //            }
+        //            else 
+        //            {
+        //                var folderId = objInfo.Value.id;
+        //                var name = objInfo.Value.attributes.name;
 
-                            var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-                            var thisCategory = new PublicCategoryCore(entity);
-                            thisCategory.IsVisible = false;
-                            //thisCategory.Parent = rootCategory;
-                            rootCategory.Children.Add(thisCategory);
-                        }
-                    }
-                }
-            }
-        }
+        //                var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+        //                var thisCategory = new PublicCategoryCore(entity);
+        //                //thisCategory.Parent = rootCategory;
+        //                GetChildrenCategory(hubId, thisCategory);
+        //                rootCategory.Children.Add(thisCategory);
+        //            }
+        //        }
+        //        if (isItemExist)
+        //        {
+        //            foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+        //            {
+        //                var new_type = storageObjInfo.Value.type;
+        //                if (new_type == "versions")
+        //                {
+        //                    var id = storageObjInfo.Value.relationships.storage.data.id;
+        //                    var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
+        //                    var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+        //                    var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+        //                    var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+        //                    var thisCategory = new PublicCategoryCore(entity);
+        //                    thisCategory.IsVisible = false;
+        //                    //thisCategory.Parent = rootCategory;
+        //                    rootCategory.Children.Add(thisCategory);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Transfer File
@@ -265,6 +288,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             foreach(var item in selectedSourceCategoryTree)
             {
+                if (item.CategoryType != "versions") continue;
                 var objectAPIInstance = new ObjectsApi();
                 objectAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                 var bucketKey = item.CategoryBucketId;  // string | URL-encoded bucket key
@@ -273,17 +297,19 @@ namespace BIM360FileTransfer.ViewModels
                 try
                 {
                     Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
-                    var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
-                    DirectoryInfo info = new DirectoryInfo(filePath);
-                    if (!info.Exists)
-                    {
-                        info.Create();
-                    }
-                    string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
-                    using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
-                    {
-                        result.CopyTo(outputFileStream);
-                    }
+                    FileInfoStreamMap[item] = result;
+
+                    //var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
+                    //DirectoryInfo info = new DirectoryInfo(filePath);
+                    //if (!info.Exists)
+                    //{
+                    //    info.Create();
+                    //}
+                    //string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
+                    //using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
+                    //{
+                    //    result.CopyTo(outputFileStream);
+                    //}
                 }
                 catch (Exception e)
                 {
@@ -292,43 +318,97 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        private CreateStorage CreateStorageBody(string folderId, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
+        {
+            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+            var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("", "", new JsonApiLink("")));
+            var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+            var relationships = new CreateStorageDataRelationships(target);
+            var data = new CreateStorageData(new CreateStorageData.TypeEnum(), attributes, relationships);
+            var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
+            return createStorageBody;
+        }
+
         internal void UploadFile()
         {
             foreach (var item in selectedTargetCategoryTree)
             {
                 var projectsAPIInstance = new ProjectsApi();
+                var folderId = item.CategoryId;
                 var projectId = item.CategoryProjectId;  // string | the `project id`
-                var createStorageBody = new CreateStorage(); // CreateStorage | describe the file the storage is created for
-
+                
                 try
                 {
-                    StorageCreated storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
-                    var target_storage_object_id = storageCreateResult.Data.Id;
-                    var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
-                    var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-                        
-
-                    var objectsAPIInstance = new ObjectsApi();
-                    var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
-                    var objectName = target_object_id;  // string | URL-encoded object name
-                    var contentLength = 56;  // int? | Indicates the size of the request body.
-                    var body = "/ path / to / file.txt";  // System.IO.Stream | 
-                    // TODO: Make body as stream and enable upload.
-                  
-                    try
+                    foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
-                       // ObjectDetails result = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, body);
+                        //var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                        //var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("","",new JsonApiLink("")));
+                        //var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+                        //var relationships = new CreateStorageDataRelationships(target);
+                        //var data = new CreateStorageData(new CreateStorageData.TypeEnum(),attributes, relationships);
+                        //var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
+                        var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
 
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Exception when calling ObjectApi.GetObject: " + e.Message);
-                    }
 
+                        var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
+                        var target_storage_object_id = storageCreateResult.data.id;
+                        var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
+                        var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+
+                        var objectsAPIInstance = new ObjectsApi();
+                        var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
+                        var objectName = target_object_id;  // string | URL-encoded object name
+                        var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
+                        var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
+
+                        try
+                        {
+                            var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
+                            
+                            var itemsAPIInstance = new ItemsApi();
+
+                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+
+                            var createItemDataAttributes = new CreateItemDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("items:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+                            var tip = new CreateItemDataRelationshipsTip(new CreateItemDataRelationshipsTipData(new CreateItemDataRelationshipsTipData.TypeEnum(), new CreateItemDataRelationshipsTipData.IdEnum()));
+                            var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+                            var createItemDataRelationships = new CreateItemDataRelationships(tip, target);
+                            var data = new CreateItemData(new CreateItemData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+
+                            var createStorageDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+
+
+                            var createStorageDataRelationships = new CreateItemRelationships(new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id)));
+                            var included = new List<CreateItemIncluded>() { new CreateItemIncluded(new CreateItemIncluded.TypeEnum(), new CreateItemIncluded.IdEnum(), createStorageDataAttributes, createStorageDataRelationships) };
+
+                            var postItemBody = new CreateItem(jsonapi, data, included); // CreateItem | describe the item to be created
+
+                            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
+                            {
+                                JsonSerializer serializer = new JsonSerializer();
+                                serializer.TypeNameHandling = TypeNameHandling.None;
+                                serializer.Serialize(file, postItemBody);
+                            }
+
+                            try
+                            {
+                                var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Exception when calling ProjectsApi.GetObject: " + e.Message);
+                    throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
             }
         }
