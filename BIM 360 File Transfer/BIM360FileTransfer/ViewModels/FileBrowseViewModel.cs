@@ -318,6 +318,17 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        private CreateStorage CreateStorageBody(string folderId, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
+        {
+            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+            var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("", "", new JsonApiLink("")));
+            var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+            var relationships = new CreateStorageDataRelationships(target);
+            var data = new CreateStorageData(new CreateStorageData.TypeEnum(), attributes, relationships);
+            var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
+            return createStorageBody;
+        }
+
         internal void UploadFile()
         {
             foreach (var item in selectedTargetCategoryTree)
@@ -330,14 +341,14 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
-                        var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
-                        var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("","",new JsonApiLink("")));
-                        var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
-                        var relationships = new CreateStorageDataRelationships(target);
-                        var data = new CreateStorageData(new CreateStorageData.TypeEnum(),attributes, relationships);
-                        var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
-                        //createStorageBody.Data.Attributes.Name = fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' '));
-                        //createStorageBody.Data.Relationships.Target.Data.Id = folderId;
+                        //var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                        //var attributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("","",new JsonApiLink("")));
+                        //var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+                        //var relationships = new CreateStorageDataRelationships(target);
+                        //var data = new CreateStorageData(new CreateStorageData.TypeEnum(),attributes, relationships);
+                        //var createStorageBody = new CreateStorage(jsonapi, data); // CreateStorage | describe the file the storage is created for
+                        var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
+
 
                         var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
                         var target_storage_object_id = storageCreateResult.data.id;
@@ -355,7 +366,29 @@ namespace BIM360FileTransfer.ViewModels
                             var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
                             
                             var itemsAPIInstance = new ItemsApi();
-                            var postItemBody = new CreateItem(); // CreateItem | describe the item to be created
+
+                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+
+                            var createItemDataAttributes = new CreateItemDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("items:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+                            var tip = new CreateItemDataRelationshipsTip(new CreateItemDataRelationshipsTipData(new CreateItemDataRelationshipsTipData.TypeEnum(), new CreateItemDataRelationshipsTipData.IdEnum()));
+                            var target = new CreateStorageDataRelationshipsTarget(new StorageRelationshipsTargetData(new StorageRelationshipsTargetData.TypeEnum(), folderId));
+                            var createItemDataRelationships = new CreateItemDataRelationships(tip, target);
+                            var data = new CreateItemData(new CreateItemData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+
+                            var createStorageDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+
+
+                            var createStorageDataRelationships = new CreateItemRelationships(new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id)));
+                            var included = new List<CreateItemIncluded>() { new CreateItemIncluded(new CreateItemIncluded.TypeEnum(), new CreateItemIncluded.IdEnum(), createStorageDataAttributes, createStorageDataRelationships) };
+
+                            var postItemBody = new CreateItem(jsonapi, data, included); // CreateItem | describe the item to be created
+
+                            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
+                            {
+                                JsonSerializer serializer = new JsonSerializer();
+                                serializer.TypeNameHandling = TypeNameHandling.None;
+                                serializer.Serialize(file, postItemBody);
+                            }
 
                             try
                             {
