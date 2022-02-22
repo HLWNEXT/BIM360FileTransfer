@@ -220,8 +220,9 @@ namespace BIM360FileTransfer.ViewModels
             
             if (rootCategory.CategoryType == "projects")
             {
-                var apiInstance = new FoldersApi();
-                var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+                var folderAPIInstance = new FoldersApi();
+                folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
                 foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
                 {
                     var type = objInfo.Value.type;
@@ -249,31 +250,11 @@ namespace BIM360FileTransfer.ViewModels
 
                 bool isItemExist = false;
 
-
                 foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
                 {
                     var type = objInfo.Value.type;
-
                     if (type == "items")
                     {
-                        //foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
-                        //{
-                        //    var new_type = storageObjInfo.Value.type;
-
-                        //    if (new_type == "versions")
-                        //    {
-                        //        var id = storageObjInfo.Value.relationships.storage.data.id;
-                        //        var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);// id.Split("/")[-1];
-                        //        var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-                        //        var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
-
-                        //        var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-                        //        var thisCategory = new PublicCategoryCore(entity);
-                        //        thisCategory.IsVisible = false;
-                        //        //thisCategory.Parent = rootCategory;
-                        //        rootCategory.Children.Add(thisCategory);
-                        //    }
-                        //}
                         isItemExist = true;
                         continue;
                     }
@@ -294,11 +275,10 @@ namespace BIM360FileTransfer.ViewModels
                     foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
                     {
                         var new_type = storageObjInfo.Value.type;
-
                         if (new_type == "versions")
                         {
                             var id = storageObjInfo.Value.relationships.storage.data.id;
-                            var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);// id.Split("/")[-1];
+                            var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
                             var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
                             var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
 
@@ -317,8 +297,41 @@ namespace BIM360FileTransfer.ViewModels
         #region Transfer File
         internal void TransferFile()
         {
-            var a = "";
+            DownloadFile();
         }
+
+        internal void DownloadFile()
+        {
+            foreach(var item in selectedSourceCategoryTree)
+            {
+                var objectAPIInstance = new ObjectsApi();
+                objectAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                var bucketKey = item.CategoryBucketId;  // string | URL-encoded bucket key
+                var objectName = item.CategoryId;  // string | URL-encoded object name
+
+                try
+                {
+                    Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
+                    var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
+                    DirectoryInfo info = new DirectoryInfo(filePath);
+                    if (!info.Exists)
+                    {
+                        info.Create();
+                    }
+
+                    string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
+                    using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
+                    {
+                        result.CopyTo(outputFileStream);
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Exception when calling ObjectsApi.GetObject: " + e.Message);
+                }
+            }
+        }
+
         #endregion
 
         #region ICommand
