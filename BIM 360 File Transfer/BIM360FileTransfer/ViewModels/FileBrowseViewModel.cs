@@ -27,57 +27,11 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
-        private readonly List<SourceViewModel> entities;
         private IList<CategoryViewModel> categoryTree;
-
-        public IList<CategoryViewModel> CategoryTree
-        {
-            get { return categoryTree; }
-            set
-            {
-                categoryTree = value;
-                OnPropertyChanged("CategoryTree");
-            }
-        }
-
         private IList<CategoryViewModel> selectedSourceCategoryTree;
-
-        public IList<CategoryViewModel> SelectedSourceCategoryTree
-        {
-            get { return selectedSourceCategoryTree; }
-            set
-            {
-                selectedSourceCategoryTree = value;
-                OnPropertyChanged("SelectedSourceCategoryTree");
-            }
-        }
-
         private IList<CategoryViewModel> selectedTargetCategoryTree;
-
-        public IList<CategoryViewModel> SelectedTargetCategoryTree
-        {
-            get { return selectedTargetCategoryTree; }
-            set
-            {
-                selectedTargetCategoryTree = value;
-                OnPropertyChanged("SelectedTargetCategoryTree");
-            }
-        }
-
         private IList<CategoryViewModel> targetCategoryTree;
-        public IList<CategoryViewModel> TargetCategoryTree
-        {
-            get { return targetCategoryTree; }
-            set
-            {
-                targetCategoryTree = value;
-                OnPropertyChanged("TargetCategoryTree");
-            }
-        }
 
-        private ObservableCollection<SourceViewModel> items;
-
-        
 
         #region Constructor
         public FileBrowseViewModel()
@@ -91,37 +45,43 @@ namespace BIM360FileTransfer.ViewModels
         #endregion
 
         #region Public Properties
-        //private CategoryViewModel selectedCategory;
-
-        //public CategoryViewModel SelectedCategory
-        //{
-        //    get { return selectedCategory; }
-        //    set
-        //    {
-        //        if (!object.Equals(selectedCategory, value))
-        //        {
-        //            selectedCategory = value;
-        //            if (selectedCategory != null && !selectedCategory.IsSelected)
-        //                selectedCategory.IsSelected = true;
-        //            OnPropertyChanged("SelectedCategory");
-        //        }
-        //        Items = new ObservableCollection<SourceViewModel>();
-        //        foreach (var item in entities)
-        //        {
-        //            if (selectedCategory.Model.Subjects.Contains(item.Model.Name))
-        //                Items.Add(item);
-        //        }
-
-        //    }
-        //}
-
-        public ObservableCollection<SourceViewModel> Items
+        public IList<CategoryViewModel> CategoryTree
         {
-            get { return items; }
+            get { return categoryTree; }
             set
             {
-                items = value;
-                OnPropertyChanged("Items");
+                categoryTree = value;
+                OnPropertyChanged("CategoryTree");
+            }
+        }
+
+        public IList<CategoryViewModel> TargetCategoryTree
+        {
+            get { return targetCategoryTree; }
+            set
+            {
+                targetCategoryTree = value;
+                OnPropertyChanged("TargetCategoryTree");
+            }
+        }
+
+        public IList<CategoryViewModel> SelectedSourceCategoryTree
+        {
+            get { return selectedSourceCategoryTree; }
+            set
+            {
+                selectedSourceCategoryTree = value;
+                OnPropertyChanged("SelectedSourceCategoryTree");
+            }
+        }
+
+        public IList<CategoryViewModel> SelectedTargetCategoryTree
+        {
+            get { return selectedTargetCategoryTree; }
+            set
+            {
+                selectedTargetCategoryTree = value;
+                OnPropertyChanged("SelectedTargetCategoryTree");
             }
         }
         #endregion
@@ -298,6 +258,7 @@ namespace BIM360FileTransfer.ViewModels
         internal void TransferFile()
         {
             DownloadFile();
+            UploadFile();
         }
 
         internal void DownloadFile()
@@ -318,7 +279,6 @@ namespace BIM360FileTransfer.ViewModels
                     {
                         info.Create();
                     }
-
                     string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
                     using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
                     {
@@ -328,6 +288,47 @@ namespace BIM360FileTransfer.ViewModels
                 catch (Exception e)
                 {
                     throw new Exception("Exception when calling ObjectsApi.GetObject: " + e.Message);
+                }
+            }
+        }
+
+        internal void UploadFile()
+        {
+            foreach (var item in selectedTargetCategoryTree)
+            {
+                var projectsAPIInstance = new ProjectsApi();
+                var projectId = item.CategoryProjectId;  // string | the `project id`
+                var createStorageBody = new CreateStorage(); // CreateStorage | describe the file the storage is created for
+
+                try
+                {
+                    StorageCreated storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
+                    var target_storage_object_id = storageCreateResult.Data.Id;
+                    var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
+                    var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                        
+
+                    var objectsAPIInstance = new ObjectsApi();
+                    var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
+                    var objectName = target_object_id;  // string | URL-encoded object name
+                    var contentLength = 56;  // int? | Indicates the size of the request body.
+                    var body = "/ path / to / file.txt";  // System.IO.Stream | 
+                    // TODO: Make body as stream and enable upload.
+                  
+                    try
+                    {
+                       // ObjectDetails result = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, body);
+
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Exception when calling ObjectApi.GetObject: " + e.Message);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Exception when calling ProjectsApi.GetObject: " + e.Message);
                 }
             }
         }
