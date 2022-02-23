@@ -41,6 +41,7 @@ namespace BIM360FileTransfer.ViewModels
             selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
+            FileTransferCommand = new FileTransferCommand(this);
         }
         #endregion
 
@@ -381,6 +382,7 @@ namespace BIM360FileTransfer.ViewModels
                         var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
                         var objectName = target_object_id;  // string | URL-encoded object name
                         var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
+                        fileInfoStreamMap.Value.Position = 0;
                         var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
 
                         try
