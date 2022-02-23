@@ -35,6 +35,8 @@ All functions are done. You can find the code in the master branch.
 
 - Click the > Button to fire the transfer process.
 
+- Create a new version for files with duplicate names.
+
 - Check your BIM 360 page to see the result.
 
 # Known Issues
