@@ -32,7 +32,7 @@ namespace BIM360FileTransfer.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _fileBrowseViewModel.CanFileLoad;
         }
 
         public void Execute(object parameter)

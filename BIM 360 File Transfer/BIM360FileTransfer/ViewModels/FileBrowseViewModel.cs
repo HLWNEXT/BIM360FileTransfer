@@ -465,6 +465,18 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
+        public bool CanFileLoad
+        {
+            get
+            {
+                if (User.FORGE_CODE is null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         public bool CanFileTransfer
         {
             get
