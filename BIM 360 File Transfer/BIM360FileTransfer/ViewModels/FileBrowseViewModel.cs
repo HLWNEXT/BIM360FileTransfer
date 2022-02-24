@@ -90,22 +90,22 @@ namespace BIM360FileTransfer.ViewModels
         #region Get Category
         internal void GetCategoryLocal()
         {
-            using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
-                serializer.NullValueHandling = NullValueHandling.Ignore;
-                serializer.TypeNameHandling = TypeNameHandling.All;
-                serializer.Formatting = Formatting.Indented;
-                CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+            //using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
+            //{
+            //    JsonSerializer serializer = new JsonSerializer();
+            //    serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
+            //    serializer.NullValueHandling = NullValueHandling.Ignore;
+            //    serializer.TypeNameHandling = TypeNameHandling.All;
+            //    serializer.Formatting = Formatting.Indented;
+            //    CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
                 
-                // Create a deep copy of the source tree to build the target tree.
-                TargetCategoryTree = new List<CategoryViewModel>();
-                foreach(var tree in CategoryTree)
-                {
-                    TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
-                }
-            }
+            //    // Create a deep copy of the source tree to build the target tree.
+            //    TargetCategoryTree = new List<CategoryViewModel>();
+            //    foreach(var tree in CategoryTree)
+            //    {
+            //        TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+            //    }
+            //}
         }
 
         public void GetCategoryAsync()
@@ -122,13 +122,13 @@ namespace BIM360FileTransfer.ViewModels
 
         private void SaveCategory(IList<CategoryViewModel> categoryTree)
         {
-            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.TypeNameHandling = TypeNameHandling.All;
-                serializer.NullValueHandling = NullValueHandling.Ignore;
-                serializer.Serialize(file, categoryTree);
-            }
+            //using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
+            //{
+            //    JsonSerializer serializer = new JsonSerializer();
+            //    serializer.TypeNameHandling = TypeNameHandling.All;
+            //    serializer.NullValueHandling = NullValueHandling.Ignore;
+            //    serializer.Serialize(file, categoryTree);
+            //}
         }
 
         /// <summary>
@@ -170,111 +170,7 @@ namespace BIM360FileTransfer.ViewModels
             return categoryTree;
         }
 
-        //private CategoryViewModel GetProjects(string hubId)
-        //{
-        //    var root = new CategoryModel("Projects", "root");
-        //    var rootCategory = new PublicCategoryCore(root);
-
-        //    ProjectsApi projectsAPIInstance = new ProjectsApi();
-        //    projectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-
-        //    var response = projectsAPIInstance.GetHubProjects(hubId);
-
-        //    foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-        //    {
-        //        var type = objInfo.Value.type;
-        //        var projectId = objInfo.Value.id;
-        //        var rootFolderId = objInfo.Value.relationships.rootFolder.data.id;
-        //        var name = objInfo.Value.attributes.name;
-
-        //        var entity = new CategoryModel(rootFolderId, projectId, name, type);
-        //        var thisCategory = new PublicCategoryCore(entity);
-        //        //thisCategory.Parent = rootCategory;
-        //        GetChildrenCategory(hubId, thisCategory);
-        //        rootCategory.Children.Add(thisCategory);
-        //    }
-
-            
-        //    return rootCategory;
-        //}
-
-        //private void GetChildrenCategory(string hubId, CategoryViewModel rootCategory)
-        //{
-            
-        //    if (rootCategory.CategoryType == "projects")
-        //    {
-        //        var folderAPIInstance = new FoldersApi();
-        //        folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-        //        var response = folderAPIInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
-        //        foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-        //        {
-        //            var type = objInfo.Value.type;
-        //            var folderId = objInfo.Value.id;
-        //            var name = objInfo.Value.attributes.name;
-
-        //            if (name == "Plans" || name == "Project Files")
-        //            {
-        //                var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-        //                var thisCategory = new PublicCategoryCore(entity);
-        //                //thisCategory.Parent = rootCategory;
-        //                GetChildrenCategory(hubId, thisCategory);
-        //                rootCategory.Children.Add(thisCategory);
-        //            }
-        //        }
-        //    }
-        //    else if (rootCategory.CategoryType == "folders")
-        //    {
-        //        if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
-        //        {
-        //            return;
-        //        }
-        //        var apiInstance = new FoldersApi();
-        //        var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
-
-        //        bool isItemExist = false;
-
-        //        foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
-        //        {
-        //            var type = objInfo.Value.type;
-        //            if (type == "items")
-        //            {
-        //                isItemExist = true;
-        //                continue;
-        //            }
-        //            else 
-        //            {
-        //                var folderId = objInfo.Value.id;
-        //                var name = objInfo.Value.attributes.name;
-
-        //                var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-        //                var thisCategory = new PublicCategoryCore(entity);
-        //                //thisCategory.Parent = rootCategory;
-        //                GetChildrenCategory(hubId, thisCategory);
-        //                rootCategory.Children.Add(thisCategory);
-        //            }
-        //        }
-        //        if (isItemExist)
-        //        {
-        //            foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
-        //            {
-        //                var new_type = storageObjInfo.Value.type;
-        //                if (new_type == "versions")
-        //                {
-        //                    var id = storageObjInfo.Value.relationships.storage.data.id;
-        //                    var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
-        //                    var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
-        //                    var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
-
-        //                    var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-        //                    var thisCategory = new PublicCategoryCore(entity);
-        //                    thisCategory.IsVisible = false;
-        //                    //thisCategory.Parent = rootCategory;
-        //                    rootCategory.Children.Add(thisCategory);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+      
         #endregion
 
         #region Transfer File
@@ -401,12 +297,12 @@ namespace BIM360FileTransfer.ViewModels
                             itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                             var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
 
-                            using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
-                            {
-                                JsonSerializer serializer = new JsonSerializer();
-                                serializer.TypeNameHandling = TypeNameHandling.None;
-                                serializer.Serialize(file, postItemBody);
-                            }
+                            //using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
+                            //{
+                            //    JsonSerializer serializer = new JsonSerializer();
+                            //    serializer.TypeNameHandling = TypeNameHandling.None;
+                            //    serializer.Serialize(file, postItemBody);
+                            //}
 
                             try
                             {
