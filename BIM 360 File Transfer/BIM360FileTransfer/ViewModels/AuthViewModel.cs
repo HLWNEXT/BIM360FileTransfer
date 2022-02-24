@@ -79,6 +79,12 @@ namespace BIM360FileTransfer.ViewModels
             }
             else
             {
+                // Close the authentication window once done.
+                if (oAuthWindow.Dispatcher.CheckAccess())
+                    oAuthWindow.Close();
+                else
+                    oAuthWindow.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(oAuthWindow.Close));
+
                 // Remove the load end event.
                 authBrowser.FrameLoadEnd -= BrowserFrameLoadEnd;
 
@@ -89,13 +95,6 @@ namespace BIM360FileTransfer.ViewModels
                     throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(User.FORGE_CODE));
                 }
                 User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
-
-
-                // Close the authentication window once done.
-                if (oAuthWindow.Dispatcher.CheckAccess())
-                    oAuthWindow.Close();
-                else
-                    oAuthWindow.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(oAuthWindow.Close));
             }
         }
 
