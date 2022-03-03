@@ -1,0 +1,11 @@
+{
+    "source" : [{
+        "model_name" : "string",
+        "path" : "string"
+    }],
+
+    "target" : [{
+        "folder_name" : "string",
+        "path" : "string"
+    }]
+}

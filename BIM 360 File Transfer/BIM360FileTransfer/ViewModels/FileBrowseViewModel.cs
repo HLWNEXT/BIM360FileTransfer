@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using BIM360FileTransfer.Utilities;
+using System.Windows;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -176,6 +177,16 @@ namespace BIM360FileTransfer.ViewModels
         #region Transfer File
         internal void TransferFile()
         {
+            string messageBoxText = "Do you want to work on these tasks? \n Transfer: a to b \n Transfer: c to d";
+            string caption = "File Transfer Processor";
+            MessageBoxButton button = MessageBoxButton.YesNoCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+            if (result == MessageBoxResult.No) return;
+
             DownloadFile();
             UploadFile();
         }
