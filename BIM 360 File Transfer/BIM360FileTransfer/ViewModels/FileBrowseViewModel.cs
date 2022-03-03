@@ -91,6 +91,22 @@ namespace BIM360FileTransfer.ViewModels
         #region Get Category
         internal void GetCategoryLocal()
         {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".json"; // Default file extension
+            dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dialog.FileName;
+            }
+
+
             //using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
             //{
             //    JsonSerializer serializer = new JsonSerializer();
@@ -99,7 +115,7 @@ namespace BIM360FileTransfer.ViewModels
             //    serializer.TypeNameHandling = TypeNameHandling.All;
             //    serializer.Formatting = Formatting.Indented;
             //    CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
-                
+
             //    // Create a deep copy of the source tree to build the target tree.
             //    TargetCategoryTree = new List<CategoryViewModel>();
             //    foreach(var tree in CategoryTree)
@@ -177,6 +193,8 @@ namespace BIM360FileTransfer.ViewModels
         #region Transfer File
         internal void TransferFile()
         {
+            
+
             string messageBoxText = "Do you want to work on these tasks? \n Transfer: a to b \n Transfer: c to d";
             string caption = "File Transfer Processor";
             MessageBoxButton button = MessageBoxButton.YesNoCancel;
@@ -326,6 +344,19 @@ namespace BIM360FileTransfer.ViewModels
                         }
                         else
                         {
+                            //string messageBoxText = "The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName";
+                            //string caption = "File Transfer Processor";
+                            //MessageBoxButton button = MessageBoxButton.YesNoCancel;
+                            //MessageBoxImage icon = MessageBoxImage.Warning;
+                            //MessageBoxResult result;
+                            MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
+                                                                                        "File Transfer Processor",
+                                                                                        MessageBoxButton.YesNoCancel,
+                                                                                        MessageBoxImage.Warning);
+                            postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
+                            if (postVersionMessageBox.result == MessageBoxResult.No) return;
+
+
                             var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
                             var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
 
@@ -340,7 +371,7 @@ namespace BIM360FileTransfer.ViewModels
 
                             try
                             {
-                                var result = projectsAPIInstance.PostVersion(projectId, createVersionBody);
+                                var postVersionResult = projectsAPIInstance.PostVersion(projectId, createVersionBody);
 
                             }
                             catch (Exception e)
@@ -354,6 +385,31 @@ namespace BIM360FileTransfer.ViewModels
                 catch (Exception e)
                 {
                     throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
+                }
+
+                // Create a message box. Let use choose if they want to save json.
+                MessageBoxModel saveJsonMessageBox = new MessageBoxModel("File transfered sucessfully. Do you want to save the log to JSON?",
+                                                                         "File Transfer Processor",
+                                                                         MessageBoxButton.YesNoCancel,
+                                                                         MessageBoxImage.Warning);
+                saveJsonMessageBox.result = MessageBox.Show(saveJsonMessageBox.messageBoxText, saveJsonMessageBox.caption, saveJsonMessageBox.button, saveJsonMessageBox.icon, MessageBoxResult.Yes);
+
+                if (saveJsonMessageBox.result == MessageBoxResult.Yes) {
+                    // Configure save file dialog box
+                    var dialog = new Microsoft.Win32.SaveFileDialog();
+                    dialog.FileName = "Document"; // Default file name
+                    dialog.DefaultExt = ".json"; // Default file extension
+                    dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
+
+                    // Show save file dialog box
+                    bool? result = dialog.ShowDialog();
+
+                    // Process save file dialog box results
+                    if (result == true)
+                    {
+                        // Save document
+                        string filename = dialog.FileName;
+                    }
                 }
             }
         }
