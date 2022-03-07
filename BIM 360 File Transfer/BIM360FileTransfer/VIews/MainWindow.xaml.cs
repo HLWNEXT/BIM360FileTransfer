@@ -26,6 +26,7 @@ namespace BIM360FileTransfer.Views
 				e.CancelThis = e.Item.GetType() != SourceCategoryTree.SelectedItems[0].GetType();
 			}
 		}
+
 		private void TargetTreeView_PreviewSelectionChanged(object sender, PreviewSelectionChangedEventArgs e)
 		{
 			// Selection is not locked, apply other conditions.

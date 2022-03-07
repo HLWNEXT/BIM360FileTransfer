@@ -24,10 +24,12 @@ namespace BIM360FileTransfer.ViewModels
     {
         public ChromiumWebBrowser authBrowser;
         public OAuthWindow oAuthWindow;
+        public FileBrowseViewModel fileBrowseViewModel;
 
 
-        public AuthViewModel()
+        public AuthViewModel(FileBrowseViewModel fileBrowseViewModel)
         {
+            this.fileBrowseViewModel = fileBrowseViewModel;
             OpenAuthCommand = new AuthCommand(this);
         }
 
@@ -95,6 +97,7 @@ namespace BIM360FileTransfer.ViewModels
                     throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(User.FORGE_CODE));
                 }
                 User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
+                fileBrowseViewModel.GetCategoryAsync();
             }
         }
 

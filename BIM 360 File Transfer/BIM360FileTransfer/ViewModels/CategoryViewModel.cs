@@ -23,6 +23,7 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryType => Model.Type;
         public string CategoryId => Model.Id;
         public string CategoryBucketId => Model.BucketId;
+        public string CategoryPath;
 
         private readonly ObservableCollection<CategoryViewModel> children;
         //public readonly CategoryViewModel parent;
@@ -66,6 +67,16 @@ namespace BIM360FileTransfer.ViewModels
             {
                 level = value;
                 OnPropertyChanged("Level");
+            }
+        }
+
+        public string Path
+        {
+            get { return CategoryPath; }
+            set
+            {
+                CategoryPath = value;
+                OnPropertyChanged("CategoryPath");
             }
         }
 
@@ -138,6 +149,7 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = CategoryPath + "//" + name;
                     //thisCategory.Parent = rootCategory;
                     GetChildrenCategory(thisCategory);
                     Children.Add(thisCategory);
@@ -167,6 +179,7 @@ namespace BIM360FileTransfer.ViewModels
 
                     var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
                     thisCategory.isVisibleInSource = false;
                     rootCategory.Children.Add(thisCategory);
                     continue;
@@ -178,6 +191,7 @@ namespace BIM360FileTransfer.ViewModels
 
                     var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
                     //thisCategory.Parent = rootCategory;
                     GetChildrenCategory(thisCategory);
                     rootCategory.Children.Add(thisCategory);
@@ -198,6 +212,7 @@ namespace BIM360FileTransfer.ViewModels
                         var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
                         var thisCategory = new PublicCategoryCore(entity);
                         thisCategory.IsVisible = false;
+                        thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
                         //thisCategory.Parent = rootCategory;
                         rootCategory.Children.Add(thisCategory);
                     }

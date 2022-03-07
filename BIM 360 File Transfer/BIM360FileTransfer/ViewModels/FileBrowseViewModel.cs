@@ -204,6 +204,7 @@ namespace BIM360FileTransfer.ViewModels
 
                 var entity = new CategoryModel(rootFolderId, projectId, name, type);
                 var thisCategory = new PublicCategoryCore(entity);
+                thisCategory.CategoryPath = name;
                 //thisCategory.Parent = rootCategory;
                 //GetChildrenCategory(hubId, thisCategory);
                 categoryTree.Add(thisCategory);
@@ -246,6 +247,7 @@ namespace BIM360FileTransfer.ViewModels
                     Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
                     FileInfoStreamMap[item] = result;
 
+                    // Save to local
                     //var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
                     //DirectoryInfo info = new DirectoryInfo(filePath);
                     //if (!info.Exists)
