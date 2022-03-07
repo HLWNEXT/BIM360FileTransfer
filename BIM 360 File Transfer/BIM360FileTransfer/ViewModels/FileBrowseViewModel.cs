@@ -88,6 +88,7 @@ namespace BIM360FileTransfer.ViewModels
         }
         #endregion
 
+
         #region Get Category
         internal void GetCategoryLocal()
         {
@@ -104,25 +105,23 @@ namespace BIM360FileTransfer.ViewModels
             {
                 // Open document
                 string filename = dialog.FileName;
+                using (StreamReader file = File.OpenText(filename))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
+                    serializer.NullValueHandling = NullValueHandling.Ignore;
+                    serializer.TypeNameHandling = TypeNameHandling.All;
+                    serializer.Formatting = Formatting.Indented;
+                    CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+
+                    // Create a deep copy of the source tree to build the target tree.
+                    TargetCategoryTree = new List<CategoryViewModel>();
+                    foreach (var tree in CategoryTree)
+                    {
+                        TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+                    }
+                }
             }
-
-
-            //using (StreamReader file = File.OpenText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
-            //{
-            //    JsonSerializer serializer = new JsonSerializer();
-            //    serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
-            //    serializer.NullValueHandling = NullValueHandling.Ignore;
-            //    serializer.TypeNameHandling = TypeNameHandling.All;
-            //    serializer.Formatting = Formatting.Indented;
-            //    CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
-
-            //    // Create a deep copy of the source tree to build the target tree.
-            //    TargetCategoryTree = new List<CategoryViewModel>();
-            //    foreach(var tree in CategoryTree)
-            //    {
-            //        TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
-            //    }
-            //}
         }
 
         public void GetCategoryAsync()
@@ -132,20 +131,45 @@ namespace BIM360FileTransfer.ViewModels
             TargetCategoryTree = new List<CategoryViewModel>();
             foreach (var tree in CategoryTree)
             {
-                TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+                TargetCategoryTree.Add(TreeHelper.DeepClone(tree));
             }
-            SaveCategory(CategoryTree);
+            //SaveCategoryToJson(CategoryTree);
         }
 
-        private void SaveCategory(IList<CategoryViewModel> categoryTree)
+        private void SaveCategoryToJson(IList<CategoryViewModel> categoryTree)
         {
-            //using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\category.json"))
-            //{
-            //    JsonSerializer serializer = new JsonSerializer();
-            //    serializer.TypeNameHandling = TypeNameHandling.All;
-            //    serializer.NullValueHandling = NullValueHandling.Ignore;
-            //    serializer.Serialize(file, categoryTree);
-            //}
+            // Create a message box. Let use choose if they want to save json.
+            MessageBoxModel saveJsonMessageBox = new MessageBoxModel("File transfered sucessfully. Do you want to save the log to JSON?",
+                                                                     "File Transfer Processor",
+                                                                     MessageBoxButton.YesNoCancel,
+                                                                     MessageBoxImage.Warning);
+            saveJsonMessageBox.result = MessageBox.Show(saveJsonMessageBox.messageBoxText, saveJsonMessageBox.caption, saveJsonMessageBox.button, saveJsonMessageBox.icon, MessageBoxResult.Yes);
+
+            if (saveJsonMessageBox.result == MessageBoxResult.Yes)
+            {
+                // Configure save file dialog box
+                var dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.FileName = "Document"; // Default file name
+                dialog.DefaultExt = ".json"; // Default file extension
+                dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
+
+                // Show save file dialog box
+                bool? result = dialog.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    string filename = dialog.FileName;
+                    using (StreamWriter file = File.CreateText(filename))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        serializer.TypeNameHandling = TypeNameHandling.All;
+                        serializer.NullValueHandling = NullValueHandling.Ignore;
+                        serializer.Serialize(file, categoryTree);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -186,8 +210,6 @@ namespace BIM360FileTransfer.ViewModels
             }
             return categoryTree;
         }
-
-      
         #endregion
 
         #region Transfer File
@@ -387,34 +409,11 @@ namespace BIM360FileTransfer.ViewModels
                     throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
 
-                // Create a message box. Let use choose if they want to save json.
-                MessageBoxModel saveJsonMessageBox = new MessageBoxModel("File transfered sucessfully. Do you want to save the log to JSON?",
-                                                                         "File Transfer Processor",
-                                                                         MessageBoxButton.YesNoCancel,
-                                                                         MessageBoxImage.Warning);
-                saveJsonMessageBox.result = MessageBox.Show(saveJsonMessageBox.messageBoxText, saveJsonMessageBox.caption, saveJsonMessageBox.button, saveJsonMessageBox.icon, MessageBoxResult.Yes);
 
-                if (saveJsonMessageBox.result == MessageBoxResult.Yes) {
-                    // Configure save file dialog box
-                    var dialog = new Microsoft.Win32.SaveFileDialog();
-                    dialog.FileName = "Document"; // Default file name
-                    dialog.DefaultExt = ".json"; // Default file extension
-                    dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
-
-                    // Show save file dialog box
-                    bool? result = dialog.ShowDialog();
-
-                    // Process save file dialog box results
-                    if (result == true)
-                    {
-                        // Save document
-                        string filename = dialog.FileName;
-                    }
-                }
             }
         }
-
         #endregion
+
 
         #region ICommand
         public bool CanFileBrowse
