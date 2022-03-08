@@ -98,7 +98,7 @@ namespace BIM360FileTransfer.ViewModels
 
                 if (CategoryType == "projects" && value is true)
                 {
-                    GetChildren();
+                    GetChildrenAsync();
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace BIM360FileTransfer.ViewModels
 
         #region Get Children
 
-        private void GetChildren()
+        private async Task GetChildrenAsync()
         {
             var folderAPIInstance = new FoldersApi();
             folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
@@ -151,7 +151,7 @@ namespace BIM360FileTransfer.ViewModels
                     var thisCategory = new PublicCategoryCore(entity);
                     thisCategory.CategoryPath = CategoryPath + "//" + name;
                     //thisCategory.Parent = rootCategory;
-                    GetChildrenCategory(thisCategory);
+                    await Task.Run(() => GetChildrenCategory(thisCategory));
                     Children.Add(thisCategory);
                 }
             }

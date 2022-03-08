@@ -23,6 +23,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using BIM360FileTransfer.Utilities;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -44,6 +45,7 @@ namespace BIM360FileTransfer.ViewModels
             selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
+            LoadLocalFilesCommand = new LoadLocalFilesCommand(this);
             FileTransferCommand = new FileTransferCommand(this);
             FileTransferExecuteCommand = new FileTransferExecuteCommand(this);
             FileTransferAbortCommand = new FileTransferAbortCommand(this);
@@ -97,7 +99,7 @@ namespace BIM360FileTransfer.ViewModels
         #region Get Category
         internal void GetCategoryLocal()
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
+            var dialog = new OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
             dialog.DefaultExt = ".json"; // Default file extension
             dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
@@ -303,6 +305,59 @@ namespace BIM360FileTransfer.ViewModels
                     throw new Exception("Exception when calling ObjectsApi.GetObject: " + e.Message);
                 }
             }
+        }
+
+        internal async void LoadLocalFile()
+        {
+            List<string> filePaths = new List<string>();
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "Autodesk Revit Project (*.rvt)|*.rvt|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (string filePath in openFileDialog.FileNames)
+                {
+                    var filename = new FileInfo(filePath);
+
+                    MemoryStream localSourceStream = new MemoryStream();
+                    using (FileStream localSource = File.Open(@filePath, FileMode.Open))
+                    {
+
+                        Console.WriteLine("Source length: {0}", localSource.Length.ToString());
+
+                        // Copy source to destination.
+                        localSource.CopyTo(localSourceStream);
+                    }
+                }
+            }
+
+            //foreach (var filePath in filePaths)
+            //{
+            //    if (item.CategoryType != "versions") continue;
+            //    var objectAPIInstance = new ObjectsApi();
+            //    objectAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            //    var bucketKey = item.CategoryBucketId;  // string | URL-encoded bucket key
+            //    var objectName = item.CategoryId;  // string | URL-encoded object name
+
+            //    try
+            //    {
+            //        var fileInfo = 
+            //        var entity = new CategoryModel(rootFolderId, projectId, name, type);
+            //        var thisCategory = new PublicCategoryCore(entity);
+            //        thisCategory.CategoryPath = name;
+            //        //thisCategory.Parent = rootCategory;
+            //        //GetChildrenCategory(hubId, thisCategory);
+            //        categoryTree.Add(thisCategory);
+            //        Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
+            //        FileInfoStreamMap[item] = result;
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        throw new Exception("Exception when calling ObjectsApi.GetObject: " + e.Message);
+            //    }
+            //}
         }
 
         private CreateStorage CreateStorageBody(string folderId, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
@@ -511,6 +566,12 @@ namespace BIM360FileTransfer.ViewModels
         }
 
         public ICommand FileLoadCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand LoadLocalFilesCommand
         {
             get;
             private set;

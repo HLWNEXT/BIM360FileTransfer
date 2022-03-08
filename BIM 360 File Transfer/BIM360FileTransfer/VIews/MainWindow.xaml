@@ -95,7 +95,9 @@
                             </Controls:MultiSelectTreeView.Resources>
                         </Controls:MultiSelectTreeView>
                     </TabItem>
-                    <TabItem Header="Local" />
+                    <TabItem Header="Local" >
+                        <Button Command="{Binding FileBrowseViewModel.LoadLocalFilesCommand}" Margin="5">Load Local Files</Button>
+                    </TabItem>
                 </TabControl>
             </DockPanel>
 
@@ -119,7 +121,6 @@
                     </Controls:MultiSelectTreeView.ContextMenu>
                     <Controls:MultiSelectTreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type Controls:MultiSelectTreeViewItem}">
-
                             <Setter Property="DisplayName" Value="{Binding DisplayName, Mode=TwoWay}"/>
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
