@@ -35,6 +35,7 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> selectedSourceCategoryTree;
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
+        private IList<string> filePaths;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
         #endregion
 
@@ -91,6 +92,16 @@ namespace BIM360FileTransfer.ViewModels
             {
                 selectedTargetCategoryTree = value;
                 OnPropertyChanged("SelectedTargetCategoryTree");
+            }
+        }
+
+        public IList<string> FilePaths
+        {
+            get { return filePaths; }
+            set
+            {
+                filePaths = value;
+                OnPropertyChanged("FilePaths");
             }
         }
         #endregion
@@ -309,7 +320,7 @@ namespace BIM360FileTransfer.ViewModels
 
         internal async void LoadLocalFile()
         {
-            List<string> filePaths = new List<string>();
+            FilePaths = new List<string>();
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -319,6 +330,7 @@ namespace BIM360FileTransfer.ViewModels
             {
                 foreach (string filePath in openFileDialog.FileNames)
                 {
+                    FilePaths.Add(filePath);
                     var filename = new FileInfo(filePath);
 
                     MemoryStream localSourceStream = new MemoryStream();
@@ -329,35 +341,13 @@ namespace BIM360FileTransfer.ViewModels
 
                         // Copy source to destination.
                         localSource.CopyTo(localSourceStream);
+                        var id = Guid.NewGuid();
+                        var entity = new CategoryModel(id.ToString(), "", filename.Name, "items");
+                        var thisCategory = new PublicCategoryCore(entity);
+                        FileInfoStreamMap[thisCategory] = localSourceStream;
                     }
                 }
             }
-
-            //foreach (var filePath in filePaths)
-            //{
-            //    if (item.CategoryType != "versions") continue;
-            //    var objectAPIInstance = new ObjectsApi();
-            //    objectAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-            //    var bucketKey = item.CategoryBucketId;  // string | URL-encoded bucket key
-            //    var objectName = item.CategoryId;  // string | URL-encoded object name
-
-            //    try
-            //    {
-            //        var fileInfo = 
-            //        var entity = new CategoryModel(rootFolderId, projectId, name, type);
-            //        var thisCategory = new PublicCategoryCore(entity);
-            //        thisCategory.CategoryPath = name;
-            //        //thisCategory.Parent = rootCategory;
-            //        //GetChildrenCategory(hubId, thisCategory);
-            //        categoryTree.Add(thisCategory);
-            //        Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
-            //        FileInfoStreamMap[item] = result;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        throw new Exception("Exception when calling ObjectsApi.GetObject: " + e.Message);
-            //    }
-            //}
         }
 
         private CreateStorage CreateStorageBody(string folderId, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
