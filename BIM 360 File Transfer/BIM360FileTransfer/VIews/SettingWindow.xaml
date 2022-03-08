@@ -35,7 +35,7 @@
         
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" >
-            <Button Command="{Binding AbortTransfer}" Margin="5">Cancel</Button>
+            <Button Command="{Binding FileTransferAbortCommand}" Margin="5">Cancel</Button>
             <Button Command="{Binding FileTransferExecuteCommand}" Margin="5">Start</Button>
         </StackPanel>
 

@@ -28,13 +28,14 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
+        #region Data
         SettingViewModel settingViewModel;
         private IList<CategoryViewModel> categoryTree;
         private IList<CategoryViewModel> selectedSourceCategoryTree;
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
-
+        #endregion
 
         #region Constructor
         public FileBrowseViewModel()
@@ -45,6 +46,7 @@ namespace BIM360FileTransfer.ViewModels
             FileLoadCommand = new FileLoadCommand(this);
             FileTransferCommand = new FileTransferCommand(this);
             FileTransferExecuteCommand = new FileTransferExecuteCommand(this);
+            FileTransferAbortCommand = new FileTransferAbortCommand(this);
             settingViewModel = new SettingViewModel(this);
         }
         #endregion
@@ -255,6 +257,11 @@ namespace BIM360FileTransfer.ViewModels
             //if (result == MessageBoxResult.No) return;
 
 
+        }
+
+        internal void AbortTransfer()
+        {
+            settingViewModel.SettingWindow.Close();
         }
 
         internal void ExecuteTransfer()
@@ -514,7 +521,14 @@ namespace BIM360FileTransfer.ViewModels
             get;
             private set;
         }
+
         public ICommand FileTransferExecuteCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand FileTransferAbortCommand
         {
             get;
             private set;
