@@ -37,6 +37,7 @@ namespace BIM360FileTransfer.Commands
 
         public void Execute(object parameter)
         {
+
             _fileBrowseViewModel.TransferFile();
         }
         #endregion

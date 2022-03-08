@@ -33,16 +33,16 @@ namespace BIM360FileTransfer.ViewModels
             OpenAuthCommand = new AuthCommand(this);
         }
 
-    public void myFirstCommand(string par)
-    {
-        Console.Beep();
-    }
+        public void myFirstCommand(string par)
+        {
+            Console.Beep();
+        }
 
 
-    /// <summary>
-    /// Open an authentication window using Chromium browser.
-    /// </summary>
-    public void OpenAuthPage()
+        /// <summary>
+        /// Open an authentication window using Chromium browser.
+        /// </summary>
+        public void OpenAuthPage()
         {
             // Set up the Chromium cache. 
             var settings = new CefSettings();
