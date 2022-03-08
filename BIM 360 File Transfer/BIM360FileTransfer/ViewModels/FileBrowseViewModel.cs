@@ -35,7 +35,7 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> selectedSourceCategoryTree;
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
-        private IList<string> filePaths;
+        private string filePaths;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
         #endregion
 
@@ -95,7 +95,7 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
-        public IList<string> FilePaths
+        public string FilePaths
         {
             get { return filePaths; }
             set
@@ -320,7 +320,7 @@ namespace BIM360FileTransfer.ViewModels
 
         internal async void LoadLocalFile()
         {
-            FilePaths = new List<string>();
+            FilePaths = "";
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -330,7 +330,7 @@ namespace BIM360FileTransfer.ViewModels
             {
                 foreach (string filePath in openFileDialog.FileNames)
                 {
-                    FilePaths.Add(filePath);
+                    FilePaths += (filePath + Environment.NewLine);
                     var filename = new FileInfo(filePath);
 
                     MemoryStream localSourceStream = new MemoryStream();
