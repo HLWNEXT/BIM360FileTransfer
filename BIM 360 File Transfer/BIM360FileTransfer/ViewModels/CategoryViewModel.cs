@@ -98,7 +98,7 @@ namespace BIM360FileTransfer.ViewModels
 
                 if (CategoryType == "projects" && value is true)
                 {
-                    GetChildrenAsync();
+                    _ = GetChildrenAsync();
                 }
             }
         }
@@ -151,13 +151,13 @@ namespace BIM360FileTransfer.ViewModels
                     var thisCategory = new PublicCategoryCore(entity);
                     thisCategory.CategoryPath = CategoryPath + "//" + name;
                     //thisCategory.Parent = rootCategory;
-                    await Task.Run(() => GetChildrenCategory(thisCategory));
+                    await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
                     Children.Add(thisCategory);
                 }
             }
         }
 
-        private void GetChildrenCategory(CategoryViewModel rootCategory)
+        private async Task GetChildrenCategoryAsync(CategoryViewModel rootCategory)
         {
             if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
             {
@@ -193,7 +193,7 @@ namespace BIM360FileTransfer.ViewModels
                     var thisCategory = new PublicCategoryCore(entity);
                     thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
                     //thisCategory.Parent = rootCategory;
-                    GetChildrenCategory(thisCategory);
+                    await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
                     rootCategory.Children.Add(thisCategory);
                 }
             }
