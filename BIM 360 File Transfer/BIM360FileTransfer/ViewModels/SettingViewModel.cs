@@ -45,6 +45,7 @@ namespace BIM360FileTransfer.ViewModels
 
             // Open the authentication window.
             SettingWindow = new SettingWindow();
+            SettingWindow.DataContext = fileBrowseViewModel;
             SettingWindow.Show();
 
         }

@@ -28,6 +28,7 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class FileBrowseViewModel : BaseViewModel, IViewModel
     {
+        SettingViewModel settingViewModel;
         private IList<CategoryViewModel> categoryTree;
         private IList<CategoryViewModel> selectedSourceCategoryTree;
         private IList<CategoryViewModel> selectedTargetCategoryTree;
@@ -43,6 +44,8 @@ namespace BIM360FileTransfer.ViewModels
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
             FileTransferCommand = new FileTransferCommand(this);
+            FileTransferExecuteCommand = new FileTransferExecuteCommand(this);
+            settingViewModel = new SettingViewModel(this);
         }
         #endregion
 
@@ -238,21 +241,24 @@ namespace BIM360FileTransfer.ViewModels
         #region Transfer File
         internal void TransferFile()
         {
-            SettingViewModel settingViewModel = new SettingViewModel(this);
+            
             settingViewModel.OpenSettingWindow();
 
+            //string messageBoxText = "Do you want to work on these tasks? \n Transfer: a to b \n Transfer: c to d";
+            //string caption = "File Transfer Processor";
+            //MessageBoxButton button = MessageBoxButton.YesNoCancel;
+            //MessageBoxImage icon = MessageBoxImage.Warning;
+            //MessageBoxResult result;
+
+            //result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+            //if (result == MessageBoxResult.No) return;
 
 
-            string messageBoxText = "Do you want to work on these tasks? \n Transfer: a to b \n Transfer: c to d";
-            string caption = "File Transfer Processor";
-            MessageBoxButton button = MessageBoxButton.YesNoCancel;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-            MessageBoxResult result;
+        }
 
-            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-
-            if (result == MessageBoxResult.No) return;
-
+        internal void ExecuteTransfer()
+        {
             DownloadFile();
             UploadFile();
         }
@@ -504,6 +510,11 @@ namespace BIM360FileTransfer.ViewModels
         }
 
         public ICommand FileTransferCommand
+        {
+            get;
+            private set;
+        }
+        public ICommand FileTransferExecuteCommand
         {
             get;
             private set;
