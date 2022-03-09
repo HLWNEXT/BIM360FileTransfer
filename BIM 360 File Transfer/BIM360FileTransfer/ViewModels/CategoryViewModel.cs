@@ -35,6 +35,8 @@ namespace BIM360FileTransfer.ViewModels
         private bool isVisible = true;
         private bool isVisibleInSource = true;
         private string remarks;
+        private bool hasBeenSelected = false;
+
         #endregion
 
 
@@ -96,8 +98,9 @@ namespace BIM360FileTransfer.ViewModels
                     OnPropertyChanged("IsSelected");
                 }
 
-                if (CategoryType == "projects" && value is true)
+                if (CategoryType == "projects" && hasBeenSelected is false && value is true)
                 {
+                    hasBeenSelected = true;
                     _ = GetChildrenAsync();
                 }
             }
@@ -150,7 +153,8 @@ namespace BIM360FileTransfer.ViewModels
                     var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
                     thisCategory.CategoryPath = CategoryPath + "//" + name;
-                    //thisCategory.Parent = rootCategory;
+                    //thisCategory.Parent = rootCategory;.
+                    
                     await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
                     Children.Add(thisCategory);
                 }
