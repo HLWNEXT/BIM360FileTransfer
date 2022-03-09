@@ -24,23 +24,25 @@ namespace BIM360FileTransfer.ViewModels
     {
         public ChromiumWebBrowser authBrowser;
         public OAuthWindow oAuthWindow;
+        public FileBrowseViewModel fileBrowseViewModel;
 
 
-        public AuthViewModel()
+        public AuthViewModel(FileBrowseViewModel fileBrowseViewModel)
         {
+            this.fileBrowseViewModel = fileBrowseViewModel;
             OpenAuthCommand = new AuthCommand(this);
         }
 
-    public void myFirstCommand(string par)
-    {
-        Console.Beep();
-    }
+        public void myFirstCommand(string par)
+        {
+            Console.Beep();
+        }
 
 
-    /// <summary>
-    /// Open an authentication window using Chromium browser.
-    /// </summary>
-    public void OpenAuthPage()
+        /// <summary>
+        /// Open an authentication window using Chromium browser.
+        /// </summary>
+        public void OpenAuthPage()
         {
             // Set up the Chromium cache. 
             var settings = new CefSettings();
@@ -95,6 +97,7 @@ namespace BIM360FileTransfer.ViewModels
                     throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(User.FORGE_CODE));
                 }
                 User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
+                fileBrowseViewModel.GetCategoryAsync();
             }
         }
 
