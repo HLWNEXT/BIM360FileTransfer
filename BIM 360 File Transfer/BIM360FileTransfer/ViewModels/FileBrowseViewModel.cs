@@ -318,7 +318,7 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
-        internal async void LoadLocalFile()
+        internal void LoadLocalFile()
         {
             FilePaths = "";
 
@@ -341,8 +341,9 @@ namespace BIM360FileTransfer.ViewModels
 
                         // Copy source to destination.
                         localSource.CopyTo(localSourceStream);
+                        localSourceStream.Position = 0;
                         var id = Guid.NewGuid();
-                        var entity = new CategoryModel(id.ToString(), "", filename.Name, "items");
+                        var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
                         var thisCategory = new PublicCategoryCore(entity);
                         FileInfoStreamMap[thisCategory] = localSourceStream;
                     }
@@ -529,7 +530,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             get
             {
-                if (selectedTargetCategoryTree.Count == 0 || selectedSourceCategoryTree.Count == 0)
+                if (selectedTargetCategoryTree.Count == 0 || FileInfoStreamMap.Keys.Count == 0)
                 {
                     return false;
                 }
