@@ -10,14 +10,32 @@ namespace BIM360FileTransfer.Models
     {
         public Source source { get; set; }
         public Target target { get; set; }
+
+        public JsonModel()
+        {
+            source = new Source();
+            target = new Target();
+        }
+
+
         public class Source
         {
             public List<SourceItem> sourceItems { get; set; }
+
+            public Source()
+            {
+                sourceItems = new List<SourceItem>();
+            }
         }
 
         public class Target
         {
-            public List<SourceItem> targetItems { get; set; }
+            public List<TargetItem> targetItems { get; set; }
+
+            public Target()
+            {
+                targetItems = new List<TargetItem>();
+            }
         }
 
         public class SourceItem

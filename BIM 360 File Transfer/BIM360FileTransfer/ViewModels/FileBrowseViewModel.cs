@@ -327,9 +327,11 @@ namespace BIM360FileTransfer.ViewModels
 
         internal async Task UploadFileAsync()
         {
+            // Work on each target folder first to avoid redundent call to projectsApi
             foreach (var item in selectedTargetCategoryTree)
             {
-                if (item.CategoryType == "projects") continue;
+                // Ignore the root and plan folders.
+                if (item.CategoryType == "projects" || item.CategoryType.Contains("Plan")) continue;
 
                 var projectsAPIInstance = new ProjectsApi();
                 var folderId = item.CategoryId;
@@ -380,12 +382,6 @@ namespace BIM360FileTransfer.ViewModels
                             itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                             var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
 
-                            //using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
-                            //{
-                            //    JsonSerializer serializer = new JsonSerializer();
-                            //    serializer.TypeNameHandling = TypeNameHandling.None;
-                            //    serializer.Serialize(file, postItemBody);
-                            //}
 
                             try
                             {
@@ -449,8 +445,30 @@ namespace BIM360FileTransfer.ViewModels
 
 
         #region Reoccurring Task
+        private JsonModel CreateJsonModel()
+        {
+            var jsonModel = new JsonModel();
+
+            // Format source files to Json model.
+            foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
+            {
+
+            }
+
+            // Format target folders to Json model.
+            foreach (var item in selectedTargetCategoryTree)
+            {
+
+            }
+
+            return jsonModel;
+        }
+
         public void SaveCategoryToJson()
         {
+            JsonModel jsonModel = CreateJsonModel();
+
+            // Set save file dialog box
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.FileName = "Reoccurring_Task"; // Default file name
             dialog.DefaultExt = ".json"; // Default file extension
@@ -469,7 +487,7 @@ namespace BIM360FileTransfer.ViewModels
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.TypeNameHandling = TypeNameHandling.All;
                     serializer.NullValueHandling = NullValueHandling.Ignore;
-                    serializer.Serialize(file, categoryTree);
+                    serializer.Serialize(file, jsonModel);
                 }
             }
 
