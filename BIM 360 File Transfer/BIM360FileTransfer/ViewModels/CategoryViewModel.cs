@@ -25,7 +25,7 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryBucketId => Model.BucketId;
         public string CategoryPath;
 
-        private readonly ObservableCollection<CategoryViewModel> children;
+        private ObservableCollection<CategoryViewModel> children;
         //public readonly CategoryViewModel parent;
 
         private int level;
@@ -60,6 +60,7 @@ namespace BIM360FileTransfer.ViewModels
 		public ObservableCollection<CategoryViewModel> Children
         {
             get { return children; }
+            set { children = value; }
         }
 
         public int Level
@@ -137,7 +138,7 @@ namespace BIM360FileTransfer.ViewModels
 
         #region Get Children
 
-        private async Task GetChildrenAsync()
+        public async Task GetChildrenAsync()
         {
             var folderAPIInstance = new FoldersApi();
             folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
@@ -161,7 +162,7 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
-        private async Task GetChildrenCategoryAsync(CategoryViewModel rootCategory)
+        public async Task GetChildrenCategoryAsync(CategoryViewModel rootCategory)
         {
             if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
             {
