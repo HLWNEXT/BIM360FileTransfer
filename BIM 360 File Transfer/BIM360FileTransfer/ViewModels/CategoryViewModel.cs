@@ -224,6 +224,93 @@ namespace BIM360FileTransfer.ViewModels
                 }
             }
         }
+
+        public void GetChildren()
+        {
+            var folderAPIInstance = new FoldersApi();
+            folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            var response = folderAPIInstance.GetFolderContents(CategoryProjectId, CategoryId);
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                var type = objInfo.Value.type;
+                var folderId = objInfo.Value.id;
+                var name = objInfo.Value.attributes.name;
+
+                if (name == "Plans" || name == "Project Files")
+                {
+                    var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = CategoryPath + "\\" + name;
+                    //thisCategory.Parent = rootCategory;.
+
+                    GetChildrenCategory(thisCategory);
+                    Children.Add(thisCategory);
+                }
+            }
+        }
+
+        public void GetChildrenCategory(CategoryViewModel rootCategory)
+        {
+            if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+            {
+                return;
+            }
+            var apiInstance = new FoldersApi();
+            var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+
+            bool isItemExist = false;
+
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                var type = objInfo.Value.type;
+                if (type == "items")
+                {
+                    isItemExist = true;
+                    var itemId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.displayName;
+
+                    var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
+                    thisCategory.isVisibleInSource = false;
+                    rootCategory.Children.Add(thisCategory);
+                    continue;
+                }
+                else
+                {
+                    var folderId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.name;
+
+                    var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
+                    //thisCategory.Parent = rootCategory;
+                    GetChildrenCategory(thisCategory);
+                    rootCategory.Children.Add(thisCategory);
+                }
+            }
+            if (isItemExist)
+            {
+                foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+                {
+                    var new_type = storageObjInfo.Value.type;
+                    if (new_type == "versions")
+                    {
+                        var id = storageObjInfo.Value.relationships.storage.data.id;
+                        var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
+                        var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                        var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+                        var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        thisCategory.IsVisible = false;
+                        thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
+                        //thisCategory.Parent = rootCategory;
+                        rootCategory.Children.Add(thisCategory);
+                    }
+                }
+            }
+        }
         #endregion
 
 
