@@ -153,7 +153,7 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
-                    thisCategory.CategoryPath = CategoryPath + "//" + name;
+                    thisCategory.CategoryPath = CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;.
                     
                     await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
@@ -184,7 +184,7 @@ namespace BIM360FileTransfer.ViewModels
 
                     var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
-                    thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     thisCategory.isVisibleInSource = false;
                     rootCategory.Children.Add(thisCategory);
                     continue;
@@ -196,7 +196,7 @@ namespace BIM360FileTransfer.ViewModels
 
                     var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
-                    thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;
                     await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
                     rootCategory.Children.Add(thisCategory);
@@ -217,7 +217,7 @@ namespace BIM360FileTransfer.ViewModels
                         var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
                         var thisCategory = new PublicCategoryCore(entity);
                         thisCategory.IsVisible = false;
-                        thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
+                        thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                         //thisCategory.Parent = rootCategory;
                         rootCategory.Children.Add(thisCategory);
                     }

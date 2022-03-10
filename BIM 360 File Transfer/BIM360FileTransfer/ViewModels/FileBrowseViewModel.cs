@@ -291,6 +291,7 @@ namespace BIM360FileTransfer.ViewModels
                         var id = Guid.NewGuid();
                         var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
                         var thisCategory = new PublicCategoryCore(entity);
+                        thisCategory.CategoryPath = filePath;
                         FileInfoStreamMap[thisCategory] = localSourceStream;
                     }
                 }
@@ -333,16 +334,19 @@ namespace BIM360FileTransfer.ViewModels
                 // Ignore the root and plan folders.
                 if (item.CategoryType == "projects" || item.CategoryType.Contains("Plan")) continue;
 
+                // Initiate projectsApi.
                 var projectsAPIInstance = new ProjectsApi();
                 var folderId = item.CategoryId;
                 var projectId = item.CategoryProjectId;  // string | the `project id`
                 
                 try
                 {
+                    // Work on each <fileinfo, stream> set to upload file.
                     foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
-                        bool isExisted = false;
+                        // Check if the source file already existed in the target folder. If yes, record fileId.
                         string itemId = "";
+                        bool isExisted = false;
                         foreach (var child in item.Children)
                         {
                             if (child.CategoryType == "items" && fileInfoStreamMap.Key.CategoryName.Contains(child.CategoryName))
@@ -352,20 +356,26 @@ namespace BIM360FileTransfer.ViewModels
                                 break;
                             }
                         }
+                        
+                        // Create storage on BIM 360 via projectsApi. Record returned info.
                         var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
                         var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
                         var target_storage_object_id = storageCreateResult.data.id;
                         var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
                         var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
 
+                        // Initiate objectsApi.
                         var objectsAPIInstance = new ObjectsApi();
                         objectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                         var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
                         var objectName = target_object_id;  // string | URL-encoded object name
                         var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
+                        
+                        // Set the pointer to the start position of the stream. Then assign to the body.
                         fileInfoStreamMap.Value.Position = 0;
                         var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
 
+                        // Upload the file to the BIM 360 via objectsApi.
                         try
                         {
                             var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
@@ -377,11 +387,10 @@ namespace BIM360FileTransfer.ViewModels
 
                         if (!isExisted)
                         {
-                            
+                            // For the brand new file, create the fist version to show it on the BIM 360.
                             var itemsAPIInstance = new ItemsApi();
                             itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                             var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
-
 
                             try
                             {
@@ -394,27 +403,20 @@ namespace BIM360FileTransfer.ViewModels
                         }
                         else
                         {
-                            //string messageBoxText = "The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName";
-                            //string caption = "File Transfer Processor";
-                            //MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                            //MessageBoxImage icon = MessageBoxImage.Warning;
-                            //MessageBoxResult result;
-                            MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
-                                                                                        "File Transfer Processor",
-                                                                                        MessageBoxButton.YesNoCancel,
-                                                                                        MessageBoxImage.Warning);
-                            postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
-                            if (postVersionMessageBox.result == MessageBoxResult.No) return;
+                            //MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
+                            //                                                            "File Transfer Processor",
+                            //                                                            MessageBoxButton.YesNoCancel,
+                            //                                                            MessageBoxImage.Warning);
+                            //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
+                            //if (postVersionMessageBox.result == MessageBoxResult.No) return;
 
-
+                            // For the existed file, create a new version to on the BIM 360.
                             var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
                             var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
 
                             var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
                             var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
                             var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
-
-
                             var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
 
                             var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
@@ -437,6 +439,7 @@ namespace BIM360FileTransfer.ViewModels
                     throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
 
+                // Refresh target folder's children after transferring the file on UI.
                 //item.Children.Clear();
                 //await Task.Run(() => item.GetChildrenCategoryAsync(item));
             }
@@ -449,16 +452,31 @@ namespace BIM360FileTransfer.ViewModels
         {
             var jsonModel = new JsonModel();
 
-            // Format source files to Json model.
-            foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
+            // Format cloud files to Json model.
+            foreach (var item in selectedSourceCategoryTree)
             {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.SourceItem sourceItem = new JsonModel.SourceItem(name, path);
+                jsonModel.source.sourceItems.Add(sourceItem);
+            }
 
+            // Format local files to Json model.
+            foreach (var item in FileInfoStreamMap.Keys)
+            {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.SourceItem sourceItem = new JsonModel.SourceItem(name, path);
+                jsonModel.source.sourceItems.Add(sourceItem);
             }
 
             // Format target folders to Json model.
             foreach (var item in selectedTargetCategoryTree)
             {
-
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.TargetItem targetItem = new JsonModel.TargetItem(name, path);
+                jsonModel.target.targetItems.Add(targetItem);
             }
 
             return jsonModel;
@@ -468,27 +486,29 @@ namespace BIM360FileTransfer.ViewModels
         {
             JsonModel jsonModel = CreateJsonModel();
 
-            // Set save file dialog box
+            // Set save file dialog box.
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.FileName = "Reoccurring_Task"; // Default file name
             dialog.DefaultExt = ".json"; // Default file extension
             dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
 
-            // Show save file dialog box
+            // Show save file dialog box.
             bool? result = dialog.ShowDialog();
 
-            // Process save file dialog box results
+            // Process save file dialog box results.
             if (result == true)
             {
-                // Save document
+                // Save json string to the selected file.
+                Models.Settings.CREATE_NEW_VERSION = dialog.FileName;
                 string filename = dialog.FileName;
-                using (StreamWriter file = File.CreateText(filename))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.TypeNameHandling = TypeNameHandling.All;
-                    serializer.NullValueHandling = NullValueHandling.Ignore;
-                    serializer.Serialize(file, jsonModel);
-                }
+                string json = JsonConvert.SerializeObject(jsonModel, Formatting.Indented);
+                File.WriteAllText(@filename, json);
+
+                //using (StreamWriter sw = File.CreateText(@filename))
+                //{
+                //    string json = JsonConvert.SerializeObject(jsonModel, Formatting.Indented);
+                //    sw.WriteLine(json);
+                //}
             }
 
             //// Create a message box. Let use choose if they want to save json.
@@ -556,7 +576,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             get
             {
-                if (selectedTargetCategoryTree.Count == 0 || FileInfoStreamMap.Keys.Count == 0)
+                if (selectedTargetCategoryTree.Count == 0 && (selectedSourceCategoryTree.Count == 0 || FileInfoStreamMap.Keys.Count == 0))
                 {
                     return false;
                 }

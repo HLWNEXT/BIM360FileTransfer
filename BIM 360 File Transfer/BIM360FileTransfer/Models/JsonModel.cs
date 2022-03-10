@@ -8,15 +8,29 @@ namespace BIM360FileTransfer.Models
 {
     internal class JsonModel
     {
-        public Source source { get; set; }
-        public Target target { get; set; }
-
-        public JsonModel()
+        public class SourceItem
         {
-            source = new Source();
-            target = new Target();
+            public string model_name { get; set; }
+            public string path { get; set; }
+
+            public SourceItem(string _name, string _path)
+            {
+                model_name = _name;
+                path = _path;
+            }
         }
 
+        public class TargetItem
+        {
+            public string folder_name { get; set; }
+            public string path { get; set; }
+
+            public TargetItem(string _name, string _path)
+            {
+                folder_name = _name;
+                path = _path;
+            }
+        }
 
         public class Source
         {
@@ -38,16 +52,13 @@ namespace BIM360FileTransfer.Models
             }
         }
 
-        public class SourceItem
-        {
-            public string model_name { get; set; }
-            public string path { get; set; }
-        }
+        public Source source { get; set; }
+        public Target target { get; set; }
 
-        public class TargetItem
+        public JsonModel()
         {
-            public string folder_name { get; set; }
-            public string path { get; set; }
+            source = new Source();
+            target = new Target();
         }
 
     }
