@@ -2,7 +2,21 @@
 A desktop program helps you copy files to different projects on BIM 360.
 All functions are done. You can find the code in the master branch. 
 
-# Test Instruction
+# Update 1.0.1
+
+- Automatically load BIM 360 projects once you log in.
+
+- Select and upload multiple local files to BIM 360.
+
+- Add a setting page to save the current task to JSON file.
+
+- Load JSON file to redo predefined transfer task.
+
+- Update asynchronized Forge API calls to make the program smoother.
+
+- Update UI binding and animation.
+
+# Instruction
 
 - Download the code to your local computer. (Recommend GitHub Desktop App to save your time setting environment).
 
@@ -41,9 +55,9 @@ All functions are done. You can find the code in the master branch.
 
 # Known Issues
 
-- Load CLOUD might encounter request limit.
+- Load CLOUD might encounter request limit. -- Fixed
 
-- You can only click empty space or check box to deselect the files and folders.
+- You can only click empty space or check box to deselect the files and folders.  -- Fixed
 
 - Transfer result doesn't show properly inside the program.
 
