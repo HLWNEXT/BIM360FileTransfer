@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
-using System.Collections.ObjectModel;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
@@ -22,23 +15,23 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class AuthViewModel : BaseViewModel, IViewModel
     {
+        #region Data
         public ChromiumWebBrowser authBrowser;
         public OAuthWindow oAuthWindow;
         public FileBrowseViewModel fileBrowseViewModel;
+        #endregion
 
 
+        #region Constructor
         public AuthViewModel(FileBrowseViewModel fileBrowseViewModel)
         {
             this.fileBrowseViewModel = fileBrowseViewModel;
             OpenAuthCommand = new AuthCommand(this);
         }
-
-        public void myFirstCommand(string par)
-        {
-            Console.Beep();
-        }
+        #endregion
 
 
+        #region Get and refresh token
         /// <summary>
         /// Open an authentication window using Chromium browser.
         /// </summary>
@@ -139,7 +132,10 @@ namespace BIM360FileTransfer.ViewModels
               User.FORGE_INTERNAL_TOKEN.refresh_token);
             return bearer;
         }
+        #endregion
 
+
+        #region Run periodic function
         private async void OnTick()
         {
             User.FORGE_INTERNAL_TOKEN = await RefreshTokenAsync();
@@ -166,8 +162,10 @@ namespace BIM360FileTransfer.ViewModels
                     await Task.Delay(interval, token);
             }
         }
+        #endregion
 
 
+        #region ICommand
         public bool CanOpenAuthPage
         {
             get
@@ -187,5 +185,6 @@ namespace BIM360FileTransfer.ViewModels
             get;
             private set;
         }
+        #endregion
     }
 }
