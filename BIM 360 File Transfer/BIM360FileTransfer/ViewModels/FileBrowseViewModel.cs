@@ -336,6 +336,8 @@ namespace BIM360FileTransfer.ViewModels
                     sourItemPaths = openFileDialog.FileNames;
                 }
             }
+
+            if (sourItemPaths is null) return;
             
 
             foreach (string filePath in sourItemPaths)
