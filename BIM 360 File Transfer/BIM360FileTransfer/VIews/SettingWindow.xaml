@@ -18,15 +18,15 @@
         Title="Settings" Height="650" Width="500">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
             <materialDesign:Card Padding="32" Margin="16">
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5,0,5,0" >
-                    <TextBox Grid.Column="0" Margin="5">BIM 360 File Transfer</TextBox>
+                    <TextBox  Margin="5">BIM 360 File Transfer</TextBox>
                     <Button Command="{Binding SaveJsonCommand}" Margin="5">Save JSON</Button>
                 </StackPanel>
             </materialDesign:Card>
