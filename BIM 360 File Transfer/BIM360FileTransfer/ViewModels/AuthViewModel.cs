@@ -64,6 +64,8 @@ namespace BIM360FileTransfer.ViewModels
             // Open url and get end event.
             authBrowser.LoadUrl(authorizeURL);
             authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
+
+
         }
 
         /// <summary>
@@ -97,8 +99,13 @@ namespace BIM360FileTransfer.ViewModels
                     throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(User.FORGE_CODE));
                 }
                 User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
-                User.FORGE_INTERNAL_TOKEN = await RefreshTokenAsync();
                 fileBrowseViewModel.GetCategoryAsync();
+
+                var dueTime = TimeSpan.FromSeconds(10);
+                var interval = 
+
+                // TODO: Add a CancellationTokenSource and supply the token here instead of None.
+                _ = RunPeriodicAsync(OnTick, dueTime, CancellationToken.None);
             }
         }
 
@@ -118,6 +125,10 @@ namespace BIM360FileTransfer.ViewModels
             return bearer;
         }
 
+        /// <summary>
+        /// Refresh the 3 legged token from Forge API.
+        /// </summary>
+        /// <returns></returns>
         private async Task<dynamic> RefreshTokenAsync()
         {
             ThreeLeggedApi oauth = new ThreeLeggedApi();
@@ -127,6 +138,33 @@ namespace BIM360FileTransfer.ViewModels
               "refresh_token",
               User.FORGE_INTERNAL_TOKEN.refresh_token);
             return bearer;
+        }
+
+        private async void OnTick()
+        {
+            User.FORGE_INTERNAL_TOKEN = await RefreshTokenAsync();
+        }
+
+        private static async Task RunPeriodicAsync(Action onTick,
+                                           TimeSpan dueTime,
+                                           CancellationToken token)
+        {
+            var interval = TimeSpan.FromSeconds(User.FORGE_INTERNAL_TOKEN.expires_in - 60);
+
+            // Initial wait time before we begin the periodic loop.
+            if (dueTime > TimeSpan.Zero)
+                await Task.Delay(dueTime, token);
+
+            // Repeat this loop until cancelled.
+            while (!token.IsCancellationRequested)
+            {
+                // Call our onTick function.
+                onTick?.Invoke();
+
+                // Wait to repeat again.
+                if (interval > TimeSpan.Zero)
+                    await Task.Delay(interval, token);
+            }
         }
 
 
