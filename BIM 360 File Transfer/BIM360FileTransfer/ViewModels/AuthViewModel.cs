@@ -97,6 +97,7 @@ namespace BIM360FileTransfer.ViewModels
                     throw new ArgumentNullException("Unable to get the authentication code. Please check your client_id and client_secret.", nameof(User.FORGE_CODE));
                 }
                 User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
+                User.FORGE_INTERNAL_TOKEN = await RefreshTokenAsync();
                 fileBrowseViewModel.GetCategoryAsync();
             }
         }
@@ -114,6 +115,17 @@ namespace BIM360FileTransfer.ViewModels
               User.FORGE_GRANT_TYPE,
               User.FORGE_CODE,
               User.FORGE_CALLBACK_URL);
+            return bearer;
+        }
+
+        private async Task<dynamic> RefreshTokenAsync()
+        {
+            ThreeLeggedApi oauth = new ThreeLeggedApi();
+            dynamic bearer = await oauth.RefreshtokenAsync(
+              User.FORGE_CLIENT_ID,
+              User.FORGE_CLIENT_SECRET,
+              "refresh_token",
+              User.FORGE_INTERNAL_TOKEN.refresh_token);
             return bearer;
         }
 
