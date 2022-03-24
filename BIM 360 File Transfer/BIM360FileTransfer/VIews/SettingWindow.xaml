@@ -67,9 +67,11 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">Every</TextBlock>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Width="180">
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Width="100">
                         <ComboBoxItem>Monday</ComboBoxItem>
                         <ComboBoxItem>Tuesday</ComboBoxItem>
                         <ComboBoxItem>Wednesday</ComboBoxItem>
@@ -78,7 +80,9 @@
                         <ComboBoxItem>Saturday</ComboBoxItem>
                         <ComboBoxItem>Sunday</ComboBoxItem>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding ScheduleTask}" Margin="5">Schedule Task</Button>
+                    <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">At</TextBlock>
+                    <materialDesign:TimePicker Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100"></materialDesign:TimePicker>
+                    <Button Grid.Column="4" Command="{Binding ScheduleTask}" Margin="5">Schedule Task</Button>
                 </Grid>
             </Grid>
             
