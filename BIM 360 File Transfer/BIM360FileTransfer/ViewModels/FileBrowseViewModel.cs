@@ -225,7 +225,15 @@ namespace BIM360FileTransfer.ViewModels
             HubsApi hubsAPIInstance = new HubsApi();
             hubsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
             var response = hubsAPIInstance.GetHubs();
-            return response.data[0].id;
+            foreach (KeyValuePair<string, dynamic> hubInfo in new DynamicDictionaryItems(response.data))
+            {
+                if (hubInfo.Value.attributes.name.Contains("hlw") || hubInfo.Value.attributes.name.Contains("HLW"))
+                {
+                    return hubInfo.Value.id;
+                }
+            }
+            //return response.data[0].id;
+            return "Error: No HLW hub found in your account.";
         }
 
         private ObservableCollection<CategoryViewModel> GetCategoryTree(string hubId)

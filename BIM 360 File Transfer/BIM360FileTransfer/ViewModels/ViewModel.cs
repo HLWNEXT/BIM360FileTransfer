@@ -25,12 +25,6 @@ namespace BIM360FileTransfer.ViewModels
         {
             FileBrowseViewModel = new FileBrowseViewModel();
             AuthViewModel = new AuthViewModel(FileBrowseViewModel);
-            //this.FileTransferViewModel = new FileTransferViewModel(FileBrowseViewModel);'
-
-
-            
         }
-
-       
     }
 }
