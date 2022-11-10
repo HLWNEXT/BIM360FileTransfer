@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>8410a75c-e627-477f-95ec-7ce564c50d33</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>BIM360FileTransferToolShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BIM360FileTransferTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\AuthCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\FileBrowseCommandcs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\FileLoadCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\FileSelectCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\FileTransferAbortCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\FileTransferCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\FileTransferExecuteCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\LoadLocalFilesCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\SaveJsonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ICategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IModelCore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISelectable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AuthModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CategoryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DataManagementResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\JsonModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MessageBoxModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Properties\Resources.Designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\HttpUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\TreeHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AuthViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CategoryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\FileBrowseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ObserverableObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PublicCategoryCore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SelectableObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SourceViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\EnhancedTreeView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OAuthWindow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SettingWindow.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Resources\Autodesk.Forge.dll" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\rac_basic_sample_project_version_test.rvt" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\rac_basic_sample_project_version_test.rvt v2" />
+    <None Include="$(MSBuildThisFileDirectory)Resources\RestSharp.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\category.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\HLW Logo Vivid Blue_rgb.ico" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\index.html" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\postItemBody.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Untitled-2.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Properties\PublishProfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\OAuthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
