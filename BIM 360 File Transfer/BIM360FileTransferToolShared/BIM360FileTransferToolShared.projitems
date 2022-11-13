@@ -77,6 +77,10 @@
     <Folder Include="$(MSBuildThisFileDirectory)Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

@@ -5,50 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIM360FileTransfer.Views" xmlns:viewmodels="clr-namespace:BIM360FileTransfer.ViewModels"
         mc:Ignorable="d" 
-        Title="Add Parameter in Batch" Height="42.925" Width="280"
-        MinHeight="500" MinWidth="450">
+        Title="BIM 360 File Transfer Tool" Height="720" Width="1280"
+        MinHeight="500" MinWidth="450"
+        >
+    
+    <Window.Resources>
+        <ResourceDictionary Source="Dictionary.xaml" />
+    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.8*"></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="0.8*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0">
-            <GroupBox.Header>
-                <Label>Source</Label>
-            </GroupBox.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Width="330" Height="30" Text="{Binding SourcePath}"></TextBox>
-                <Button Content="Browse" Grid.Column="1" Width="80" Height="30" Command="{Binding GetSource}"></Button>
-            </Grid>
-        </GroupBox>
-        <GroupBox Grid.Row="1">
-            <GroupBox.Header>
-                <Label>Destiniation</Label>
-            </GroupBox.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Width="330" Height="30" Text="{Binding DestinationPath}"></TextBox>
-                <Button Content="Browse" Grid.Column="1" Width="80" Height="30" Command="{Binding GetDestination}"></Button>
-            </Grid>
-        </GroupBox>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button Content="Add" Grid.Column="0" Width="100" Height="30" Command="{Binding Add}"></Button>
-            <Button Content="Cancel" Grid.Column="1" Width="100" Height="30" Command="{Binding Exit}"></Button>
-        </Grid>
-        <ProgressBar Grid.Row="4" Width ="400" Height="30" Minimum="0" Maximum="100" Value="75"></ProgressBar>
+        <Label>Hello world</Label>
+        <Button>btn</Button>
+        <TextBox></TextBox>
     </Grid>
+
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="242*"/>
+            <ColumnDefinition Width="995*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Grid.Row ="0" Padding="32" Margin="16,16,16,16" Grid.ColumnSpan="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="BIM 360 File Transfer Tool"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" >
+                    <Button Command="{Binding AuthViewModel.OpenAuthCommand}" Margin="5">Authenticate</Button>
+                    <Button Command="{Binding FileBrowseViewModel.FileBrowseCommand}" Margin="5">Load CLOUD</Button>
+                    <Button Command="{Binding FileBrowseViewModel.FileLoadCommand}" Margin="5">Load JSON</Button>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:Card Grid.Column="0" Padding="5" Margin="16">
+                <DockPanel Margin="16">
+                    <TextBlock DockPanel.Dock="Top">Source File</TextBlock>
+                    <TabControl>
+                        <TabItem Header="BIM 360">
+                            
+                        </TabItem>
+                        <TabItem Header="Local" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row ="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <TextBlock Text="{Binding Path=FileBrowseViewModel.FilePaths}" Background="White"/>
+                                </ScrollViewer>
+                                <Button Grid.Row ="1" Command="{Binding FileBrowseViewModel.LoadLocalFilesCommand}" Margin="5">Load Local Files</Button>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </DockPanel>
+            </materialDesign:Card>
+
+
+            <Button Command="{Binding FileBrowseViewModel.FileTransferCommand}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE03E52" BorderBrush="#FFE03E52">></Button>
+
+            <materialDesign:Card Grid.Column="2" Padding="5" Margin="16">
+                <DockPanel  Margin="16">
+                    <TextBlock DockPanel.Dock="Top">Target Folder</TextBlock>
+                </DockPanel>
+            </materialDesign:Card>
+
+        </Grid>
+    </Grid>-->
 </Window>
