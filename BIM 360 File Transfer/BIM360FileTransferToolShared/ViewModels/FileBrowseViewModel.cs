@@ -460,7 +460,7 @@ namespace BIM360FileTransfer.ViewModels
 
                         if (!isExisted)
                         {
-                            // For the brand new file, create the fist version to show it on the BIM 360.
+                            // For the brand new file, create the first version to show it on the BIM 360.
                             var itemsAPIInstance = new ItemsApi();
                             itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                             var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
@@ -483,7 +483,7 @@ namespace BIM360FileTransfer.ViewModels
                             //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
                             //if (postVersionMessageBox.result == MessageBoxResult.No) return;
 
-                            // For the existed file, create a new version to on the BIM 360.
+                            // For the existed file, create a new version to the BIM 360.
                             var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
                             var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
 

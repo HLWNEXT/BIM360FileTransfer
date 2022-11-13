@@ -40,6 +40,7 @@ namespace BIM360FileTransfer
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };
+            instance.Show();
             
 
             UIApp.Application.FailuresProcessing -= OnFailuresProcessing;

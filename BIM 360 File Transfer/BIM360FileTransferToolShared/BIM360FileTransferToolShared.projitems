@@ -6,9 +6,10 @@
     <SharedGUID>8410a75c-e627-477f-95ec-7ce564c50d33</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>BIM360FileTransferToolShared</Import_RootNamespace>
+    <Import_RootNamespace>BIM360FileTransfer</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BIM360FileTransferTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\AuthCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Commands\FileBrowseCommandcs.cs" />
@@ -32,9 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\MessageBoxModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Properties\Resources.Designer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\HttpUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\TreeHelper.cs" />
@@ -52,8 +50,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\OAuthWindow.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\SettingWindow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\OAuthWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SettingWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Properties\Resources.resx" />
@@ -81,17 +83,11 @@
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\OAuthWindow.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\SettingWindow.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+    </Page>
   </ItemGroup>
 </Project>
