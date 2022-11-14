@@ -1,29 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Text.RegularExpressions;
-using System.Windows.Threading;
-using System.Threading;
 using System.Collections.ObjectModel;
-using CefSharp.Wpf;
-using CefSharp;
-using Autodesk.Forge;
-using BIM360FileTransfer.Views;
 using BIM360FileTransfer.Models;
 using BIM360FileTransfer.Commands;
 using BIM360FileTransfer.Interfaces;
-using Autodesk.Forge.Model;
 using Newtonsoft.Json;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using BIM360FileTransfer.Utilities;
-using System.Windows;
 using Microsoft.Win32;
+using Autodesk.Forge;
+using Autodesk.Forge.Model;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -446,64 +435,64 @@ namespace BIM360FileTransfer.ViewModels
                         
                         // Set the pointer to the start position of the stream. Then assign to the body.
                         fileInfoStreamMap.Value.Position = 0;
-                        var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
+                        //var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
 
-                        // Upload the file to the BIM 360 via objectsApi.
-                        try
-                        {
-                            var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
-                        }
-                        catch (Exception e)
-                        {
-                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
-                        }
+                        //// Upload the file to the BIM 360 via objectsApi.
+                        //try
+                        //{
+                        //    var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
+                        //}
+                        //catch (Exception e)
+                        //{
+                        //    throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                        //}
 
-                        if (!isExisted)
-                        {
-                            // For the brand new file, create the first version to show it on the BIM 360.
-                            var itemsAPIInstance = new ItemsApi();
-                            itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-                            var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
+                        //if (!isExisted)
+                        //{
+                        //    // For the brand new file, create the first version to show it on the BIM 360.
+                        //    var itemsAPIInstance = new ItemsApi();
+                        //    itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                        //    var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
 
-                            try
-                            {
-                                var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
-                            }
-                            catch (Exception e)
-                            {
-                                throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
-                            }
-                        }
-                        else
-                        {
-                            //MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
-                            //                                                            "File Transfer Processor",
-                            //                                                            MessageBoxButton.YesNoCancel,
-                            //                                                            MessageBoxImage.Warning);
-                            //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
-                            //if (postVersionMessageBox.result == MessageBoxResult.No) return;
+                        //    try
+                        //    {
+                        //        var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
+                        //    }
+                        //    catch (Exception e)
+                        //    {
+                        //        throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    //MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
+                        //    //                                                            "File Transfer Processor",
+                        //    //                                                            MessageBoxButton.YesNoCancel,
+                        //    //                                                            MessageBoxImage.Warning);
+                        //    //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
+                        //    //if (postVersionMessageBox.result == MessageBoxResult.No) return;
 
-                            // For the existed file, create a new version to the BIM 360.
-                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
-                            var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+                        //    // For the existed file, create a new version to the BIM 360.
+                        //    var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                        //    var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
 
-                            var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
-                            var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
-                            var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
-                            var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+                        //    var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
+                        //    var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
+                        //    var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
+                        //    var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
 
-                            var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
+                        //    var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
 
-                            try
-                            {
-                                var postVersionResult = projectsAPIInstance.PostVersion(projectId, createVersionBody);
+                        //    try
+                        //    {
+                        //        var postVersionResult = projectsAPIInstance.PostVersion(projectId, createVersionBody);
 
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
-                            }
-                        }
+                        //    }
+                        //    catch (Exception e)
+                        //    {
+                        //        Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
+                        //    }
+                        //}
                         
                     }
                 }
