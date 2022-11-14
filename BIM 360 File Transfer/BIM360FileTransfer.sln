@@ -7,6 +7,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BIM360FileTransferToolShare
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM360FileTransferTool2022", "BIM360FileTransferTool2022\BIM360FileTransferTool2022.csproj", "{F05EA4D8-80ED-4440-A32E-D310706F7EB0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autodesk.Forge", "Autodesk.Forge\Autodesk.Forge.csproj", "{0D60C718-8038-455B-9446-354EC816B77E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,14 @@ Global
 		{F05EA4D8-80ED-4440-A32E-D310706F7EB0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F05EA4D8-80ED-4440-A32E-D310706F7EB0}.Release|x64.ActiveCfg = Release|x64
 		{F05EA4D8-80ED-4440-A32E-D310706F7EB0}.Release|x64.Build.0 = Release|x64
+		{0D60C718-8038-455B-9446-354EC816B77E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D60C718-8038-455B-9446-354EC816B77E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D60C718-8038-455B-9446-354EC816B77E}.Debug|x64.ActiveCfg = Debug|x64
+		{0D60C718-8038-455B-9446-354EC816B77E}.Debug|x64.Build.0 = Debug|x64
+		{0D60C718-8038-455B-9446-354EC816B77E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D60C718-8038-455B-9446-354EC816B77E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D60C718-8038-455B-9446-354EC816B77E}.Release|x64.ActiveCfg = Release|x64
+		{0D60C718-8038-455B-9446-354EC816B77E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

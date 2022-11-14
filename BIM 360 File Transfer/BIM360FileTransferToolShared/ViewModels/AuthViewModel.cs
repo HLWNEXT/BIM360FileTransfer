@@ -45,18 +45,18 @@ namespace BIM360FileTransfer.ViewModels
             // Open the authentication window.
             oAuthWindow = new OAuthWindow();
             oAuthWindow.Show();
-            //authBrowser = oAuthWindow.webBrowser;
-            //authBrowser.MinHeight = 600;
-            //authBrowser.MinWidth = 300;
+            authBrowser = oAuthWindow.webBrowser;
+            authBrowser.MinHeight = 600;
+            authBrowser.MinWidth = 300;
 
-            //// Build authentication url.
-            //string authorizeURL = User.FORGE_BASE_URL +
-            //    string.Format("/authentication/v1/authorize?response_type=code&client_id={0}&redirect_uri={1}&scope={2}",
-            //    User.FORGE_CLIENT_ID, User.FORGE_CALLBACK_URL, System.Net.WebUtility.UrlEncode(User.FORGE_SCOPE));
+            // Build authentication url.
+            string authorizeURL = User.FORGE_BASE_URL +
+                string.Format("/authentication/v1/authorize?response_type=code&client_id={0}&redirect_uri={1}&scope={2}",
+                User.FORGE_CLIENT_ID, User.FORGE_CALLBACK_URL, System.Net.WebUtility.UrlEncode(User.FORGE_SCOPE));
 
-            //// Open url and get end event.
-            //authBrowser.Load(authorizeURL);
-            //authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
+            // Open url and get end event.
+            authBrowser.Load(authorizeURL);
+            authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
 
         }
 
