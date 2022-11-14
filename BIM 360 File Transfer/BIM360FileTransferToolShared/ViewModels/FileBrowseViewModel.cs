@@ -13,6 +13,7 @@ using BIM360FileTransfer.Utilities;
 using Microsoft.Win32;
 using Autodesk.Forge;
 using Autodesk.Forge.Model;
+using Autodesk.Revit.ApplicationServices;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -26,10 +27,12 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> targetCategoryTree;
         private string filePaths;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
+        private Application application;
+        private string hubId = String.Empty;
         #endregion
 
         #region Constructor
-        public FileBrowseViewModel()
+        public FileBrowseViewModel(Application application)
         {
             selectedSourceCategoryTree = new ObservableCollection<CategoryViewModel>();
             selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
@@ -42,6 +45,7 @@ namespace BIM360FileTransfer.ViewModels
             SaveJsonCommand = new SaveJsonCommand(this);
 
             settingViewModel = new SettingViewModel(this);
+            this.application = application;
         }
         #endregion
 
@@ -194,7 +198,7 @@ namespace BIM360FileTransfer.ViewModels
 
         public void GetCategoryAsync()
         {
-            var hubId = GetHub();
+            hubId = GetHub();
             CategoryTree = GetCategoryTree(hubId);
             TargetCategoryTree = new List<CategoryViewModel>();
             foreach (var tree in CategoryTree)
@@ -279,10 +283,10 @@ namespace BIM360FileTransfer.ViewModels
             settingViewModel.SettingWindow.Close();
         }
 
-        internal void ExecuteTransfer()
+        internal async void ExecuteTransfer()
         {
             DownloadFile();
-            UploadFileAsync();
+            await UploadFileAsync();
         }
 
         internal void DownloadFile()
@@ -432,68 +436,90 @@ namespace BIM360FileTransfer.ViewModels
                         var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
                         var objectName = target_object_id;  // string | URL-encoded object name
                         var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
-                        
+
                         // Set the pointer to the start position of the stream. Then assign to the body.
+                        /* Upload to BIM 360
                         fileInfoStreamMap.Value.Position = 0;
-                        //var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
-
-                        //// Upload the file to the BIM 360 via objectsApi.
-                        //try
-                        //{
-                        //    var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
-                        //}
-                        //catch (Exception e)
-                        //{
-                        //    throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
-                        //}
-
-                        //if (!isExisted)
-                        //{
-                        //    // For the brand new file, create the first version to show it on the BIM 360.
-                        //    var itemsAPIInstance = new ItemsApi();
-                        //    itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
-                        //    var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
-
-                        //    try
-                        //    {
-                        //        var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
-                        //    }
-                        //    catch (Exception e)
-                        //    {
-                        //        throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    //MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
-                        //    //                                                            "File Transfer Processor",
-                        //    //                                                            MessageBoxButton.YesNoCancel,
-                        //    //                                                            MessageBoxImage.Warning);
-                        //    //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
-                        //    //if (postVersionMessageBox.result == MessageBoxResult.No) return;
-
-                        //    // For the existed file, create a new version to the BIM 360.
-                        //    var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
-                        //    var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
-
-                        //    var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
-                        //    var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
-                        //    var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
-                        //    var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
-
-                        //    var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
-
-                        //    try
-                        //    {
-                        //        var postVersionResult = projectsAPIInstance.PostVersion(projectId, createVersionBody);
-
-                        //    }
-                        //    catch (Exception e)
-                        //    {
-                        //        Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
-                        //    }
-                        //}
                         
+                        var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
+
+                        // Upload the file to the BIM 360 via objectsApi.
+                        try
+                        {
+                            var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
+                        }
+                        catch (Exception e)
+                        {
+                            throw new Exception("Exception when calling ObjectApi.UploadObject: " + e.Message);
+                        }
+
+                        if (!isExisted)
+                        {
+                            // For the brand new file, create the first version to show it on the BIM 360.
+                            var itemsAPIInstance = new ItemsApi();
+                            itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+                            var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
+
+                            try
+                            {
+                                var postItemResult = itemsAPIInstance.PostItem(projectId, postItemBody);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new Exception("Exception when calling ItemsApi.PostItem: " + e.Message);
+                            }
+                        }
+                        else
+                        {
+                            //MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
+                            //                                                            "File Transfer Processor",
+                            //                                                            MessageBoxButton.YesNoCancel,
+                            //                                                            MessageBoxImage.Warning);
+                            //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
+                            //if (postVersionMessageBox.result == MessageBoxResult.No) return;
+
+                            // For the existed file, create a new version to the BIM 360.
+                            var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
+                            var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
+
+                            var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
+                            var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
+                            var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
+                            var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
+
+                            var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
+
+                            try
+                            {
+                                var postVersionResult = projectsAPIInstance.PostVersion(projectId, createVersionBody);
+
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.Print("Exception when calling ProjectsApi.PostVersion: " + e.Message);
+                            }
+                        }
+                        */
+
+                        var modelName = fileInfoStreamMap.Key.CategoryName.Split(' ')[0];
+
+                        string tempFilePath = Path.GetTempPath() + modelName;
+                        var accountId = "";
+
+                        using (var fileStream = File.Create(tempFilePath))
+                        {
+                            fileInfoStreamMap.Value.Position = 0;
+                            fileInfoStreamMap.Value.CopyTo(fileStream);
+                        }
+
+                        var document = application.OpenDocumentFile(tempFilePath);
+
+                        var accountGuid = new Guid(hubId.Replace("b.", ""));
+                        var projectGuid = new Guid(projectId.Replace("b.", ""));
+
+                        document.SaveAsCloudModel(accountGuid, projectGuid, folderId, modelName);
+                        document.EnableCloudWorksharing();
+
                     }
                 }
                 catch (Exception e)

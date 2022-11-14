@@ -36,7 +36,7 @@ namespace BIM360FileTransfer
             UIApp.Application.FailuresProcessing += new EventHandler<FailuresProcessingEventArgs>(OnFailuresProcessing);
             cmdData = commandData;
 
-            var instance = new MainWindow
+            var instance = new MainWindow(UIApp.Application)
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };

@@ -9,9 +9,9 @@ namespace BIM360FileTransfer.Views
     /// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow ()
+		public MainWindow (Autodesk.Revit.ApplicationServices.Application application)
 		{
-            var viewModel = new ViewModel();
+            var viewModel = new ViewModel(application);
             DataContext = viewModel;
             InitializeComponent();
         }

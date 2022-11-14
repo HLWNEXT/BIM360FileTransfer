@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Collections.ObjectModel;
 using BIM360FileTransfer.Interfaces;
+using Autodesk.Revit.ApplicationServices;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -21,9 +22,9 @@ namespace BIM360FileTransfer.ViewModels
 
 
 
-        public ViewModel()
+        public ViewModel(Application application)
         {
-            FileBrowseViewModel = new FileBrowseViewModel();
+            FileBrowseViewModel = new FileBrowseViewModel(application);
             AuthViewModel = new AuthViewModel(FileBrowseViewModel);
         }
     }
