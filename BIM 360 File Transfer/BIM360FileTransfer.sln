@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM360FileTransferTool2022"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autodesk.Forge", "Autodesk.Forge\Autodesk.Forge.csproj", "{0D60C718-8038-455B-9446-354EC816B77E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIM360FileTransferTool2023", "BIM360FileTransferTool2023\BIM360FileTransferTool2023.csproj", "{111D3390-17B6-41A9-9BB9-3ED3F573523E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,14 @@ Global
 		{0D60C718-8038-455B-9446-354EC816B77E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D60C718-8038-455B-9446-354EC816B77E}.Release|x64.ActiveCfg = Release|x64
 		{0D60C718-8038-455B-9446-354EC816B77E}.Release|x64.Build.0 = Release|x64
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Debug|x64.Build.0 = Debug|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Release|x64.ActiveCfg = Release|Any CPU
+		{111D3390-17B6-41A9-9BB9-3ED3F573523E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +51,7 @@ Global
 		SolutionGuid = {1DCED19C-DA77-418E-A171-A53D61220A28}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		BIM360FileTransferToolShared\BIM360FileTransferToolShared.projitems*{111d3390-17b6-41a9-9bb9-3ed3f573523e}*SharedItemsImports = 4
 		BIM360FileTransferToolShared\BIM360FileTransferToolShared.projitems*{8410a75c-e627-477f-95ec-7ce564c50d33}*SharedItemsImports = 13
 		BIM360FileTransferToolShared\BIM360FileTransferToolShared.projitems*{f05ea4d8-80ed-4440-a32e-d310706f7eb0}*SharedItemsImports = 4
 	EndGlobalSection

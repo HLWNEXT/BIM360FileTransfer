@@ -39,7 +39,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             // Set up the Chromium cache. 
             var settings = new CefSettings();
-            settings.CachePath = AppDomain.CurrentDomain.BaseDirectory + "cache";
+            //settings.CachePath = AppDomain.CurrentDomain.BaseDirectory + "cache";
             if (!Cef.IsInitialized) Cef.Initialize(settings);
 
             // Open the authentication window.

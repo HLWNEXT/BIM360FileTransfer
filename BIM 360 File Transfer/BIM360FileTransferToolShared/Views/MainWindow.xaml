@@ -12,9 +12,9 @@
         MinHeight="500" MinWidth="450"
         >
     
-    <Window.Resources>
+    <!--<Window.Resources>
         <ResourceDictionary Source="Dictionary.xaml" />
-    </Window.Resources>
+    </Window.Resources>-->
 
     <Grid>
         <Grid.RowDefinitions>

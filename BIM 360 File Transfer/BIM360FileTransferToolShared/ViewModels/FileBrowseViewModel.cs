@@ -501,7 +501,8 @@ namespace BIM360FileTransfer.ViewModels
                         }
                         */
 
-                        var modelName = fileInfoStreamMap.Key.CategoryName.Split(' ')[0];
+                        int idx = fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ');
+                        var modelName = fileInfoStreamMap.Key.CategoryName.Substring(0, idx);
 
                         string tempFilePath = Path.GetTempPath() + modelName;
                         var accountId = "";

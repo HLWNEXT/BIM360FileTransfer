@@ -13,8 +13,6 @@ using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using BIM360FileTransfer.Views;
-using System.IO;
-using System.Collections.ObjectModel;
 
 namespace BIM360FileTransfer
 {
@@ -23,6 +21,7 @@ namespace BIM360FileTransfer
     [Transaction(TransactionMode.Manual)]
     public class BIM360FileTransferTool : IExternalCommand
     {
+
         private Document previousDocument = null;
         private ExternalCommandData cmdData;
         public static int success;
