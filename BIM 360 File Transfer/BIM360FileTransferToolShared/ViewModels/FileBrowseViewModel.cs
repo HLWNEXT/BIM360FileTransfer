@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using Autodesk.Forge;
 using Autodesk.Forge.Model;
 using Autodesk.Revit.ApplicationServices;
+using System.Windows;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -521,10 +522,13 @@ namespace BIM360FileTransfer.ViewModels
                         document.SaveAsCloudModel(accountGuid, projectGuid, folderId, modelName);
                         document.EnableCloudWorksharing();
 
+                        document.Close();
+
                     }
                 }
                 catch (Exception e)
                 {
+                    MessageBox.Show(e.Message + " .Please check the model set up.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
 
