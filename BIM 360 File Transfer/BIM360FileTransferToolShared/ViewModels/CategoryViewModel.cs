@@ -40,6 +40,11 @@ namespace BIM360FileTransfer.ViewModels
 
 
         #region Constructor
+        protected CategoryViewModel(ICategory category)
+        {
+            Model = category;
+        }
+
         protected CategoryViewModel(ICategory category, ICommand command = null)
         {
             Model = category;

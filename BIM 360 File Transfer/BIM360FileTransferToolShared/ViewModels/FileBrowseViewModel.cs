@@ -28,12 +28,12 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> targetCategoryTree;
         private string filePaths;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
-        private Application application;
+        private Autodesk.Revit.ApplicationServices.Application application;
         private string hubId = String.Empty;
         #endregion
 
         #region Constructor
-        public FileBrowseViewModel(Application application)
+        public FileBrowseViewModel(Autodesk.Revit.ApplicationServices.Application application)
         {
             selectedSourceCategoryTree = new ObservableCollection<CategoryViewModel>();
             selectedTargetCategoryTree = new ObservableCollection<CategoryViewModel>();
