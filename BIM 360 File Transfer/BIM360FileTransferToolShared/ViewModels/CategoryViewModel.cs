@@ -12,7 +12,7 @@ using BIM360FileTransfer.Models;
 namespace BIM360FileTransfer.ViewModels
 {
     [Serializable]
-    public abstract class CategoryViewModel : BaseViewModel, IViewModel, ICloneable
+    public class CategoryViewModel : BaseViewModel, IViewModel, ICloneable
     {
         #region Data
         public ICategory Model { get; set; }
@@ -23,8 +23,7 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryBucketId => Model.BucketId;
         public string CategoryPath;
 
-        private ObservableCollection<CategoryViewModel> children;
-        //public readonly CategoryViewModel parent;
+        private ObservableCollection<CategoryViewModel> children = new ObservableCollection<CategoryViewModel>();
 
         private int level;
         
@@ -32,7 +31,6 @@ namespace BIM360FileTransfer.ViewModels
         private bool isSelected;
         private bool isVisible = true;
         private bool isVisibleInSource = true;
-        private string remarks;
         private bool hasBeenSelected = false;
 
         #endregion
@@ -40,7 +38,7 @@ namespace BIM360FileTransfer.ViewModels
 
 
         #region Constructor
-        protected CategoryViewModel(ICategory category)
+        public CategoryViewModel(ICategory category)
         {
             Model = category;
         }
@@ -155,7 +153,7 @@ namespace BIM360FileTransfer.ViewModels
                 if (name == "Plans" || name == "Project Files")
                 {
                     var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;.
                     
@@ -186,7 +184,7 @@ namespace BIM360FileTransfer.ViewModels
                     var name = objInfo.Value.attributes.displayName;
 
                     var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     thisCategory.isVisibleInSource = false;
                     rootCategory.Children.Add(thisCategory);
@@ -198,7 +196,7 @@ namespace BIM360FileTransfer.ViewModels
                     var name = objInfo.Value.attributes.name;
 
                     var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;
                     await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
@@ -218,7 +216,7 @@ namespace BIM360FileTransfer.ViewModels
                         var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
 
                         var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-                        var thisCategory = new PublicCategoryCore(entity);
+                        var thisCategory = new CategoryViewModel(entity);
                         thisCategory.IsVisible = false;
                         thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                         //thisCategory.Parent = rootCategory;
@@ -242,7 +240,7 @@ namespace BIM360FileTransfer.ViewModels
                 if (name == "Plans" || name == "Project Files")
                 {
                     var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;.
 
@@ -273,7 +271,7 @@ namespace BIM360FileTransfer.ViewModels
                     var name = objInfo.Value.attributes.displayName;
 
                     var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     thisCategory.isVisibleInSource = false;
                     rootCategory.Children.Add(thisCategory);
@@ -285,7 +283,7 @@ namespace BIM360FileTransfer.ViewModels
                     var name = objInfo.Value.attributes.name;
 
                     var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;
                     GetChildrenCategory(thisCategory);
@@ -305,7 +303,7 @@ namespace BIM360FileTransfer.ViewModels
                         var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
 
                         var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
-                        var thisCategory = new PublicCategoryCore(entity);
+                        var thisCategory = new CategoryViewModel(entity);
                         thisCategory.IsVisible = false;
                         thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                         //thisCategory.Parent = rootCategory;

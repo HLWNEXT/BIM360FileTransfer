@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BIM360FileTransfer.Commands
@@ -27,9 +28,10 @@ namespace BIM360FileTransfer.Commands
                 var fileSelectCanExecute = FileSelectCanExecute;
                 result = fileSelectCanExecute == null || fileSelectCanExecute(parameter);
             }
-            catch (Exception o)
+            catch (Exception e)
             {
                 result = false;
+                MessageBox.Show(e.Message);
             }
 
             return result;
@@ -44,9 +46,9 @@ namespace BIM360FileTransfer.Commands
                 var fileSelectExecute = FileSelectExecute;
                 fileSelectExecute?.Invoke(parameter);
             }
-            catch (Exception o)
+            catch (Exception e)
             {
-
+                MessageBox.Show(e.Message);
             }
         }
     }

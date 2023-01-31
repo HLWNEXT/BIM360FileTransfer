@@ -21,8 +21,6 @@ namespace BIM360FileTransfer
     [Transaction(TransactionMode.Manual)]
     public class BIM360FileTransferTool : IExternalCommand
     {
-
-        private Document previousDocument = null;
         private ExternalCommandData cmdData;
         public static int success;
         public static int failed;

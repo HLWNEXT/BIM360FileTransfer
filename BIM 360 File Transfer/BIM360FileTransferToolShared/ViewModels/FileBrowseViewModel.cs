@@ -201,11 +201,12 @@ namespace BIM360FileTransfer.ViewModels
         {
             hubId = GetHub();
             CategoryTree = GetCategoryTree(hubId);
-            TargetCategoryTree = new List<CategoryViewModel>();
-            foreach (var tree in CategoryTree)
-            {
-                TargetCategoryTree.Add(TreeHelper.DeepClone(tree));
-            }
+            TargetCategoryTree = GetCategoryTree(hubId);
+            //TargetCategoryTree = new List<CategoryViewModel>();
+            //foreach (var tree in CategoryTree)
+            //{
+            //    TargetCategoryTree.Add(TreeHelper.DeepClone(tree));
+            //}
             //SaveCategoryToJson(CategoryTree);
         }
 
@@ -250,7 +251,7 @@ namespace BIM360FileTransfer.ViewModels
                 var name = objInfo.Value.attributes.name;
 
                 var entity = new CategoryModel(rootFolderId, projectId, name, type);
-                var thisCategory = new PublicCategoryCore(entity);
+                var thisCategory = new CategoryViewModel(entity);
                 thisCategory.CategoryPath = name;
                 //thisCategory.Parent = rootCategory;
                 //GetChildrenCategory(hubId, thisCategory);
@@ -284,10 +285,10 @@ namespace BIM360FileTransfer.ViewModels
             settingViewModel.SettingWindow.Close();
         }
 
-        internal async void ExecuteTransfer()
+        internal void ExecuteTransfer()
         {
             DownloadFile();
-            await UploadFileAsync();
+            UploadFileAsync();
         }
 
         internal void DownloadFile()
@@ -358,7 +359,7 @@ namespace BIM360FileTransfer.ViewModels
                     localSourceStream.Position = 0;
                     var id = Guid.NewGuid();
                     var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
-                    var thisCategory = new PublicCategoryCore(entity);
+                    var thisCategory = new CategoryViewModel(entity);
                     thisCategory.CategoryPath = filePath;
                     FileInfoStreamMap[thisCategory] = localSourceStream;
                 }
@@ -393,7 +394,7 @@ namespace BIM360FileTransfer.ViewModels
             return postItemBody;
         }
 
-        internal async Task UploadFileAsync()
+        internal void UploadFileAsync()
         {
             // Work on each target folder first to avoid redundent call to projectsApi
             foreach (var item in selectedTargetCategoryTree)
@@ -506,7 +507,7 @@ namespace BIM360FileTransfer.ViewModels
                         var modelName = fileInfoStreamMap.Key.CategoryName.Substring(0, idx);
 
                         string tempFilePath = Path.GetTempPath() + modelName;
-                        var accountId = "";
+                        //var accountId = "";
 
                         using (var fileStream = File.Create(tempFilePath))
                         {
@@ -528,7 +529,7 @@ namespace BIM360FileTransfer.ViewModels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message + " .Please check the model set up.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message + "Please check the model set up.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
 

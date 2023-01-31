@@ -27,11 +27,7 @@ namespace BIM360FileTransfer.ViewModels
             else Status = "Load";
         }
 
-        private static bool _canLoad = true;
-        private static bool _hasLoaded = false;
-
         public OperateFamily LoadFamily;
-
         public OperateFamily PlaceFamily;
 
 
