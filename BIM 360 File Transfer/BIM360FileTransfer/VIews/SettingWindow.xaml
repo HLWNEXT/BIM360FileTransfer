@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIM360FileTransfer.VIews"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:BIM360FileTransfer.ViewModels"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -58,9 +59,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">From</TextBlock>
-                    <DatePicker Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="180" />
+                    <DatePicker Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="180" SelectedDate="{Binding Path=StartDate, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}"/>
                     <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">To</TextBlock>
-                    <DatePicker Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="180" />
+                    <DatePicker Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="180" SelectedDate="{Binding Path=EndDate, Mode=TwoWay, TargetNullValue={x:Static System:DateTime.Now}}"/>
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -71,7 +72,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">Every</TextBlock>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Width="100">
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Width="100" SelectedItem="{Binding SelectedDate}">
                         <ComboBoxItem>Monday</ComboBoxItem>
                         <ComboBoxItem>Tuesday</ComboBoxItem>
                         <ComboBoxItem>Wednesday</ComboBoxItem>
@@ -81,7 +82,7 @@
                         <ComboBoxItem>Sunday</ComboBoxItem>
                     </ComboBox>
                     <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">At</TextBlock>
-                    <materialDesign:TimePicker Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100"></materialDesign:TimePicker>
+                    <materialDesign:TimePicker Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="100" SelectedTime="{Binding SelectedTime}"></materialDesign:TimePicker>
                     <Button Grid.Column="4" Command="{Binding ScheduleTask}" Margin="5">Schedule Task</Button>
                 </Grid>
             </Grid>

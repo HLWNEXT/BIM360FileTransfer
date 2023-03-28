@@ -54,11 +54,19 @@ namespace BIM360FileTransfer.Models
 
         public Source source { get; set; }
         public Target target { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public string selectedDate { get; set; }
+        public string selectedTime { get; set; }
 
         public JsonModel()
         {
             source = new Source();
             target = new Target();
+            startDate = string.Empty;
+            endDate = string.Empty;
+            selectedDate = string.Empty;
+            selectedTime = string.Empty;
         }
 
     }

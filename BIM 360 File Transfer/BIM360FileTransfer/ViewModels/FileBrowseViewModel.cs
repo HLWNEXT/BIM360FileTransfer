@@ -24,6 +24,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using BIM360FileTransfer.Utilities;
 using System.Windows;
 using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -36,6 +37,11 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
         private string filePaths;
+        private string targetFolderPath = string.Empty;
+        private DateTime? startDate = DateTime.Now;
+        private DateTime? endDate = DateTime.Now;
+        private string selectedDate;
+        private string selectedTime;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
         #endregion
 
@@ -47,11 +53,11 @@ namespace BIM360FileTransfer.ViewModels
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
             LoadLocalFilesCommand = new LoadLocalFilesCommand(this);
+            SaveToLocalCommand = new SaveToLocalCommand(this);
             FileTransferCommand = new FileTransferCommand(this);
             FileTransferExecuteCommand = new FileTransferExecuteCommand(this);
             FileTransferAbortCommand = new FileTransferAbortCommand(this);
             SaveJsonCommand = new SaveJsonCommand(this);
-
             settingViewModel = new SettingViewModel(this);
         }
         #endregion
@@ -104,6 +110,56 @@ namespace BIM360FileTransfer.ViewModels
             {
                 filePaths = value;
                 OnPropertyChanged("FilePaths");
+            }
+        }
+
+        public string TargetFolderPath
+        {
+            get { return targetFolderPath; }
+            set
+            {
+                targetFolderPath = value;
+                OnPropertyChanged("TargetFolderPath");
+            }
+        }
+
+        public DateTime? StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                startDate = value;
+                OnPropertyChanged("StartDate");
+            }
+        }
+
+        public DateTime? EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                endDate = value;
+                OnPropertyChanged("EndDate");
+            }
+        }
+        
+        public string SelectedDate
+        {
+            get { return selectedDate; }
+            set
+            {
+                selectedDate = value;
+                OnPropertyChanged("SelectedDate");
+            }
+        }
+
+        public string SelectedTime
+        {
+            get { return selectedTime; }
+            set
+            {
+                selectedTime = value;
+                OnPropertyChanged("SelectedTime");
             }
         }
         #endregion
@@ -310,19 +366,6 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
                     FileInfoStreamMap[item] = result;
-
-                    // Save to local
-                    //var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
-                    //DirectoryInfo info = new DirectoryInfo(filePath);
-                    //if (!info.Exists)
-                    //{
-                    //    info.Create();
-                    //}
-                    //string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
-                    //using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
-                    //{
-                    //    result.CopyTo(outputFileStream);
-                    //}
                 }
                 catch (Exception e)
                 {
@@ -333,6 +376,8 @@ namespace BIM360FileTransfer.ViewModels
 
         internal void LoadLocalFile(string[] sourItemPaths = null)
         {
+            
+
             if (sourItemPaths is null)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -346,7 +391,7 @@ namespace BIM360FileTransfer.ViewModels
             }
 
             if (sourItemPaths is null) return;
-            
+
 
             foreach (string filePath in sourItemPaths)
             {
@@ -369,6 +414,53 @@ namespace BIM360FileTransfer.ViewModels
                     FileInfoStreamMap[thisCategory] = localSourceStream;
                 }
             }
+        }
+
+        internal void SaveToLocal(string targetFolderPath = null)
+        {
+            if (targetFolderPath is null)
+            {
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.IsFolderPicker = true;
+                dialog.Multiselect = false;
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    targetFolderPath = dialog.FileName;
+                }
+            }
+
+            if (targetFolderPath is null) return;
+            else
+            {
+                TargetFolderPath += targetFolderPath;
+            }
+
+
+        
+
+
+            //foreach (string filePath in sourItemPaths)
+            //{
+            //    FilePaths += (filePath + Environment.NewLine);
+            //    var filename = new FileInfo(filePath);
+
+            //    MemoryStream localSourceStream = new MemoryStream();
+            //    using (FileStream localSource = File.Open(@filePath, FileMode.Open))
+            //    {
+
+            //        Console.WriteLine("Source length: {0}", localSource.Length.ToString());
+
+            //        // Copy source to destination.
+            //        localSource.CopyTo(localSourceStream);
+            //        localSourceStream.Position = 0;
+            //        var id = Guid.NewGuid();
+            //        var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
+            //        var thisCategory = new PublicCategoryCore(entity);
+            //        thisCategory.CategoryPath = filePath;
+            //        FileInfoStreamMap[thisCategory] = localSourceStream;
+            //    }
+            //}
         }
 
         private CreateStorage CreateStorageBody(string folderId, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
@@ -525,6 +617,12 @@ namespace BIM360FileTransfer.ViewModels
         {
             var jsonModel = new JsonModel();
 
+            jsonModel.startDate = StartDate.ToString();
+            jsonModel.endDate = EndDate.ToString();
+            jsonModel.selectedDate = SelectedDate;
+            jsonModel.selectedTime = SelectedTime;
+
+
             // Format cloud files to Json model.
             foreach (var item in selectedSourceCategoryTree)
             {
@@ -549,6 +647,21 @@ namespace BIM360FileTransfer.ViewModels
                 var path = item.CategoryPath;
                 var name = item.CategoryName;
                 JsonModel.TargetItem targetItem = new JsonModel.TargetItem(name, path);
+                jsonModel.target.targetItems.Add(targetItem);
+            }
+
+            // Format local target to Json model.
+            foreach (var item in FileInfoStreamMap.Keys)
+            {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.TargetItem targetItem = new JsonModel.TargetItem(name, path);
+                jsonModel.target.targetItems.Add(targetItem);
+            }
+
+            if (TargetFolderPath != null && TargetFolderPath != string.Empty)
+            {
+                JsonModel.TargetItem targetItem = new JsonModel.TargetItem("", TargetFolderPath);
                 jsonModel.target.targetItems.Add(targetItem);
             }
 
@@ -649,7 +762,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             get
             {
-                if (selectedTargetCategoryTree.Count == 0 && (selectedSourceCategoryTree.Count == 0 || FileInfoStreamMap.Keys.Count == 0))
+                if (selectedTargetCategoryTree.Count == 0 && !(selectedSourceCategoryTree.Count != 0 || FileInfoStreamMap.Keys.Count != 0 || TargetFolderPath != string.Empty))
                 {
                     return false;
                 }
@@ -682,6 +795,12 @@ namespace BIM360FileTransfer.ViewModels
         }
 
         public ICommand LoadLocalFilesCommand
+        {
+            get;
+            private set;
+        }
+        
+        public ICommand SaveToLocalCommand
         {
             get;
             private set;

@@ -120,7 +120,9 @@
             <materialDesign:Card Grid.Column="2" Padding="5" Margin="16">
                 <DockPanel  Margin="16">
                     <TextBlock DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignHeadline5TextBlock}">Target Folder</TextBlock>
-                    <Controls:MultiSelectTreeView
+                    <TabControl Style="{DynamicResource MaterialDesignTabControl}">
+                        <TabItem Header="BIM 360">
+                        <Controls:MultiSelectTreeView
                         Name="TargetCategoryTree"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         ItemsSource="{Binding Path=FileBrowseViewModel.TargetCategoryTree,Mode=OneWay,IsAsync=True}"
@@ -156,6 +158,20 @@
                             </HierarchicalDataTemplate>
                         </Controls:MultiSelectTreeView.Resources>
                     </Controls:MultiSelectTreeView>
+                    </TabItem>
+                    <TabItem Header="Local" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ScrollViewer Grid.Row ="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <TextBlock Text="{Binding Path=FileBrowseViewModel.TargetFolderPath}" Style="{DynamicResource MaterialDesignBody1TextBlock}" Background="White"/>
+                            </ScrollViewer>
+                            <Button Grid.Row ="1" Command="{Binding FileBrowseViewModel.SaveToLocalCommand}" Margin="5">Set Local Destination</Button>
+                        </Grid>
+                    </TabItem>
+                    </TabControl>
                 </DockPanel>
             </materialDesign:Card>
             <!--<Border Grid.Column="2" x:Name="Target" Margin="16">
