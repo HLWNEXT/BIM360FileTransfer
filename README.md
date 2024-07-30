@@ -2,7 +2,10 @@
 A desktop program helps you copy files to different projects on BIM 360.
 All functions are done. You can find the code in the master branch. 
 
-# Test Instruction
+# Deprecated 
+This tool has been deprecated and we will no longer maintain this repo. The file transfer tool is transferred to the Autodesk Replication Tool for Docs. Check it out at https://art.autodesk.com/
+
+# Instruction
 
 - Download the code to your local computer. (Recommend GitHub Desktop App to save your time setting environment).
 
