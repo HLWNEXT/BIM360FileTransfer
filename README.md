@@ -2,7 +2,12 @@
 A desktop program helps you copy files to different projects on BIM 360.
 All functions are done. You can find the code in the master branch. 
 
-# Update 1.0.1
+
+## Deprecated 
+This tool has been deprecated and we will no longer maintain this repo. The file transfer tool is transferred to the Autodesk Replication Tool for Docs. Check it out at https://art.autodesk.com/
+
+
+## Update 1.0.1
 
 - Automatically load BIM 360 projects once you log in.
 
@@ -16,7 +21,8 @@ All functions are done. You can find the code in the master branch.
 
 - Update UI binding and animation.
 
-# Instruction
+
+## Instruction
 
 - Download the code to your local computer. (Recommend GitHub Desktop App to save your time setting environment).
 
@@ -31,7 +37,7 @@ All functions are done. You can find the code in the master branch.
 - Finally, click the green Triangle on the top debug panel.
 
 
-# Working Functions
+## Working Functions
 
 - Click Authentication button to open the new browser page.
 
@@ -53,7 +59,7 @@ All functions are done. You can find the code in the master branch.
 
 - Check your BIM 360 page to see the result.
 
-# Known Issues
+## Known Issues
 
 - Load CLOUD might encounter request limit. -- Fixed
 
