@@ -22,19 +22,19 @@
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_864CB6E18F4843E0BD916DC2A02B519D"
+        "OwnerKey" = "8:_AF9506C838364AC7B4E6FAB184A5A153"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_7A1BE55F34BA4ED293C1D060871DA611"
+        "OwnerKey" = "8:_7829D88142F64DA693A35F9CAC522670"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_6FEDEC5392B24D9885DBD0C4B999B0FB"
+        "OwnerKey" = "8:_5095EA1B9F524FAA8710D707652B8E98"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -46,373 +46,439 @@
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_FAB9AEE7D4EC6060F8B0A2C5A47B357B"
+        "OwnerKey" = "8:_215EA461133B46C99E93C40E0126ECD8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+        "OwnerKey" = "8:_F97300524DABE16934911BDA16491F9A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_4F85A632F9E74FA2B37986FA22845B0F"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_3F2BAE80041C491BAB04D366CD3A2D47"
+        "OwnerKey" = "8:_0311D883F30185B0D64276F4642BCCBA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "OwnerKey" = "8:_0ABC350FBEEB39E90D8F1D56261C266C"
+        "OwnerKey" = "8:_04B04FFB380E4D39A7FCA5478981BD95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0ABC350FBEEB39E90D8F1D56261C266C"
-        "OwnerKey" = "8:_3F2BAE80041C491BAB04D366CD3A2D47"
+        "MsmKey" = "8:_0311D883F30185B0D64276F4642BCCBA"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0ABC350FBEEB39E90D8F1D56261C266C"
-        "OwnerKey" = "8:_FAB9AEE7D4EC6060F8B0A2C5A47B357B"
+        "MsmKey" = "8:_0311D883F30185B0D64276F4642BCCBA"
+        "OwnerKey" = "8:_7829D88142F64DA693A35F9CAC522670"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0ABC350FBEEB39E90D8F1D56261C266C"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+        "MsmKey" = "8:_0311D883F30185B0D64276F4642BCCBA"
+        "OwnerKey" = "8:_F97300524DABE16934911BDA16491F9A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0C2E77B1764747BFA489ACFCFDE2E4F8"
+        "MsmKey" = "8:_04B04FFB380E4D39A7FCA5478981BD95"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_16F364AB181A4675A8C6A001B9C85E3B"
+        "MsmKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_173431DDB1F6EC0F7F403167F5714E34"
-        "OwnerKey" = "8:_5DCA87C16167476A83DE9194EB7A2860"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_173431DDB1F6EC0F7F403167F5714E34"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_173431DDB1F6EC0F7F403167F5714E34"
-        "OwnerKey" = "8:_41A32D6BA887DD1145D3298F298BBD88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_30A7FDC388CA4EA5918573D77256333B"
+        "MsmKey" = "8:_15BE30E71A3A43379C2B0BC29FAF3961"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_361BD5BDDEC53E2819A038AC55B3DADC"
-        "OwnerKey" = "8:_5DCA87C16167476A83DE9194EB7A2860"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_361BD5BDDEC53E2819A038AC55B3DADC"
-        "OwnerKey" = "8:_41A32D6BA887DD1145D3298F298BBD88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_377BDDBD51904D928EB791FFDDC548B9"
+        "MsmKey" = "8:_1EB224A35EEE404B83C675001237926F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3C7BBBCFD7ED471DABB75E14F09CD196"
+        "MsmKey" = "8:_215EA461133B46C99E93C40E0126ECD8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3DAAC2DF1FA74E95A83673CF35EF341B"
+        "MsmKey" = "8:_278B27E96D0A4325AACB3AA7E8CF474E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3F2BAE80041C491BAB04D366CD3A2D47"
+        "MsmKey" = "8:_2A247798A5544C50B0155C30B859ED7C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_41A32D6BA887DD1145D3298F298BBD88"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+        "MsmKey" = "8:_335BA5D25B1A48668AA5465137D057DE"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_43E9EC738E0C2C998890C1E113B9534F"
-        "OwnerKey" = "8:_E3BD8367697C43C983E8526CBF8F4F2F"
+        "OwnerKey" = "8:_9062B1516A15457F893124F28192D35A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4DD2866109204CABADF292F07FA5A19F"
+        "MsmKey" = "8:_43E9EC738E0C2C998890C1E113B9534F"
+        "OwnerKey" = "8:_9846547EACFA486E90398F667EB2C4E3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_43E9EC738E0C2C998890C1E113B9534F"
+        "OwnerKey" = "8:_DE115752A8FD7FAAB84BE1EFD9779ED0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_43EF4087FE2A43A8B212C17F66505E71"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4F18BF44045A478FB318B3F31FF68C9B"
+        "MsmKey" = "8:_448871038E6A4E798FBD9AEF663865CB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_46C6FE78C7D440F4ADE22D30FAFF67E8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_49CE6CC4BF1C405DB5ECDF937A973A74"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4F3628B7A5DB8D41ACCC1D6B75E2655E"
-        "OwnerKey" = "8:_6FEDEC5392B24D9885DBD0C4B999B0FB"
+        "OwnerKey" = "8:_5095EA1B9F524FAA8710D707652B8E98"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4F85A632F9E74FA2B37986FA22845B0F"
+        "MsmKey" = "8:_5095EA1B9F524FAA8710D707652B8E98"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5400E5608F2545A3A9C2849AD1754DF5"
+        "MsmKey" = "8:_5139B907311D4EECA3BA135F8DB86575"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5A5054A5C262C1C86CB158E3EC1DD7E1"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+        "MsmKey" = "8:_5149B5897BF5F824F04F0B47B5A0AB5F"
+        "OwnerKey" = "8:_EAB0BD769212AA58A4B66844B18D3EBE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5DCA87C16167476A83DE9194EB7A2860"
+        "MsmKey" = "8:_5149B5897BF5F824F04F0B47B5A0AB5F"
+        "OwnerKey" = "8:_BB570224B25941958814DD14535B6531"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5149B5897BF5F824F04F0B47B5A0AB5F"
+        "OwnerKey" = "8:_278B27E96D0A4325AACB3AA7E8CF474E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5ABE776F726C4E728A15EEE3B0D41FBE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_63552367EB9A4D7EBEA9B48C6E4F9C7B"
+        "MsmKey" = "8:_5CF70CD270A44B00AC35A22C7E43B81A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+        "MsmKey" = "8:_64213CC482C2F6B5D9ABCE896391EDAF"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_64AEB1D3D05D4002A2EF23A74FE26A55"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6AC47AD27CF540CCB6A6E42C64A88506"
+        "MsmKey" = "8:_67D44CC56BAA429CA34C17260C3C28F0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6B926E5AEF8842C8BFFE2064864644E5"
+        "MsmKey" = "8:_7012EFBCB6094C11BFF103B382C59667"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6FEDEC5392B24D9885DBD0C4B999B0FB"
+        "MsmKey" = "8:_74DC98FB36104BFFA1CB0086668AC6C8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7A1BE55F34BA4ED293C1D060871DA611"
+        "MsmKey" = "8:_7806CB9207E060B14C22561D25AEEB29"
+        "OwnerKey" = "8:_EAB0BD769212AA58A4B66844B18D3EBE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7806CB9207E060B14C22561D25AEEB29"
+        "OwnerKey" = "8:_BB570224B25941958814DD14535B6531"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7806CB9207E060B14C22561D25AEEB29"
+        "OwnerKey" = "8:_278B27E96D0A4325AACB3AA7E8CF474E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7806CB9207E060B14C22561D25AEEB29"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7829D88142F64DA693A35F9CAC522670"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7F616D1DE5BA47A7B9D94AC3435AA0B0"
+        "MsmKey" = "8:_7F1E1E9510AE446992FC937A007B9FBB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_864CB6E18F4843E0BD916DC2A02B519D"
+        "MsmKey" = "8:_89A429873EEC410586733D071AB7426C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8CD7D3D3129246389267BEE80BA05F79"
+        "MsmKey" = "8:_9062B1516A15457F893124F28192D35A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9033C88080EC4176945A82CA41095CA3"
+        "MsmKey" = "8:_9846547EACFA486E90398F667EB2C4E3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_99ED1B978471460F89FA969159742B14"
+        "MsmKey" = "8:_9F3E6F5C8939431CBE84CFD0D40FAAEA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_ADF043F4A6B24999B7A4762A30D1545E"
+        "MsmKey" = "8:_A306218B1ABB4F899769AE453757A1CE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B3CB032E0BF54D9EBB1E766B9CE2D1FF"
+        "MsmKey" = "8:_A45558F6FB1F4FB180825564BDEAA036"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BDDACC53470946C29B830042E5F5C1F9"
+        "MsmKey" = "8:_AA9B85A06FD84B8DAEA278663D0DE9F6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C14438FF81354D56A01934DAFF635516"
+        "MsmKey" = "8:_AB423A5760F340EF8CC3894B5318F404"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C1EBCFDDB89A44D19FFA9DB1DCDA436F"
+        "MsmKey" = "8:_AB8AEDBBC1B7427AA0667F4D92757F15"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C89234E5DEB244A1BBE8847C6630AC0D"
+        "MsmKey" = "8:_AC17B5B7DAD24C77B64151147BED4B8E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C95F9BE4F13A4389B9241FD93E6F9823"
+        "MsmKey" = "8:_AD172A990B6048DAA1827CBFC18595E0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D701A0B77FBB43A48CF2BBBAC29FB3E1"
+        "MsmKey" = "8:_AF9506C838364AC7B4E6FAB184A5A153"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_DD938815C1734111A9879738A9BECBBB"
+        "MsmKey" = "8:_BB570224B25941958814DD14535B6531"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C0FF769DDDE24ADE8C61B2942D6A37C8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D911DD15A83D400AAFFC27C52C2EC73D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DD286DA4C5784EE5933F0B2DAE8A5B44"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DE115752A8FD7FAAB84BE1EFD9779ED0"
+        "OwnerKey" = "8:_9062B1516A15457F893124F28192D35A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E19359993EEF0B09EBBEE8A9DEA32459"
-        "OwnerKey" = "8:_0ABC350FBEEB39E90D8F1D56261C266C"
+        "OwnerKey" = "8:_04B04FFB380E4D39A7FCA5478981BD95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E19359993EEF0B09EBBEE8A9DEA32459"
-        "OwnerKey" = "8:_4F85A632F9E74FA2B37986FA22845B0F"
+        "OwnerKey" = "8:_0311D883F30185B0D64276F4642BCCBA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E3BD8367697C43C983E8526CBF8F4F2F"
+        "MsmKey" = "8:_EAB0BD769212AA58A4B66844B18D3EBE"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EB2EFD309F0347308BC2ABED03A9936D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E82EFFA9D8174A01899B5FFF97E0DF42"
+        "MsmKey" = "8:_ED12F1948CBC44EA915AE8A5D94DE933"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_ECBBC4CF57274DB68C3A79B84CADE6E9"
+        "MsmKey" = "8:_EF4166B71BBF4CF6B4F79584093685FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F726DA6029914C81AA3F6584A9C00851"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F9C3A4EC91C9420F93C8F087E40D2D85"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FAB9AEE7D4EC6060F8B0A2C5A47B357B"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB5FD52541E948AAB4A4483F59CBA57A"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_F97300524DABE16934911BDA16491F9A"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_30A7FDC388CA4EA5918573D77256333B"
+        "OwnerKey" = "8:_BB570224B25941958814DD14535B6531"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_377BDDBD51904D928EB791FFDDC548B9"
+        "OwnerKey" = "8:_AF9506C838364AC7B4E6FAB184A5A153"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ECBBC4CF57274DB68C3A79B84CADE6E9"
+        "OwnerKey" = "8:_AD172A990B6048DAA1827CBFC18595E0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E3BD8367697C43C983E8526CBF8F4F2F"
+        "OwnerKey" = "8:_AB423A5760F340EF8CC3894B5318F404"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9846547EACFA486E90398F667EB2C4E3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9062B1516A15457F893124F28192D35A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DE115752A8FD7FAAB84BE1EFD9779ED0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -424,25 +490,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C14438FF81354D56A01934DAFF635516"
+        "OwnerKey" = "8:_7829D88142F64DA693A35F9CAC522670"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_864CB6E18F4843E0BD916DC2A02B519D"
+        "OwnerKey" = "8:_74DC98FB36104BFFA1CB0086668AC6C8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7A1BE55F34BA4ED293C1D060871DA611"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6FEDEC5392B24D9885DBD0C4B999B0FB"
+        "OwnerKey" = "8:_5095EA1B9F524FAA8710D707652B8E98"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -454,67 +514,79 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+        "OwnerKey" = "8:_43EF4087FE2A43A8B212C17F66505E71"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5A5054A5C262C1C86CB158E3EC1DD7E1"
+        "OwnerKey" = "8:_335BA5D25B1A48668AA5465137D057DE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FAB9AEE7D4EC6060F8B0A2C5A47B357B"
+        "OwnerKey" = "8:_2A247798A5544C50B0155C30B859ED7C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_41A32D6BA887DD1145D3298F298BBD88"
+        "OwnerKey" = "8:_278B27E96D0A4325AACB3AA7E8CF474E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5DCA87C16167476A83DE9194EB7A2860"
+        "OwnerKey" = "8:_215EA461133B46C99E93C40E0126ECD8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_361BD5BDDEC53E2819A038AC55B3DADC"
+        "OwnerKey" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_173431DDB1F6EC0F7F403167F5714E34"
+        "OwnerKey" = "8:_64213CC482C2F6B5D9ABCE896391EDAF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4F85A632F9E74FA2B37986FA22845B0F"
+        "OwnerKey" = "8:_F97300524DABE16934911BDA16491F9A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4F18BF44045A478FB318B3F31FF68C9B"
+        "OwnerKey" = "8:_0311D883F30185B0D64276F4642BCCBA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3F2BAE80041C491BAB04D366CD3A2D47"
+        "OwnerKey" = "8:_EAB0BD769212AA58A4B66844B18D3EBE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0ABC350FBEEB39E90D8F1D56261C266C"
+        "OwnerKey" = "8:_5149B5897BF5F824F04F0B47B5A0AB5F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7806CB9207E060B14C22561D25AEEB29"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_04B04FFB380E4D39A7FCA5478981BD95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -527,12 +599,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_02FA910B99AE5A9E574F7B2CBF4ED2DA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C7BBBCFD7ED471DABB75E14F09CD196"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -599,10 +665,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.8"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    "Name" = "8:Microsoft .NET Framework 4.8 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.8"
                     }
                 }
             }
@@ -627,7 +693,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.7.2"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.8"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=863262"
                 }
@@ -639,7 +705,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:CefSharp, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_02FA910B99AE5A9E574F7B2CBF4ED2DA"
@@ -651,7 +717,7 @@
             "SourcePath" = "8:CefSharp.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -666,14 +732,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0ABC350FBEEB39E90D8F1D56261C266C"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0311D883F30185B0D64276F4642BCCBA"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.Core, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:CefSharp.Core, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_0ABC350FBEEB39E90D8F1D56261C266C"
+                    "_0311D883F30185B0D64276F4642BCCBA"
                     {
                     "Name" = "8:CefSharp.Core.dll"
                     "Attributes" = "3:512"
@@ -682,26 +748,6 @@
             "SourcePath" = "8:CefSharp.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0C2E77B1764747BFA489ACFCFDE2E4F8"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\vk_swiftshader.dll"
-            "TargetName" = "8:vk_swiftshader.dll"
-            "Tag" = "8:"
             "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
@@ -714,387 +760,17 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_16F364AB181A4675A8C6A001B9C85E3B"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\chrome_200_percent.pak"
-            "TargetName" = "8:chrome_200_percent.pak"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_173431DDB1F6EC0F7F403167F5714E34"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_173431DDB1F6EC0F7F403167F5714E34"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Newtonsoft.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_30A7FDC388CA4EA5918573D77256333B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_04B04FFB380E4D39A7FCA5478981BD95"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:CefSharp.Core, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_30A7FDC388CA4EA5918573D77256333B"
-                    {
-                    "Name" = "8:RestSharp.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\RestSharp.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_361BD5BDDEC53E2819A038AC55B3DADC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_361BD5BDDEC53E2819A038AC55B3DADC"
-                    {
-                    "Name" = "8:RestSharp.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:RestSharp.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_377BDDBD51904D928EB791FFDDC548B9"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_377BDDBD51904D928EB791FFDDC548B9"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\Newtonsoft.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C7BBBCFD7ED471DABB75E14F09CD196"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3C7BBBCFD7ED471DABB75E14F09CD196"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\Newtonsoft.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3DAAC2DF1FA74E95A83673CF35EF341B"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\vulkan-1.dll"
-            "TargetName" = "8:vulkan-1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3F2BAE80041C491BAB04D366CD3A2D47"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.Wpf, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3F2BAE80041C491BAB04D366CD3A2D47"
-                    {
-                    "Name" = "8:CefSharp.Wpf.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Wpf.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_41A32D6BA887DD1145D3298F298BBD88"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Autodesk.Forge, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_41A32D6BA887DD1145D3298F298BBD88"
-                    {
-                    "Name" = "8:Autodesk.Forge.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Autodesk.Forge.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_43E9EC738E0C2C998890C1E113B9534F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=2.0.4.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_43E9EC738E0C2C998890C1E113B9534F"
-                    {
-                    "Name" = "8:MaterialDesignColors.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MaterialDesignColors.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DD2866109204CABADF292F07FA5A19F"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.pdb"
-            "TargetName" = "8:CefSharp.BrowserSubprocess.pdb"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4F18BF44045A478FB318B3F31FF68C9B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=2.0.4.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_4F18BF44045A478FB318B3F31FF68C9B"
-                    {
-                    "Name" = "8:MaterialDesignColors.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MaterialDesignColors.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4F3628B7A5DB8D41ACCC1D6B75E2655E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.BrowserSubprocess.Core, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_4F3628B7A5DB8D41ACCC1D6B75E2655E"
-                    {
-                    "Name" = "8:CefSharp.BrowserSubprocess.Core.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:CefSharp.BrowserSubprocess.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4F85A632F9E74FA2B37986FA22845B0F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.Core, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_4F85A632F9E74FA2B37986FA22845B0F"
+                    "_04B04FFB380E4D39A7FCA5478981BD95"
                     {
                     "Name" = "8:CefSharp.Core.dll"
                     "Attributes" = "3:512"
@@ -1103,26 +779,6 @@
             "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5400E5608F2545A3A9C2849AD1754DF5"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\vk_swiftshader_icd.json"
-            "TargetName" = "8:vk_swiftshader_icd.json"
-            "Tag" = "8:"
             "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
@@ -1138,96 +794,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5A5054A5C262C1C86CB158E3EC1DD7E1"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MultiSelectTreeView, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_5A5054A5C262C1C86CB158E3EC1DD7E1"
-                    {
-                    "Name" = "8:MultiSelectTreeView.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MultiSelectTreeView.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5DCA87C16167476A83DE9194EB7A2860"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Autodesk.Forge, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_5DCA87C16167476A83DE9194EB7A2860"
-                    {
-                    "Name" = "8:Autodesk.Forge.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\Autodesk.Forge.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_63552367EB9A4D7EBEA9B48C6E4F9C7B"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\d3dcompiler_47.dll"
-            "TargetName" = "8:d3dcompiler_47.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6A8A12E931344D57A2A01FB604E56E78"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_094A054889CD44ED8990D7F9BCC2BB67"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:BIM360FileTransfer, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_6A8A12E931344D57A2A01FB604E56E78"
+                    "_094A054889CD44ED8990D7F9BCC2BB67"
                     {
                     "Name" = "8:BIM360FileTransfer.exe"
                     "Attributes" = "3:512"
@@ -1236,26 +810,6 @@
             "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\BIM360FileTransfer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6AC47AD27CF540CCB6A6E42C64A88506"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\libGLESv2.dll"
-            "TargetName" = "8:libGLESv2.dll"
-            "Tag" = "8:"
             "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
@@ -1271,12 +825,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6B926E5AEF8842C8BFFE2064864644E5"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_15BE30E71A3A43379C2B0BC29FAF3961"
             {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\libcef.dll"
-            "TargetName" = "8:libcef.dll"
+            "SourcePath" = "8:..\\BIM360FileTransfer\\Resources\\postItemBody.json"
+            "TargetName" = "8:postItemBody.json"
             "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Folder" = "8:_00C455EC77604270A27F57273F28A584"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1291,351 +845,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6FEDEC5392B24D9885DBD0C4B999B0FB"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.BrowserSubprocess, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_6FEDEC5392B24D9885DBD0C4B999B0FB"
-                    {
-                    "Name" = "8:CefSharp.BrowserSubprocess.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7A1BE55F34BA4ED293C1D060871DA611"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.BrowserSubprocess.Core, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_7A1BE55F34BA4ED293C1D060871DA611"
-                    {
-                    "Name" = "8:CefSharp.BrowserSubprocess.Core.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F616D1DE5BA47A7B9D94AC3435AA0B0"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\chrome_elf.dll"
-            "TargetName" = "8:chrome_elf.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_864CB6E18F4843E0BD916DC2A02B519D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.Core.Runtime, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_864CB6E18F4843E0BD916DC2A02B519D"
-                    {
-                    "Name" = "8:CefSharp.Core.Runtime.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.Runtime.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8CD7D3D3129246389267BEE80BA05F79"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\BIM360FileTransfer.exe.config"
-            "TargetName" = "8:BIM360FileTransfer.exe.config"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9033C88080EC4176945A82CA41095CA3"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\resources.pak"
-            "TargetName" = "8:resources.pak"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_99ED1B978471460F89FA969159742B14"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\debug.log"
-            "TargetName" = "8:debug.log"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ADF043F4A6B24999B7A4762A30D1545E"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\README.txt"
-            "TargetName" = "8:README.txt"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B3CB032E0BF54D9EBB1E766B9CE2D1FF"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\libEGL.dll"
-            "TargetName" = "8:libEGL.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BDDACC53470946C29B830042E5F5C1F9"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.Runtime.xml"
-            "TargetName" = "8:CefSharp.Core.Runtime.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C14438FF81354D56A01934DAFF635516"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MultiSelectTreeView, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C14438FF81354D56A01934DAFF635516"
-                    {
-                    "Name" = "8:MultiSelectTreeView.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MultiSelectTreeView.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C1EBCFDDB89A44D19FFA9DB1DCDA436F"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\icudtl.dat"
-            "TargetName" = "8:icudtl.dat"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C89234E5DEB244A1BBE8847C6630AC0D"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\LICENSE.txt"
-            "TargetName" = "8:LICENSE.txt"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C95F9BE4F13A4389B9241FD93E6F9823"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\snapshot_blob.bin"
-            "TargetName" = "8:snapshot_blob.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D701A0B77FBB43A48CF2BBBAC29FB3E1"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\BIM360FileTransfer.pdb"
-            "TargetName" = "8:BIM360FileTransfer.pdb"
-            "Tag" = "8:"
-            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD938815C1734111A9879738A9BECBBB"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1EB224A35EEE404B83C675001237926F"
             {
             "SourcePath" = "8:..\\BIM360FileTransfer\\Resources\\HLW Logo Vivid Blue_rgb.ico"
             "TargetName" = "8:HLW Logo Vivid Blue_rgb.ico"
@@ -1655,23 +865,147 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E19359993EEF0B09EBBEE8A9DEA32459"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_215EA461133B46C99E93C40E0126ECD8"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.Core.Runtime, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:CefSharp.Core.Runtime, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_E19359993EEF0B09EBBEE8A9DEA32459"
+                    "_215EA461133B46C99E93C40E0126ECD8"
                     {
                     "Name" = "8:CefSharp.Core.Runtime.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:CefSharp.Core.Runtime.dll"
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.Runtime.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_278B27E96D0A4325AACB3AA7E8CF474E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Autodesk.Forge, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_278B27E96D0A4325AACB3AA7E8CF474E"
+                    {
+                    "Name" = "8:Autodesk.Forge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\Resources\\Autodesk.Forge.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_00C455EC77604270A27F57273F28A584"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2A247798A5544C50B0155C30B859ED7C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_2A247798A5544C50B0155C30B859ED7C"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_335BA5D25B1A48668AA5465137D057DE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_335BA5D25B1A48668AA5465137D057DE"
+                    {
+                    "Name" = "8:CefSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_43E9EC738E0C2C998890C1E113B9534F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=2.0.4.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_43E9EC738E0C2C998890C1E113B9534F"
+                    {
+                    "Name" = "8:MaterialDesignColors.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MaterialDesignColors.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1686,41 +1020,21 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3BD8367697C43C983E8526CBF8F4F2F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_43EF4087FE2A43A8B212C17F66505E71"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=4.3.0.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=2.0.4.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E3BD8367697C43C983E8526CBF8F4F2F"
+                    "_43EF4087FE2A43A8B212C17F66505E71"
                     {
-                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
+                    "Name" = "8:MaterialDesignColors.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MaterialDesignThemes.Wpf.dll"
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MaterialDesignColors.dll"
             "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E82EFFA9D8174A01899B5FFF97E0DF42"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\v8_context_snapshot.bin"
-            "TargetName" = "8:v8_context_snapshot.bin"
             "Tag" = "8:"
             "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
@@ -1737,41 +1051,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ECBBC4CF57274DB68C3A79B84CADE6E9"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_448871038E6A4E798FBD9AEF663865CB"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_ECBBC4CF57274DB68C3A79B84CADE6E9"
-                    {
-                    "Name" = "8:CefSharp.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F726DA6029914C81AA3F6584A9C00851"
-            {
-            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.Runtime.pdb"
-            "TargetName" = "8:CefSharp.Core.Runtime.pdb"
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\libGLESv2.dll"
+            "TargetName" = "8:libGLESv2.dll"
             "Tag" = "8:"
             "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
@@ -1788,7 +1071,384 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F9C3A4EC91C9420F93C8F087E40D2D85"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_46C6FE78C7D440F4ADE22D30FAFF67E8"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\libcef.dll"
+            "TargetName" = "8:libcef.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_49CE6CC4BF1C405DB5ECDF937A973A74"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\vk_swiftshader.dll"
+            "TargetName" = "8:vk_swiftshader.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4F3628B7A5DB8D41ACCC1D6B75E2655E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp.BrowserSubprocess.Core, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_4F3628B7A5DB8D41ACCC1D6B75E2655E"
+                    {
+                    "Name" = "8:CefSharp.BrowserSubprocess.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:CefSharp.BrowserSubprocess.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5095EA1B9F524FAA8710D707652B8E98"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp.BrowserSubprocess, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_5095EA1B9F524FAA8710D707652B8E98"
+                    {
+                    "Name" = "8:CefSharp.BrowserSubprocess.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5139B907311D4EECA3BA135F8DB86575"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\icudtl.dat"
+            "TargetName" = "8:icudtl.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5149B5897BF5F824F04F0B47B5A0AB5F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5149B5897BF5F824F04F0B47B5A0AB5F"
+                    {
+                    "Name" = "8:RestSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:RestSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5ABE776F726C4E728A15EEE3B0D41FBE"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\chrome_elf.dll"
+            "TargetName" = "8:chrome_elf.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5CF70CD270A44B00AC35A22C7E43B81A"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\BIM360FileTransfer.pdb"
+            "TargetName" = "8:BIM360FileTransfer.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_64213CC482C2F6B5D9ABCE896391EDAF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MultiSelectTreeView, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_64213CC482C2F6B5D9ABCE896391EDAF"
+                    {
+                    "Name" = "8:MultiSelectTreeView.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MultiSelectTreeView.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_64AEB1D3D05D4002A2EF23A74FE26A55"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\snapshot_blob.bin"
+            "TargetName" = "8:snapshot_blob.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_67D44CC56BAA429CA34C17260C3C28F0"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\d3dcompiler_47.dll"
+            "TargetName" = "8:d3dcompiler_47.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7012EFBCB6094C11BFF103B382C59667"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\debug.log"
+            "TargetName" = "8:debug.log"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_74DC98FB36104BFFA1CB0086668AC6C8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MultiSelectTreeView, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_74DC98FB36104BFFA1CB0086668AC6C8"
+                    {
+                    "Name" = "8:MultiSelectTreeView.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MultiSelectTreeView.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7806CB9207E060B14C22561D25AEEB29"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7806CB9207E060B14C22561D25AEEB29"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7829D88142F64DA693A35F9CAC522670"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp.Wpf, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7829D88142F64DA693A35F9CAC522670"
+                    {
+                    "Name" = "8:CefSharp.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Wpf.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F1E1E9510AE446992FC937A007B9FBB"
             {
             "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\chrome_100_percent.pak"
             "TargetName" = "8:chrome_100_percent.pak"
@@ -1808,23 +1468,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FAB9AEE7D4EC6060F8B0A2C5A47B357B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_89A429873EEC410586733D071AB7426C"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CefSharp.Wpf, Version=97.1.61.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FAB9AEE7D4EC6060F8B0A2C5A47B357B"
-                    {
-                    "Name" = "8:CefSharp.Wpf.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:CefSharp.Wpf.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\resources.pak"
+            "TargetName" = "8:resources.pak"
             "Tag" = "8:"
-            "Folder" = "8:_86A6EC8E9B0C4749AB8797C3670D9B2A"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1836,10 +1485,336 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FB5FD52541E948AAB4A4483F59CBA57A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9062B1516A15457F893124F28192D35A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignExtensions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c5ebccebe084d64f, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9062B1516A15457F893124F28192D35A"
+                    {
+                    "Name" = "8:MaterialDesignExtensions.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MaterialDesignExtensions.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9846547EACFA486E90398F667EB2C4E3"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=4.3.0.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9846547EACFA486E90398F667EB2C4E3"
+                    {
+                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\MaterialDesignThemes.Wpf.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9F3E6F5C8939431CBE84CFD0D40FAAEA"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\README.txt"
+            "TargetName" = "8:README.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A306218B1ABB4F899769AE453757A1CE"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\libEGL.dll"
+            "TargetName" = "8:libEGL.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A45558F6FB1F4FB180825564BDEAA036"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\vk_swiftshader_icd.json"
+            "TargetName" = "8:vk_swiftshader_icd.json"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA9B85A06FD84B8DAEA278663D0DE9F6"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\LICENSE.txt"
+            "TargetName" = "8:LICENSE.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AB423A5760F340EF8CC3894B5318F404"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_AB423A5760F340EF8CC3894B5318F404"
+                    {
+                    "Name" = "8:RestSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\Resources\\RestSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_00C455EC77604270A27F57273F28A584"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AB8AEDBBC1B7427AA0667F4D92757F15"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\chrome_200_percent.pak"
+            "TargetName" = "8:chrome_200_percent.pak"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AC17B5B7DAD24C77B64151147BED4B8E"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.Runtime.xml"
+            "TargetName" = "8:CefSharp.Core.Runtime.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AD172A990B6048DAA1827CBFC18595E0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_AD172A990B6048DAA1827CBFC18595E0"
+                    {
+                    "Name" = "8:RestSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\RestSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AF9506C838364AC7B4E6FAB184A5A153"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp.BrowserSubprocess.Core, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_AF9506C838364AC7B4E6FAB184A5A153"
+                    {
+                    "Name" = "8:CefSharp.BrowserSubprocess.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BB570224B25941958814DD14535B6531"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Autodesk.Forge, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BB570224B25941958814DD14535B6531"
+                    {
+                    "Name" = "8:Autodesk.Forge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\Autodesk.Forge.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C0FF769DDDE24ADE8C61B2942D6A37C8"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\v8_context_snapshot.bin"
+            "TargetName" = "8:v8_context_snapshot.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D911DD15A83D400AAFFC27C52C2EC73D"
             {
             "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.Core.pdb"
             "TargetName" = "8:CefSharp.BrowserSubprocess.Core.pdb"
@@ -1857,6 +1832,210 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD286DA4C5784EE5933F0B2DAE8A5B44"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.Core.Runtime.pdb"
+            "TargetName" = "8:CefSharp.Core.Runtime.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DE115752A8FD7FAAB84BE1EFD9779ED0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=4.3.0.3, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DE115752A8FD7FAAB84BE1EFD9779ED0"
+                    {
+                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MaterialDesignThemes.Wpf.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E19359993EEF0B09EBBEE8A9DEA32459"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp.Core.Runtime, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_E19359993EEF0B09EBBEE8A9DEA32459"
+                    {
+                    "Name" = "8:CefSharp.Core.Runtime.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:CefSharp.Core.Runtime.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EAB0BD769212AA58A4B66844B18D3EBE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Autodesk.Forge, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_EAB0BD769212AA58A4B66844B18D3EBE"
+                    {
+                    "Name" = "8:Autodesk.Forge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Autodesk.Forge.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EB2EFD309F0347308BC2ABED03A9936D"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\vulkan-1.dll"
+            "TargetName" = "8:vulkan-1.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED12F1948CBC44EA915AE8A5D94DE933"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\CefSharp.BrowserSubprocess.pdb"
+            "TargetName" = "8:CefSharp.BrowserSubprocess.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EF4166B71BBF4CF6B4F79584093685FA"
+            {
+            "SourcePath" = "8:..\\BIM360FileTransfer\\bin\\x64\\Release\\net48\\BIM360FileTransfer.exe.config"
+            "TargetName" = "8:BIM360FileTransfer.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F97300524DABE16934911BDA16491F9A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CefSharp.Wpf, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F97300524DABE16934911BDA16491F9A"
+                    {
+                    "Name" = "8:CefSharp.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:CefSharp.Wpf.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -1882,17 +2061,6 @@
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_AAFB842C65FB4CBEAA8C56DACDA0177D"
-                        "Folders"
-                        {
-                        }
-                    }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_86A6EC8E9B0C4749AB8797C3670D9B2A"
-                    {
-                    "Name" = "8:Assemblies"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_581EFEB51B8C4A03AE3E69C29A938EAC"
                         "Folders"
                         {
                         }
@@ -1948,15 +2116,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:HLW Tools"
-        "ProductCode" = "8:{54963550-A396-4AAF-BF23-7F7CB5605F89}"
-        "PackageCode" = "8:{DAE8A2FC-0B70-41A9-9222-5D072B2A095B}"
+        "ProductCode" = "8:{59821727-F711-46FD-A127-9FE020B8BEA2}"
+        "PackageCode" = "8:{2CADE605-C490-4CCA-B041-40166F7984C6}"
         "UpgradeCode" = "8:{4084F6ED-D1B6-4EA8-B9D8-5EABB941EFF9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:2.1.0"
         "Manufacturer" = "8:HLW International LLP"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2069,32 +2237,32 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4561BA8A97FB4137BBD7A241FDDBD3C3"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A62FBB9C2B83453CAFF7E9FF0303AC26"
             {
             "Name" = "8:BIM 360 File Transfer Tool"
             "Arguments" = "8:"
-            "Description" = "8:A desktop program helps you copy files to different projects on BIM 360."
+            "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_6A8A12E931344D57A2A01FB604E56E78"
-            "Folder" = "8:_E9C2C7314F0B48DF82EF1524131EEA31"
-            "WorkingFolder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Icon" = "8:_DD938815C1734111A9879738A9BECBBB"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EECB1BA4A4D94AEABD36D6497C7E94D2"
-            {
-            "Name" = "8:BIM 360 File Transfer Tool"
-            "Arguments" = "8:"
-            "Description" = "8:A desktop program helps you copy files to different projects on BIM 360."
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_6A8A12E931344D57A2A01FB604E56E78"
+            "Target" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
             "Folder" = "8:_814A874D538342FD94B6F408AA7CE164"
             "WorkingFolder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
-            "Icon" = "8:_DD938815C1734111A9879738A9BECBBB"
+            "Icon" = "8:_1EB224A35EEE404B83C675001237926F"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C9A6688DDFE044A3851E4702A0413086"
+            {
+            "Name" = "8:BIM 360 File Transfer Tool"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_094A054889CD44ED8990D7F9BCC2BB67"
+            "Folder" = "8:_E9C2C7314F0B48DF82EF1524131EEA31"
+            "WorkingFolder" = "8:_2B791D7E62EA4F4E9057C322B9FFFCD3"
+            "Icon" = "8:_1EB224A35EEE404B83C675001237926F"
             "Feature" = "8:"
             }
         }

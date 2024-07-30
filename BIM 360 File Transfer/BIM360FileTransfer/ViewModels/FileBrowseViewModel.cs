@@ -24,6 +24,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using BIM360FileTransfer.Utilities;
 using System.Windows;
 using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace BIM360FileTransfer.ViewModels
 {
@@ -36,6 +37,11 @@ namespace BIM360FileTransfer.ViewModels
         private IList<CategoryViewModel> selectedTargetCategoryTree;
         private IList<CategoryViewModel> targetCategoryTree;
         private string filePaths;
+        private string targetFolderPath = string.Empty;
+        private DateTime? startDate = DateTime.Now;
+        private DateTime? endDate = DateTime.Now;
+        private string selectedDate;
+        private string selectedTime;
         private Dictionary<CategoryViewModel, Stream> FileInfoStreamMap = new Dictionary<CategoryViewModel, Stream>();
         #endregion
 
@@ -47,9 +53,11 @@ namespace BIM360FileTransfer.ViewModels
             FileBrowseCommand = new FileBrowseCommand(this);
             FileLoadCommand = new FileLoadCommand(this);
             LoadLocalFilesCommand = new LoadLocalFilesCommand(this);
+            SaveToLocalCommand = new SaveToLocalCommand(this);
             FileTransferCommand = new FileTransferCommand(this);
             FileTransferExecuteCommand = new FileTransferExecuteCommand(this);
             FileTransferAbortCommand = new FileTransferAbortCommand(this);
+            SaveJsonCommand = new SaveJsonCommand(this);
             settingViewModel = new SettingViewModel(this);
         }
         #endregion
@@ -104,6 +112,56 @@ namespace BIM360FileTransfer.ViewModels
                 OnPropertyChanged("FilePaths");
             }
         }
+
+        public string TargetFolderPath
+        {
+            get { return targetFolderPath; }
+            set
+            {
+                targetFolderPath = value;
+                OnPropertyChanged("TargetFolderPath");
+            }
+        }
+
+        public DateTime? StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                startDate = value;
+                OnPropertyChanged("StartDate");
+            }
+        }
+
+        public DateTime? EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                endDate = value;
+                OnPropertyChanged("EndDate");
+            }
+        }
+        
+        public string SelectedDate
+        {
+            get { return selectedDate; }
+            set
+            {
+                selectedDate = value;
+                OnPropertyChanged("SelectedDate");
+            }
+        }
+
+        public string SelectedTime
+        {
+            get { return selectedTime; }
+            set
+            {
+                selectedTime = value;
+                OnPropertyChanged("SelectedTime");
+            }
+        }
         #endregion
 
 
@@ -111,7 +169,7 @@ namespace BIM360FileTransfer.ViewModels
         internal void GetCategoryLocal()
         {
             var dialog = new OpenFileDialog();
-            dialog.FileName = "Document"; // Default file name
+            dialog.FileName = "Reoccurring_Task"; // Default file name
             dialog.DefaultExt = ".json"; // Default file extension
             dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
 
@@ -127,19 +185,78 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
-                    serializer.NullValueHandling = NullValueHandling.Ignore;
-                    serializer.TypeNameHandling = TypeNameHandling.All;
-                    serializer.Formatting = Formatting.Indented;
-                    CategoryTree = (IList<CategoryViewModel>)serializer.Deserialize(file, typeof(IList<CategoryViewModel>));
+                    var jsonInput = (JsonModel)serializer.Deserialize(file, typeof(JsonModel));
 
-                    // Create a deep copy of the source tree to build the target tree.
-                    TargetCategoryTree = new List<CategoryViewModel>();
-                    foreach (var tree in CategoryTree)
+                    // Get source files from json model
+                    bool isFromLocal = false;
+                    List<string> localFilePaths = new List<string>();
+                    foreach(var sourceItem in jsonInput.source.sourceItems)
                     {
-                        TargetCategoryTree.Add(TreeHelper.DeepClone<CategoryViewModel>(tree));
+                        if (sourceItem.path.Contains(":"))
+                        {
+                            isFromLocal = true;
+                            localFilePaths.Add(sourceItem.path);
+                        }
+                        else
+                        {
+                            string[] cloudPaths = sourceItem.path.Split('\\');
+                            foreach (var sourceRootCategory in CategoryTree)
+                            {
+                                if (cloudPaths[0] == sourceRootCategory.CategoryName)
+                                {
+                                    sourceRootCategory.GetChildren();
+                                    var targetFolderInfo = TraverseCloud(sourceRootCategory, "versions", cloudPaths, 0);
+                                    targetFolderInfo.IsSelected = true;
+                                    SelectedTargetCategoryTree.Add(targetFolderInfo);
+                                    break;
+                                }
+                            }
+                        }
                     }
+
+                    if (isFromLocal)
+                        LoadLocalFile(localFilePaths.ToArray());
+                    
+
+                    // Get target files from json model
+                    foreach (var targetItem in jsonInput.target.targetItems)
+                    {
+                        string[] cloudPaths = targetItem.path.Split('\\');
+                        foreach (var targetRootCategory in TargetCategoryTree)
+                        {
+                            if (cloudPaths[0] == targetRootCategory.CategoryName)
+                            {
+                                targetRootCategory.GetChildren();
+                                var targetFolderInfo = TraverseCloud(targetRootCategory, "folders", cloudPaths, 0);
+                                targetFolderInfo.IsSelected = true;
+                                SelectedTargetCategoryTree.Add(targetFolderInfo);
+                                break;
+                            }
+                        }
+                    }
+
+                    ExecuteTransfer();
                 }
             }
+        }
+
+        // Recursive method to traverse the tree structure on BIM 360.
+        private CategoryViewModel TraverseCloud(CategoryViewModel rootCategory, string type, string[] names, int index)
+        {
+            if (rootCategory.Children is null) return null;
+
+            index++;
+            foreach (var child in rootCategory.Children)
+            {
+                if (child.CategoryType == type && child.CategoryName == names[index] )
+                {
+                    if (index == names.Length - 1)
+                        return child;
+                    else
+                        return TraverseCloud(child, type, names, index);
+                }
+            }
+            return null;
         }
 
         public void GetCategoryAsync()
@@ -154,63 +271,7 @@ namespace BIM360FileTransfer.ViewModels
             //SaveCategoryToJson(CategoryTree);
         }
 
-        private void SaveCategoryToJson(IList<CategoryViewModel> categoryTree)
-        {
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.FileName = "Document"; // Default file name
-            dialog.DefaultExt = ".json"; // Default file extension
-            dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
 
-            // Show save file dialog box
-            bool? result = dialog.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
-            {
-                // Save document
-                string filename = dialog.FileName;
-                using (StreamWriter file = File.CreateText(filename))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.TypeNameHandling = TypeNameHandling.All;
-                    serializer.NullValueHandling = NullValueHandling.Ignore;
-                    serializer.Serialize(file, categoryTree);
-                }
-            }
-
-            //// Create a message box. Let use choose if they want to save json.
-            //MessageBoxModel saveJsonMessageBox = new MessageBoxModel("File transfered sucessfully. Do you want to save the log to JSON?",
-            //                                                         "File Transfer Processor",
-            //                                                         MessageBoxButton.YesNoCancel,
-            //                                                         MessageBoxImage.Warning);
-            //saveJsonMessageBox.result = MessageBox.Show(saveJsonMessageBox.messageBoxText, saveJsonMessageBox.caption, saveJsonMessageBox.button, saveJsonMessageBox.icon, MessageBoxResult.Yes);
-
-            //if (saveJsonMessageBox.result == MessageBoxResult.Yes)
-            //{
-            //    // Configure save file dialog box
-            //    var dialog = new Microsoft.Win32.SaveFileDialog();
-            //    dialog.FileName = "Document"; // Default file name
-            //    dialog.DefaultExt = ".json"; // Default file extension
-            //    dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
-
-            //    // Show save file dialog box
-            //    bool? result = dialog.ShowDialog();
-
-            //    // Process save file dialog box results
-            //    if (result == true)
-            //    {
-            //        // Save document
-            //        string filename = dialog.FileName;
-            //        using (StreamWriter file = File.CreateText(filename))
-            //        {
-            //            JsonSerializer serializer = new JsonSerializer();
-            //            serializer.TypeNameHandling = TypeNameHandling.All;
-            //            serializer.NullValueHandling = NullValueHandling.Ignore;
-            //            serializer.Serialize(file, categoryTree);
-            //        }
-            //    }
-            //}
-        }
 
         /// <summary>
         /// Get the working hub.
@@ -220,7 +281,15 @@ namespace BIM360FileTransfer.ViewModels
             HubsApi hubsAPIInstance = new HubsApi();
             hubsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
             var response = hubsAPIInstance.GetHubs();
-            return response.data[0].id;
+            foreach (KeyValuePair<string, dynamic> hubInfo in new DynamicDictionaryItems(response.data))
+            {
+                if (hubInfo.Value.attributes.name.Contains("hlw") || hubInfo.Value.attributes.name.Contains("HLW"))
+                {
+                    return hubInfo.Value.id;
+                }
+            }
+            //return response.data[0].id;
+            return "Error: No HLW hub found in your account.";
         }
 
         private ObservableCollection<CategoryViewModel> GetCategoryTree(string hubId)
@@ -280,7 +349,7 @@ namespace BIM360FileTransfer.ViewModels
         internal void ExecuteTransfer()
         {
             DownloadFile();
-            UploadFile();
+            UploadFileAsync();
         }
 
         internal void DownloadFile()
@@ -297,19 +366,6 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     Stream result = objectAPIInstance.GetObject(bucketKey, objectName);
                     FileInfoStreamMap[item] = result;
-
-                    // Save to local
-                    //var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources";
-                    //DirectoryInfo info = new DirectoryInfo(filePath);
-                    //if (!info.Exists)
-                    //{
-                    //    info.Create();
-                    //}
-                    //string path = Path.Combine(filePath, item.CategoryName.Substring(0, item.CategoryName.LastIndexOf(' ')));
-                    //using (FileStream outputFileStream = new FileStream(path, FileMode.Create))
-                    //{
-                    //    result.CopyTo(outputFileStream);
-                    //}
                 }
                 catch (Exception e)
                 {
@@ -318,37 +374,93 @@ namespace BIM360FileTransfer.ViewModels
             }
         }
 
-        internal void LoadLocalFile()
+        internal void LoadLocalFile(string[] sourItemPaths = null)
         {
-            FilePaths = "";
+            
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Autodesk Revit Project (*.rvt)|*.rvt|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (openFileDialog.ShowDialog() == true)
+            if (sourItemPaths is null)
             {
-                foreach (string filePath in openFileDialog.FileNames)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = true;
+                openFileDialog.Filter = "Autodesk Revit Project (*.rvt)|*.rvt|All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (openFileDialog.ShowDialog() == true)
                 {
-                    FilePaths += (filePath + Environment.NewLine);
-                    var filename = new FileInfo(filePath);
-
-                    MemoryStream localSourceStream = new MemoryStream();
-                    using (FileStream localSource = File.Open(@filePath, FileMode.Open))
-                    {
-
-                        Console.WriteLine("Source length: {0}", localSource.Length.ToString());
-
-                        // Copy source to destination.
-                        localSource.CopyTo(localSourceStream);
-                        localSourceStream.Position = 0;
-                        var id = Guid.NewGuid();
-                        var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
-                        var thisCategory = new PublicCategoryCore(entity);
-                        FileInfoStreamMap[thisCategory] = localSourceStream;
-                    }
+                    sourItemPaths = openFileDialog.FileNames;
                 }
             }
+
+            if (sourItemPaths is null) return;
+
+
+            foreach (string filePath in sourItemPaths)
+            {
+                FilePaths += (filePath + Environment.NewLine);
+                var filename = new FileInfo(filePath);
+
+                MemoryStream localSourceStream = new MemoryStream();
+                using (FileStream localSource = File.Open(@filePath, FileMode.Open))
+                {
+
+                    Console.WriteLine("Source length: {0}", localSource.Length.ToString());
+
+                    // Copy source to destination.
+                    localSource.CopyTo(localSourceStream);
+                    localSourceStream.Position = 0;
+                    var id = Guid.NewGuid();
+                    var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = filePath;
+                    FileInfoStreamMap[thisCategory] = localSourceStream;
+                }
+            }
+        }
+
+        internal void SaveToLocal(string targetFolderPath = null)
+        {
+            if (targetFolderPath is null)
+            {
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.IsFolderPicker = true;
+                dialog.Multiselect = false;
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    targetFolderPath = dialog.FileName;
+                }
+            }
+
+            if (targetFolderPath is null) return;
+            else
+            {
+                TargetFolderPath += targetFolderPath;
+            }
+
+
+        
+
+
+            //foreach (string filePath in sourItemPaths)
+            //{
+            //    FilePaths += (filePath + Environment.NewLine);
+            //    var filename = new FileInfo(filePath);
+
+            //    MemoryStream localSourceStream = new MemoryStream();
+            //    using (FileStream localSource = File.Open(@filePath, FileMode.Open))
+            //    {
+
+            //        Console.WriteLine("Source length: {0}", localSource.Length.ToString());
+
+            //        // Copy source to destination.
+            //        localSource.CopyTo(localSourceStream);
+            //        localSourceStream.Position = 0;
+            //        var id = Guid.NewGuid();
+            //        var entity = new CategoryModel(id.ToString(), "", filename.Name + " v1", "items");
+            //        var thisCategory = new PublicCategoryCore(entity);
+            //        thisCategory.CategoryPath = filePath;
+            //        FileInfoStreamMap[thisCategory] = localSourceStream;
+            //    }
+            //}
         }
 
         private CreateStorage CreateStorageBody(string folderId, KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap)
@@ -379,22 +491,27 @@ namespace BIM360FileTransfer.ViewModels
             return postItemBody;
         }
 
-        internal void UploadFile()
+        internal async Task UploadFileAsync()
         {
+            // Work on each target folder first to avoid redundent call to projectsApi
             foreach (var item in selectedTargetCategoryTree)
             {
-                if (item.CategoryType == "projects") continue;
+                // Ignore the root and plan folders.
+                if (item.CategoryType == "projects" || item.CategoryType.Contains("Plan")) continue;
 
+                // Initiate projectsApi.
                 var projectsAPIInstance = new ProjectsApi();
                 var folderId = item.CategoryId;
                 var projectId = item.CategoryProjectId;  // string | the `project id`
                 
                 try
                 {
+                    // Work on each <fileinfo, stream> set to upload file.
                     foreach (KeyValuePair<CategoryViewModel, Stream> fileInfoStreamMap in FileInfoStreamMap)
                     {
-                        bool isExisted = false;
+                        // Check if the source file already existed in the target folder. If yes, record fileId.
                         string itemId = "";
+                        bool isExisted = false;
                         foreach (var child in item.Children)
                         {
                             if (child.CategoryType == "items" && fileInfoStreamMap.Key.CategoryName.Contains(child.CategoryName))
@@ -404,20 +521,26 @@ namespace BIM360FileTransfer.ViewModels
                                 break;
                             }
                         }
+                        
+                        // Create storage on BIM 360 via projectsApi. Record returned info.
                         var createStorageBody = CreateStorageBody(folderId, fileInfoStreamMap); // CreateStorage | describe the file the storage is created for
                         var storageCreateResult = projectsAPIInstance.PostStorage(projectId, createStorageBody);
                         var target_storage_object_id = storageCreateResult.data.id;
                         var target_object_id = target_storage_object_id.Substring(target_storage_object_id.LastIndexOf('/') + 1);
                         var target_bucket_key = target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/')).Substring(target_storage_object_id.Substring(0, target_storage_object_id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
 
+                        // Initiate objectsApi.
                         var objectsAPIInstance = new ObjectsApi();
                         objectsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                         var bucketKey = target_bucket_key;  // string | URL-encoded bucket key
                         var objectName = target_object_id;  // string | URL-encoded object name
                         var contentLength = Convert.ToInt32(fileInfoStreamMap.Value.Length);  // int? | Indicates the size of the request body.
+                        
+                        // Set the pointer to the start position of the stream. Then assign to the body.
                         fileInfoStreamMap.Value.Position = 0;
                         var uploadFileBody = fileInfoStreamMap.Value;  // System.IO.Stream | 
 
+                        // Upload the file to the BIM 360 via objectsApi.
                         try
                         {
                             var uploadFileResult = objectsAPIInstance.UploadObject(bucketKey, objectName, contentLength, uploadFileBody);
@@ -429,17 +552,10 @@ namespace BIM360FileTransfer.ViewModels
 
                         if (!isExisted)
                         {
-                            
+                            // For the brand new file, create the fist version to show it on the BIM 360.
                             var itemsAPIInstance = new ItemsApi();
                             itemsAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
                             var postItemBody = CreateItemBody(folderId, target_storage_object_id, fileInfoStreamMap);
-
-                            //using (StreamWriter file = File.CreateText(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\")) + "\\Resources\\postItemBody.json"))
-                            //{
-                            //    JsonSerializer serializer = new JsonSerializer();
-                            //    serializer.TypeNameHandling = TypeNameHandling.None;
-                            //    serializer.Serialize(file, postItemBody);
-                            //}
 
                             try
                             {
@@ -452,27 +568,20 @@ namespace BIM360FileTransfer.ViewModels
                         }
                         else
                         {
-                            //string messageBoxText = "The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName";
-                            //string caption = "File Transfer Processor";
-                            //MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                            //MessageBoxImage icon = MessageBoxImage.Warning;
-                            //MessageBoxResult result;
-                            MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
-                                                                                        "File Transfer Processor",
-                                                                                        MessageBoxButton.YesNoCancel,
-                                                                                        MessageBoxImage.Warning);
-                            postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
-                            if (postVersionMessageBox.result == MessageBoxResult.No) return;
+                            //MessageBoxModel postVersionMessageBox = new MessageBoxModel("The following file is already existed in the target folder. Do you want to create a new version? \n projects/folderPath/fileName",
+                            //                                                            "File Transfer Processor",
+                            //                                                            MessageBoxButton.YesNoCancel,
+                            //                                                            MessageBoxImage.Warning);
+                            //postVersionMessageBox.result = MessageBox.Show(postVersionMessageBox.messageBoxText, postVersionMessageBox.caption, postVersionMessageBox.button, postVersionMessageBox.icon, MessageBoxResult.Yes);
+                            //if (postVersionMessageBox.result == MessageBoxResult.No) return;
 
-
+                            // For the existed file, create a new version to on the BIM 360.
                             var jsonapi = new JsonApiVersionJsonapi(new JsonApiVersionJsonapi.VersionEnum());
                             var createItemDataAttributes = new CreateStorageDataAttributes(fileInfoStreamMap.Key.CategoryName.Substring(0, fileInfoStreamMap.Key.CategoryName.LastIndexOf(' ')), new BaseAttributesExtensionObject("versions:autodesk.bim360:File", "1.0", new JsonApiLink("")));
 
                             var createVersionDataRelationshipsItem = new CreateVersionDataRelationshipsItem(new CreateVersionDataRelationshipsItemData(new CreateVersionDataRelationshipsItemData.TypeEnum(), itemId));
                             var createItemRelationshipsStorage = new CreateItemRelationshipsStorage(new CreateItemRelationshipsStorageData(new CreateItemRelationshipsStorageData.TypeEnum(), target_storage_object_id));
                             var createItemDataRelationships = new CreateVersionDataRelationships(createVersionDataRelationshipsItem, createItemRelationshipsStorage);
-
-
                             var createVersionData = new CreateVersionData(new CreateVersionData.TypeEnum(), createItemDataAttributes, createItemDataRelationships);
 
                             var createVersionBody = new CreateVersion(jsonapi, createVersionData); // CreateVersion | describe the version to be created
@@ -495,8 +604,131 @@ namespace BIM360FileTransfer.ViewModels
                     throw new Exception("Exception when calling ProjectsApi.PostStorage: " + e.Message);
                 }
 
-
+                // Refresh target folder's children after transferring the file on UI.
+                //item.Children.Clear();
+                //await Task.Run(() => item.GetChildrenCategoryAsync(item));
             }
+        }
+        #endregion
+
+
+        #region Reoccurring Task
+        private JsonModel CreateJsonModel()
+        {
+            var jsonModel = new JsonModel();
+
+            jsonModel.startDate = StartDate.ToString();
+            jsonModel.endDate = EndDate.ToString();
+            jsonModel.selectedDate = SelectedDate;
+            jsonModel.selectedTime = SelectedTime;
+
+
+            // Format cloud files to Json model.
+            foreach (var item in selectedSourceCategoryTree)
+            {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.SourceItem sourceItem = new JsonModel.SourceItem(name, path);
+                jsonModel.source.sourceItems.Add(sourceItem);
+            }
+
+            // Format local files to Json model.
+            foreach (var item in FileInfoStreamMap.Keys)
+            {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.SourceItem sourceItem = new JsonModel.SourceItem(name, path);
+                jsonModel.source.sourceItems.Add(sourceItem);
+            }
+
+            // Format target folders to Json model.
+            foreach (var item in selectedTargetCategoryTree)
+            {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.TargetItem targetItem = new JsonModel.TargetItem(name, path);
+                jsonModel.target.targetItems.Add(targetItem);
+            }
+
+            // Format local target to Json model.
+            foreach (var item in FileInfoStreamMap.Keys)
+            {
+                var path = item.CategoryPath;
+                var name = item.CategoryName;
+                JsonModel.TargetItem targetItem = new JsonModel.TargetItem(name, path);
+                jsonModel.target.targetItems.Add(targetItem);
+            }
+
+            if (TargetFolderPath != null && TargetFolderPath != string.Empty)
+            {
+                JsonModel.TargetItem targetItem = new JsonModel.TargetItem("", TargetFolderPath);
+                jsonModel.target.targetItems.Add(targetItem);
+            }
+
+            return jsonModel;
+        }
+
+        public void SaveCategoryToJson()
+        {
+            JsonModel jsonModel = CreateJsonModel();
+
+            // Set save file dialog box.
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.FileName = "Reoccurring_Task"; // Default file name
+            dialog.DefaultExt = ".json"; // Default file extension
+            dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
+
+            // Show save file dialog box.
+            bool? result = dialog.ShowDialog();
+
+            // Process save file dialog box results.
+            if (result == true)
+            {
+                // Save json string to the selected file.
+                Settings.JSON_PATH = dialog.FileName;
+                //string filename = dialog.FileName;
+                //string json = JsonConvert.SerializeObject(jsonModel, Formatting.Indented);
+                //File.WriteAllText(@Settings.JSON_PATH, json);
+
+                using (StreamWriter sw = File.CreateText(@Settings.JSON_PATH))
+                {
+                    string json = JsonConvert.SerializeObject(jsonModel, Formatting.Indented);
+                    sw.WriteLine(json);
+                }
+            }
+
+            //// Create a message box. Let use choose if they want to save json.
+            //MessageBoxModel saveJsonMessageBox = new MessageBoxModel("File transfered sucessfully. Do you want to save the log to JSON?",
+            //                                                         "File Transfer Processor",
+            //                                                         MessageBoxButton.YesNoCancel,
+            //                                                         MessageBoxImage.Warning);
+            //saveJsonMessageBox.result = MessageBox.Show(saveJsonMessageBox.messageBoxText, saveJsonMessageBox.caption, saveJsonMessageBox.button, saveJsonMessageBox.icon, MessageBoxResult.Yes);
+
+            //if (saveJsonMessageBox.result == MessageBoxResult.Yes)
+            //{
+            //    // Configure save file dialog box
+            //    var dialog = new Microsoft.Win32.SaveFileDialog();
+            //    dialog.FileName = "Document"; // Default file name
+            //    dialog.DefaultExt = ".json"; // Default file extension
+            //    dialog.Filter = "Text documents (.json)|*.json"; // Filter files by extension
+
+            //    // Show save file dialog box
+            //    bool? result = dialog.ShowDialog();
+
+            //    // Process save file dialog box results
+            //    if (result == true)
+            //    {
+            //        // Save document
+            //        string filename = dialog.FileName;
+            //        using (StreamWriter file = File.CreateText(filename))
+            //        {
+            //            JsonSerializer serializer = new JsonSerializer();
+            //            serializer.TypeNameHandling = TypeNameHandling.All;
+            //            serializer.NullValueHandling = NullValueHandling.Ignore;
+            //            serializer.Serialize(file, categoryTree);
+            //        }
+            //    }
+            //}
         }
         #endregion
 
@@ -530,7 +762,7 @@ namespace BIM360FileTransfer.ViewModels
         {
             get
             {
-                if (selectedTargetCategoryTree.Count == 0 || FileInfoStreamMap.Keys.Count == 0)
+                if (selectedTargetCategoryTree.Count == 0 && !(selectedSourceCategoryTree.Count != 0 || FileInfoStreamMap.Keys.Count != 0 || TargetFolderPath != string.Empty))
                 {
                     return false;
                 }
@@ -567,6 +799,12 @@ namespace BIM360FileTransfer.ViewModels
             get;
             private set;
         }
+        
+        public ICommand SaveToLocalCommand
+        {
+            get;
+            private set;
+        }
 
         public ICommand FileTransferCommand
         {
@@ -581,6 +819,12 @@ namespace BIM360FileTransfer.ViewModels
         }
 
         public ICommand FileTransferAbortCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand SaveJsonCommand
         {
             get;
             private set;

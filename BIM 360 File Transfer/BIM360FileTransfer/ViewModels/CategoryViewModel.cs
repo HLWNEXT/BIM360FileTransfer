@@ -25,7 +25,7 @@ namespace BIM360FileTransfer.ViewModels
         public string CategoryBucketId => Model.BucketId;
         public string CategoryPath;
 
-        private readonly ObservableCollection<CategoryViewModel> children;
+        private ObservableCollection<CategoryViewModel> children;
         //public readonly CategoryViewModel parent;
 
         private int level;
@@ -35,6 +35,8 @@ namespace BIM360FileTransfer.ViewModels
         private bool isVisible = true;
         private bool isVisibleInSource = true;
         private string remarks;
+        private bool hasBeenSelected = false;
+
         #endregion
 
 
@@ -58,6 +60,7 @@ namespace BIM360FileTransfer.ViewModels
 		public ObservableCollection<CategoryViewModel> Children
         {
             get { return children; }
+            set { children = value; }
         }
 
         public int Level
@@ -96,8 +99,9 @@ namespace BIM360FileTransfer.ViewModels
                     OnPropertyChanged("IsSelected");
                 }
 
-                if (CategoryType == "projects" && value is true)
+                if (CategoryType == "projects" && hasBeenSelected is false && value is true)
                 {
+                    hasBeenSelected = true;
                     _ = GetChildrenAsync();
                 }
             }
@@ -134,7 +138,7 @@ namespace BIM360FileTransfer.ViewModels
 
         #region Get Children
 
-        private async Task GetChildrenAsync()
+        public async Task GetChildrenAsync()
         {
             var folderAPIInstance = new FoldersApi();
             folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
@@ -149,15 +153,16 @@ namespace BIM360FileTransfer.ViewModels
                 {
                     var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
-                    thisCategory.CategoryPath = CategoryPath + "//" + name;
-                    //thisCategory.Parent = rootCategory;
+                    thisCategory.CategoryPath = CategoryPath + "\\" + name;
+                    //thisCategory.Parent = rootCategory;.
+                    
                     await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
                     Children.Add(thisCategory);
                 }
             }
         }
 
-        private async Task GetChildrenCategoryAsync(CategoryViewModel rootCategory)
+        public async Task GetChildrenCategoryAsync(CategoryViewModel rootCategory)
         {
             if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
             {
@@ -179,7 +184,7 @@ namespace BIM360FileTransfer.ViewModels
 
                     var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
-                    thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     thisCategory.isVisibleInSource = false;
                     rootCategory.Children.Add(thisCategory);
                     continue;
@@ -191,7 +196,7 @@ namespace BIM360FileTransfer.ViewModels
 
                     var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
                     var thisCategory = new PublicCategoryCore(entity);
-                    thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                     //thisCategory.Parent = rootCategory;
                     await Task.Run(() => GetChildrenCategoryAsync(thisCategory));
                     rootCategory.Children.Add(thisCategory);
@@ -212,7 +217,94 @@ namespace BIM360FileTransfer.ViewModels
                         var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
                         var thisCategory = new PublicCategoryCore(entity);
                         thisCategory.IsVisible = false;
-                        thisCategory.CategoryPath = rootCategory.CategoryPath + "//" + name;
+                        thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
+                        //thisCategory.Parent = rootCategory;
+                        rootCategory.Children.Add(thisCategory);
+                    }
+                }
+            }
+        }
+
+        public void GetChildren()
+        {
+            var folderAPIInstance = new FoldersApi();
+            folderAPIInstance.Configuration.AccessToken = User.FORGE_INTERNAL_TOKEN.access_token;
+            var response = folderAPIInstance.GetFolderContents(CategoryProjectId, CategoryId);
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                var type = objInfo.Value.type;
+                var folderId = objInfo.Value.id;
+                var name = objInfo.Value.attributes.name;
+
+                if (name == "Plans" || name == "Project Files")
+                {
+                    var entity = new CategoryModel(folderId, CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = CategoryPath + "\\" + name;
+                    //thisCategory.Parent = rootCategory;.
+
+                    GetChildrenCategory(thisCategory);
+                    Children.Add(thisCategory);
+                }
+            }
+        }
+
+        public void GetChildrenCategory(CategoryViewModel rootCategory)
+        {
+            if (rootCategory.CategoryName == "Plans" || rootCategory.CategoryName == "Revit Upgrade Report")
+            {
+                return;
+            }
+            var apiInstance = new FoldersApi();
+            var response = apiInstance.GetFolderContents(rootCategory.CategoryProjectId, rootCategory.CategoryId);
+
+            bool isItemExist = false;
+
+            foreach (KeyValuePair<string, dynamic> objInfo in new DynamicDictionaryItems(response.data))
+            {
+                var type = objInfo.Value.type;
+                if (type == "items")
+                {
+                    isItemExist = true;
+                    var itemId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.displayName;
+
+                    var entity = new CategoryModel(itemId, rootCategory.CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
+                    thisCategory.isVisibleInSource = false;
+                    rootCategory.Children.Add(thisCategory);
+                    continue;
+                }
+                else
+                {
+                    var folderId = objInfo.Value.id;
+                    var name = objInfo.Value.attributes.name;
+
+                    var entity = new CategoryModel(folderId, rootCategory.CategoryProjectId, name, type);
+                    var thisCategory = new PublicCategoryCore(entity);
+                    thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
+                    //thisCategory.Parent = rootCategory;
+                    GetChildrenCategory(thisCategory);
+                    rootCategory.Children.Add(thisCategory);
+                }
+            }
+            if (isItemExist)
+            {
+                foreach (KeyValuePair<string, dynamic> storageObjInfo in new DynamicDictionaryItems(response.included))
+                {
+                    var new_type = storageObjInfo.Value.type;
+                    if (new_type == "versions")
+                    {
+                        var id = storageObjInfo.Value.relationships.storage.data.id;
+                        var storage_object_id = id.Substring(id.LastIndexOf('/') + 1);
+                        var bucket_id = id.Substring(0, id.LastIndexOf('/')).Substring(id.Substring(0, id.LastIndexOf('/') + 1).LastIndexOf(':') + 1);
+                        var name = storageObjInfo.Value.attributes.displayName + " v" + storageObjInfo.Value.attributes.versionNumber.ToString();
+
+                        var entity = new CategoryModel(storage_object_id, bucket_id, rootCategory.CategoryProjectId, name, new_type);
+                        var thisCategory = new PublicCategoryCore(entity);
+                        thisCategory.IsVisible = false;
+                        thisCategory.CategoryPath = rootCategory.CategoryPath + "\\" + name;
                         //thisCategory.Parent = rootCategory;
                         rootCategory.Children.Add(thisCategory);
                     }

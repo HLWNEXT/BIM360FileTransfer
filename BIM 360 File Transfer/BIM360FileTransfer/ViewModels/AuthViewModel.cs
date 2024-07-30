@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Threading;
-using System.Collections.ObjectModel;
 using CefSharp.Wpf;
 using CefSharp;
 using Autodesk.Forge;
@@ -22,23 +15,23 @@ namespace BIM360FileTransfer.ViewModels
 {
     internal class AuthViewModel : BaseViewModel, IViewModel
     {
+        #region Data
         public ChromiumWebBrowser authBrowser;
         public OAuthWindow oAuthWindow;
         public FileBrowseViewModel fileBrowseViewModel;
+        #endregion
 
 
+        #region Constructor
         public AuthViewModel(FileBrowseViewModel fileBrowseViewModel)
         {
             this.fileBrowseViewModel = fileBrowseViewModel;
             OpenAuthCommand = new AuthCommand(this);
         }
-
-        public void myFirstCommand(string par)
-        {
-            Console.Beep();
-        }
+        #endregion
 
 
+        #region Get and refresh token
         /// <summary>
         /// Open an authentication window using Chromium browser.
         /// </summary>
@@ -64,6 +57,8 @@ namespace BIM360FileTransfer.ViewModels
             // Open url and get end event.
             authBrowser.LoadUrl(authorizeURL);
             authBrowser.FrameLoadEnd += BrowserFrameLoadEnd;
+
+
         }
 
         /// <summary>
@@ -98,6 +93,12 @@ namespace BIM360FileTransfer.ViewModels
                 }
                 User.FORGE_INTERNAL_TOKEN = await Get3LeggedTokenAsync();
                 fileBrowseViewModel.GetCategoryAsync();
+
+                var dueTime = TimeSpan.FromSeconds(10);
+                var interval = 
+
+                // TODO: Add a CancellationTokenSource and supply the token here instead of None.
+                _ = RunPeriodicAsync(OnTick, dueTime, CancellationToken.None);
             }
         }
 
@@ -117,7 +118,54 @@ namespace BIM360FileTransfer.ViewModels
             return bearer;
         }
 
+        /// <summary>
+        /// Refresh the 3 legged token from Forge API.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<dynamic> RefreshTokenAsync()
+        {
+            ThreeLeggedApi oauth = new ThreeLeggedApi();
+            dynamic bearer = await oauth.RefreshtokenAsync(
+              User.FORGE_CLIENT_ID,
+              User.FORGE_CLIENT_SECRET,
+              "refresh_token",
+              User.FORGE_INTERNAL_TOKEN.refresh_token);
+            return bearer;
+        }
+        #endregion
 
+
+        #region Run periodic function
+        private async void OnTick()
+        {
+            User.FORGE_INTERNAL_TOKEN = await RefreshTokenAsync();
+        }
+
+        private static async Task RunPeriodicAsync(Action onTick,
+                                           TimeSpan dueTime,
+                                           CancellationToken token)
+        {
+            var interval = TimeSpan.FromSeconds(User.FORGE_INTERNAL_TOKEN.expires_in - 60);
+
+            // Initial wait time before we begin the periodic loop.
+            if (dueTime > TimeSpan.Zero)
+                await Task.Delay(dueTime, token);
+
+            // Repeat this loop until cancelled.
+            while (!token.IsCancellationRequested)
+            {
+                // Call our onTick function.
+                onTick?.Invoke();
+
+                // Wait to repeat again.
+                if (interval > TimeSpan.Zero)
+                    await Task.Delay(interval, token);
+            }
+        }
+        #endregion
+
+
+        #region ICommand
         public bool CanOpenAuthPage
         {
             get
@@ -137,5 +185,6 @@ namespace BIM360FileTransfer.ViewModels
             get;
             private set;
         }
+        #endregion
     }
 }
